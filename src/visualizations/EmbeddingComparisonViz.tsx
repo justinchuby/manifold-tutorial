@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Line, Text } from '@react-three/drei';
 import * as THREE from 'three';
@@ -37,6 +37,27 @@ function FlatEmbedding({ showNormal, animating }: { showNormal: boolean; animati
   // For flat embedding, normal is always z-axis
   const tangent = new THREE.Vector3(-Math.sin(pointAngle), Math.cos(pointAngle), 0);
   const normal = new THREE.Vector3(0, 0, 1);
+  
+  // Create normal section plane geometry (spanned by tangent and normal)
+  const planeGeometry = useMemo(() => {
+    const u = tangent.clone().normalize();
+    const n = normal.clone().normalize();
+    const size = 0.6;
+    const center = pointOnCircle.clone();
+    
+    const vertices = new Float32Array([
+      ...center.clone().add(u.clone().multiplyScalar(size)).add(n.clone().multiplyScalar(size)).toArray(),
+      ...center.clone().add(u.clone().multiplyScalar(-size)).add(n.clone().multiplyScalar(size)).toArray(),
+      ...center.clone().add(u.clone().multiplyScalar(-size)).add(n.clone().multiplyScalar(-size)).toArray(),
+      ...center.clone().add(u.clone().multiplyScalar(size)).add(n.clone().multiplyScalar(-size)).toArray(),
+    ]);
+    const indices = new Uint16Array([0, 1, 2, 0, 2, 3]);
+    
+    const geom = new THREE.BufferGeometry();
+    geom.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    geom.setIndex(new THREE.BufferAttribute(indices, 1));
+    return geom;
+  }, [pointOnCircle, tangent, normal]);
 
   return (
     <group ref={groupRef} position={[-2.5, 0, 0]}>
@@ -64,10 +85,8 @@ function FlatEmbedding({ showNormal, animating }: { showNormal: boolean; animati
             lineWidth={4} 
           />
           
-          {/* Normal section plane */}
-          <mesh position={pointOnCircle.clone().add(new THREE.Vector3(0, 0, 0.4))} 
-                rotation={[0, pointAngle + Math.PI/2, 0]}>
-            <planeGeometry args={[0.8, 1.2]} />
+          {/* Normal section plane - spanned by tangent and normal */}
+          <mesh geometry={planeGeometry}>
             <meshBasicMaterial color="#ff6b6b" transparent opacity={0.3} side={THREE.DoubleSide} />
           </mesh>
 
@@ -116,6 +135,27 @@ function TiltedEmbedding({ showNormal, animating }: { showNormal: boolean; anima
   // Normal to tilted plane
   const normal = new THREE.Vector3(0, -Math.sin(tiltAngle), Math.cos(tiltAngle));
 
+  // Create normal section plane geometry (spanned by tangent and normal)
+  const planeGeometry = useMemo(() => {
+    const u = tangent.clone().normalize();
+    const n = normal.clone().normalize();
+    const size = 0.6;
+    const center = pointOnCircle.clone();
+    
+    const vertices = new Float32Array([
+      ...center.clone().add(u.clone().multiplyScalar(size)).add(n.clone().multiplyScalar(size)).toArray(),
+      ...center.clone().add(u.clone().multiplyScalar(-size)).add(n.clone().multiplyScalar(size)).toArray(),
+      ...center.clone().add(u.clone().multiplyScalar(-size)).add(n.clone().multiplyScalar(-size)).toArray(),
+      ...center.clone().add(u.clone().multiplyScalar(size)).add(n.clone().multiplyScalar(-size)).toArray(),
+    ]);
+    const indices = new Uint16Array([0, 1, 2, 0, 2, 3]);
+    
+    const geom = new THREE.BufferGeometry();
+    geom.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    geom.setIndex(new THREE.BufferAttribute(indices, 1));
+    return geom;
+  }, [pointOnCircle, tangent, normal]);
+
   return (
     <group ref={groupRef} position={[2.5, 0, 0]}>
       {/* Tilted circle */}
@@ -142,10 +182,8 @@ function TiltedEmbedding({ showNormal, animating }: { showNormal: boolean; anima
             lineWidth={4} 
           />
           
-          {/* Normal section plane (tilted) */}
-          <mesh position={pointOnCircle.clone().add(normal.clone().multiplyScalar(0.4))}
-                rotation={[tiltAngle, pointAngle + Math.PI/2, 0]}>
-            <planeGeometry args={[0.8, 1.2]} />
+          {/* Normal section plane - spanned by tangent and normal */}
+          <mesh geometry={planeGeometry}>
             <meshBasicMaterial color="#a855f7" transparent opacity={0.3} side={THREE.DoubleSide} />
           </mesh>
 
