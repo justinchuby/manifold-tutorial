@@ -263,7 +263,7 @@ export default function Chapter11() {
               </h3>
               <p className="text-slate-300 text-sm">
                 {isZh 
-                  ? '《Geometry of Submanifolds》(AMS Contemporary Mathematics, Vol. 756) 是纪念陈邦彦教授贡献的论文集，其中多篇文章引用了Chen-Li的接触数工作。'
+                  ? '《Geometry of Submanifolds》(AMS Contemporary Mathematics, Vol. 756) 是致敬陈邦彦教授贡献的论文集，其中多篇文章引用了Chen-Li的接触数工作。'
                   : '"Geometry of Submanifolds" (AMS Contemporary Mathematics, Vol. 756) is a collection honoring Prof. Chen\'s contributions, with multiple papers citing Chen-Li\'s contact number work.'}
               </p>
             </div>
@@ -284,7 +284,7 @@ export default function Chapter11() {
               { year: '2004', event: isZh ? 'Chen-Li: 接触数理论 ⭐' : 'Chen-Li: Contact Number Theory ⭐', highlight: true },
               { year: '2006', event: isZh ? '高接触数曲面特征研究' : 'High contact number surface characterization' },
               { year: '2008', event: isZh ? 'Cabrerizo等: 伪欧氏接触数' : 'Cabrerizo et al.: Pseudo-Euclidean contact number' },
-              { year: '2020', event: isZh ? 'AMS论文集纪念陈邦彦' : 'AMS proceedings honoring Chen' },
+              { year: '2020', event: isZh ? 'AMS论文集致敬陈邦彦' : 'AMS proceedings honoring Chen' },
               { year: '2023', event: isZh ? 'Raffaelli: 推广Qin-Li全挠率定理' : 'Raffaelli: Generalizing Qin-Li total torsion theorem' },
               { year: '2024', event: isZh ? 'Chen-Blaga: Chen-Ricci不等式30年综述' : 'Chen-Blaga: 30-year Chen-Ricci inequality survey' },
             ].map((item, index) => (
