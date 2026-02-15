@@ -1,73 +1,80 @@
-# React + TypeScript + Vite
+# Contact Number Interactive Tutorial
+# 接触数理论互动教程
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An interactive bilingual (Chinese/English) web application teaching Contact Number theory in manifold geometry, based on the research of Professor Shi-Jie Li (李世杰) and Professor Bang-Yen Chen.
 
-Currently, two official plugins are available:
+一个中英双语的互动教程webapp，介绍李世杰教授与陈邦彦教授合作提出的"接触数"理论。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![React](https://img.shields.io/badge/React-18-blue)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
+![Three.js](https://img.shields.io/badge/Three.js-3D-green)
+![Bilingual](https://img.shields.io/badge/Bilingual-中英-orange)
 
-## React Compiler
+## ✨ Features / 功能特色
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 🎮 **Interactive 3D Visualizations** - Explore manifolds, geodesics, and contact number concepts in 3D
+- 📖 **12 Comprehensive Chapters** - From manifold basics to advanced research topics
+- 🌐 **Bilingual Support** - Full Chinese and English support
+- 📐 **LaTeX Math Rendering** - Beautiful mathematical formulas with KaTeX
+- 🎨 **Rich Analogies** - Pac-Man games, ant perspectives, orange slicing, and more
+- 📚 **Based on 5 Original Papers** - Academic rigor with accessibility
 
-## Expanding the ESLint configuration
+## 📚 Chapter Structure / 章节结构
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Part 1: Foundations / 流形基础
+1. **What is a Manifold?** - 从地球表面到抽象数学
+2. **Submanifolds** - 切空间、法空间、第二基本形式
+3. **Geodesics** - 流形上的"直线"
+4. **Normal Sections** - 接触数的第二条曲线
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Part 2: Contact Number Theory / 接触数理论
+5. **Contact Number: Core Definition** - 核心概念与交互可视化
+6. **Main Theorems** - c#≥3 ⟺ 各向同性
+7. **Classification & Discoveries** - 新的几何对象
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Part 3: Advanced Topics / 进阶内容
+8. **Parallel Mean Curvature Vector** - Wang-Li 1998
+9. **Total Torsion of Lines of Curvature** - Qin-Li 2002
+10. **Isoperimetric Sections** - Wang-Li 2003
+11. **Subsequent Developments** - 学术影响力
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Part 4: Summary / 总结
+12. **Significance & Applications** - 致敬李世杰教授
+
+## 🚀 Quick Start / 快速开始
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📄 Core Paper / 核心论文
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Chen, B.-Y. & Li, S.-J. (2004). "The Contact Number of a Euclidean Submanifold"  
+*Proceedings of the Edinburgh Mathematical Society*, 47, 69-100.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🛠 Tech Stack / 技术栈
+
+- React 18 + TypeScript
+- Vite
+- Three.js + @react-three/fiber
+- react-i18next (internationalization)
+- KaTeX (math rendering)
+- Tailwind CSS
+
+## 📖 Additional Papers Covered / 涵盖的其他论文
+
+- Wang & Li (1998): Parallel Mean Curvature Vector Submanifolds
+- Qin & Li (2002): Total Torsion of Closed Lines of Curvature
+- Wang & Li (2003): Isoperimetric Sections
+- Chen & Li (2003): Ricci Curvature Pinching
+
+## 📝 License
+
+Educational use. Based on published academic research.
