@@ -16,18 +16,7 @@ export default function Chapter2() {
       </header>
 
       <div className="space-y-8">
-        {/* Interactive: Tangent and Normal visualization */}
-        <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
-            🎮 {isZh ? '交互可视化：切空间与法空间' : 'Interactive: Tangent and Normal Spaces'}
-          </h2>
-          <TangentNormalVizWithLabels />
-          <p className="text-slate-400 text-sm mt-4">
-            {isZh 
-              ? '观察点在球面上移动时，切平面和法向量如何随之变化。' 
-              : 'Watch how the tangent plane and normal vector change as the point moves on the sphere.'}
-          </p>
-        </section>
+        {/* Section 2.1 */}
 
         {/* Section 2.1 */}
         <section className="bg-slate-900 rounded-xl p-6">
@@ -530,6 +519,19 @@ export default function Chapter2() {
             </p>
             <MathBlock>{'v = \\underbrace{(0, b, c)}_{\\text{' + (isZh ? '切向' : 'tangent') + '}} + \\underbrace{(a, 0, 0)}_{\\text{' + (isZh ? '法向' : 'normal') + '}}'}</MathBlock>
           </div>
+        </section>
+
+        {/* Interactive: Tangent and Normal visualization - after concepts introduced */}
+        <section className="bg-slate-900 rounded-xl p-6">
+          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+            🎮 {isZh ? '交互可视化：切空间与法空间' : 'Interactive: Tangent and Normal Spaces'}
+          </h2>
+          <TangentNormalVizWithLabels />
+          <p className="text-slate-400 text-sm mt-4">
+            {isZh 
+              ? '观察点在球面上移动时，切平面和法向量如何随之变化。' 
+              : 'Watch how the tangent plane and normal vector change as the point moves on the sphere.'}
+          </p>
         </section>
 
         {/* Section 2.4 - Key for Contact Number */}
