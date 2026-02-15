@@ -7,9 +7,12 @@ import {
 } from './chapters';
 import './i18n';
 
+// Get base path from Vite config
+const basename = import.meta.env.BASE_URL;
+
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
