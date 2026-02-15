@@ -31,10 +31,10 @@ export default function Layout() {
     <div className="min-h-screen bg-slate-950 text-white flex flex-col">
       <Sidebar />
       <Header />
-      <main ref={mainRef} className="ml-64 mt-14 p-8 flex-grow">
+      <main ref={mainRef} className="lg:ml-64 mt-14 p-4 lg:p-8 flex-grow">
         <Outlet />
       </main>
-      <footer className="ml-64 py-6 px-8 border-t border-slate-800 bg-slate-900/50">
+      <footer className="lg:ml-64 py-6 px-8 border-t border-slate-800 bg-slate-900/50">
         <div className="text-center text-slate-500 text-sm">
           <p className="mb-1">
             🤖 本教程内容由 AI 辅助总结生成 | This tutorial content was AI-assisted and generated

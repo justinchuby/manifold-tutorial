@@ -10,8 +10,8 @@ export default function Header() {
   };
 
   return (
-    <header className="h-14 bg-slate-800 text-white flex items-center justify-between px-6 fixed top-0 left-64 right-0 z-10">
-      <div className="flex items-center gap-4">
+    <header className="h-14 bg-slate-800 text-white flex items-center justify-between px-6 fixed top-0 left-0 right-0 lg:left-64 z-10">
+      <div className="flex items-center gap-4 ml-10 lg:ml-0">
         <span className="text-cyan-400 font-semibold">Contact Number</span>
         <span className="text-slate-400 text-sm">|</span>
         <span className="text-slate-300 text-sm">{t('app.subtitle')}</span>
