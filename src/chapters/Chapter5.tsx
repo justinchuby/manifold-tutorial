@@ -239,6 +239,14 @@ export default function Chapter5() {
               </div>
             </div>
           </div>
+
+          <div className="bg-slate-800 rounded-lg p-3 mb-4 text-sm">
+            <p className="text-slate-400">
+              💡 {isZh 
+                ? <>注意：这里的子流形 M 是欧氏空间 E<sup>m</sup> 中的<strong className="text-slate-200">嵌入</strong>子流形（即 M 是 E<sup>m</sup> 的子集，没有自交）。法截面的定义需要用仿射子空间"切割" M，这要求 M 没有自交点。由于浸入在局部都是嵌入，接触数在局部意义上也适用于浸入。</>
+                : <>Note: Here M is an <strong className="text-slate-200">embedded</strong> submanifold in E<sup>m</sup> (i.e., M is a subset of E<sup>m</sup> without self-intersections). The normal section definition requires intersecting M with an affine subspace, which needs M to have no self-intersections. Since immersions are locally embeddings, contact number applies locally to immersions as well.</>}
+            </p>
+          </div>
         </section>
 
         {/* Section 5.3 */}

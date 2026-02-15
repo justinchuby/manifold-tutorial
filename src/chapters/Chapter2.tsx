@@ -179,6 +179,23 @@ export default function Chapter2() {
             </div>
           </div>
 
+          {/* Why embedding matters for later theory */}
+          <div className="bg-gradient-to-r from-amber-900/30 to-yellow-900/30 rounded-lg p-4 border border-amber-700 mb-4">
+            <p className="text-amber-400 font-semibold mb-2">
+              📣 {isZh ? '预告：为什么"嵌入"是我们关注的重点？' : 'Preview: Why "Embedding" is Our Focus'}
+            </p>
+            <p className="text-slate-300 text-sm">
+              {isZh 
+                ? '在 Chen-Li 的论文中，接触数的定义要求子流形 M 是欧氏空间 E^m 中的子流形——即 M 通过等距嵌入成为 E^m 的一个子集。这是因为法截面的定义需要用一个仿射子空间去"切割" M，而这只有在 M 是一个没有自交的子集时才有意义。因此，本教程中讨论的子流形默认都是嵌入的。'
+                : 'In Chen-Li\'s paper, the contact number is defined for submanifolds M in Euclidean space E^m—meaning M is isometrically embedded as a subset of E^m. This is because the normal section definition requires intersecting M with an affine subspace, which only makes sense when M is a subset without self-intersections. Thus, submanifolds in this tutorial are embedded by default.'}
+            </p>
+            <p className="text-slate-400 text-xs mt-2">
+              {isZh 
+                ? '（技术注释：由于每个浸入在局部都是嵌入，接触数的结果在局部意义上也适用于浸入。论文中的许多例子也以"等距浸入"的语言给出。）'
+                : '(Technical note: Since every immersion is locally an embedding, contact number results also apply locally to immersions. Many examples in the paper are also stated using "isometric immersion" language.)'}
+            </p>
+          </div>
+
           {/* Preview */}
           <div className="bg-gradient-to-r from-green-900/30 to-cyan-900/30 rounded-lg p-4 border border-green-700">
             <p className="text-green-400 font-semibold mb-2">
