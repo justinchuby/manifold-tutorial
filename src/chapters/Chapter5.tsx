@@ -23,14 +23,6 @@ export default function Chapter5() {
       </header>
 
       <div className="space-y-8">
-        {/* Interactive visualization */}
-        <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
-            🎮 {isZh ? '交互可视化：接触数' : 'Interactive: Contact Number'}
-          </h2>
-          <ContactNumberVizWithControls />
-        </section>
-
         {/* Section 5.1 */}
         <section className="bg-slate-900 rounded-xl p-6">
           <h2 className="text-xl font-semibold text-cyan-400 mb-4">
@@ -247,6 +239,14 @@ export default function Chapter5() {
                 : <>Note: Here M is an <strong className="text-slate-200">embedded</strong> submanifold in E<sup>m</sup> (i.e., M is a subset of E<sup>m</sup> without self-intersections). The normal section definition requires intersecting M with an affine subspace, which needs M to have no self-intersections. Since immersions are locally embeddings, contact number applies locally to immersions as well.</>}
             </p>
           </div>
+        </section>
+
+        {/* Interactive visualization - after concepts are introduced */}
+        <section className="bg-slate-900 rounded-xl p-6">
+          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+            🎮 {isZh ? '交互可视化：接触数' : 'Interactive: Contact Number'}
+          </h2>
+          <ContactNumberVizWithControls />
         </section>
 
         {/* Section 5.3 */}
