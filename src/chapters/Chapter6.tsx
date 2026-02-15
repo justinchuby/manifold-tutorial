@@ -320,32 +320,160 @@ export default function Chapter6() {
             </p>
           </div>
 
-          {/* What is holomorphic */}
+          {/* Prerequisites: Complex numbers */}
+          <div className="bg-slate-800 rounded-lg p-4 mb-4">
+            <p className="text-blue-400 font-semibold mb-2">
+              📚 {isZh ? '前置知识：复数回顾' : 'Prerequisite: Complex Numbers Review'}
+            </p>
+            <p className="text-slate-300 text-sm mb-3">
+              {isZh 
+                ? '复数是实数的扩展，形式为 z = x + iy，其中 i² = -1。'
+                : 'Complex numbers extend real numbers, in the form z = x + iy, where i² = -1.'}
+            </p>
+            <div className="grid md:grid-cols-3 gap-3">
+              <div className="bg-slate-700 rounded-lg p-2">
+                <p className="text-cyan-400 text-sm font-semibold">z = x + iy</p>
+                <p className="text-slate-400 text-xs">{isZh ? 'x是实部，y是虚部' : 'x is real part, y is imaginary part'}</p>
+              </div>
+              <div className="bg-slate-700 rounded-lg p-2">
+                <p className="text-cyan-400 text-sm font-semibold">ℂ = {isZh ? '复平面' : 'Complex plane'}</p>
+                <p className="text-slate-400 text-xs">{isZh ? '所有复数的集合' : 'Set of all complex numbers'}</p>
+              </div>
+              <div className="bg-slate-700 rounded-lg p-2">
+                <p className="text-cyan-400 text-sm font-semibold">ℂ² = ℂ × ℂ</p>
+                <p className="text-slate-400 text-xs">{isZh ? '复数对 (z₁, z₂)' : 'Complex pairs (z₁, z₂)'}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* What is holomorphic function */}
+          <div className="bg-slate-800 rounded-lg p-4 mb-4">
+            <p className="text-green-400 font-semibold mb-2">
+              📖 {isZh ? '什么是全纯函数（解析函数）？' : 'What is a Holomorphic (Analytic) Function?'}
+            </p>
+            <p className="text-slate-300 text-sm mb-3">
+              {isZh 
+                ? '全纯函数是复变函数中"最好"的函数——可以用幂级数展开，处处可微。'
+                : 'Holomorphic functions are the "nicest" complex functions—can be expanded as power series, differentiable everywhere.'}
+            </p>
+            <div className="bg-slate-700 rounded-lg p-3 mb-3">
+              <p className="text-cyan-400 font-semibold mb-1">{isZh ? '定义' : 'Definition'}</p>
+              <p className="text-slate-300 text-sm">
+                {isZh 
+                  ? '函数 f: ℂ → ℂ 是全纯的，如果它满足 Cauchy-Riemann 方程，即复导数存在。'
+                  : 'Function f: ℂ → ℂ is holomorphic if it satisfies Cauchy-Riemann equations, i.e., complex derivative exists.'}
+              </p>
+            </div>
+            <div className="grid md:grid-cols-2 gap-3">
+              <div className="bg-slate-700 rounded-lg p-2">
+                <p className="text-green-400 text-sm">✓ {isZh ? '全纯例子' : 'Holomorphic examples'}</p>
+                <p className="text-slate-300 text-xs">f(z) = z², f(z) = eᶻ, f(z) = sin(z)</p>
+              </div>
+              <div className="bg-slate-700 rounded-lg p-2">
+                <p className="text-red-400 text-sm">✗ {isZh ? '非全纯例子' : 'Non-holomorphic examples'}</p>
+                <p className="text-slate-300 text-xs">f(z) = z̄ ({isZh ? '共轭' : 'conjugate'}), f(z) = |z|</p>
+              </div>
+            </div>
+          </div>
+
+          {/* What is holomorphic curve */}
+          <div className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 rounded-lg p-4 border border-purple-700 mb-4">
+            <p className="text-purple-400 font-semibold mb-2">
+              🔮 {isZh ? '什么是全纯曲线？' : 'What is a Holomorphic Curve?'}
+            </p>
+            <p className="text-slate-300 text-sm mb-3">
+              {isZh 
+                ? '全纯曲线是用全纯函数参数化的曲线。它是复几何中"最光滑"的曲线类型。'
+                : 'A holomorphic curve is a curve parameterized by holomorphic functions. It\'s the "smoothest" type of curve in complex geometry.'}
+            </p>
+            <div className="bg-slate-900 rounded-lg p-3 mb-3">
+              <p className="text-cyan-400 font-semibold mb-1">{isZh ? '形式定义' : 'Formal Definition'}</p>
+              <p className="text-slate-300 text-sm">
+                {isZh 
+                  ? '曲线 γ: ℂ → ℂ² 是全纯的，如果 γ(z) = (f(z), g(z))，其中f和g都是全纯函数。'
+                  : 'Curve γ: ℂ → ℂ² is holomorphic if γ(z) = (f(z), g(z)), where both f and g are holomorphic.'}
+              </p>
+            </div>
+            <div className="space-y-2">
+              <p className="text-yellow-400 text-sm font-semibold">{isZh ? '具体例子' : 'Concrete Examples'}</p>
+              <div className="grid md:grid-cols-2 gap-2">
+                <div className="bg-slate-800 rounded-lg p-2">
+                  <p className="text-cyan-400 text-sm">γ(z) = (z, z²)</p>
+                  <p className="text-slate-400 text-xs">{isZh ? '抛物线（在ℂ²中）' : 'Parabola (in ℂ²)'}</p>
+                </div>
+                <div className="bg-slate-800 rounded-lg p-2">
+                  <p className="text-cyan-400 text-sm">γ(z) = (z, z³)</p>
+                  <p className="text-slate-400 text-xs">{isZh ? '三次曲线' : 'Cubic curve'}</p>
+                </div>
+                <div className="bg-slate-800 rounded-lg p-2">
+                  <p className="text-cyan-400 text-sm">γ(z) = (eᶻ, e²ᶻ)</p>
+                  <p className="text-slate-400 text-xs">{isZh ? '指数曲线' : 'Exponential curve'}</p>
+                </div>
+                <div className="bg-slate-800 rounded-lg p-2">
+                  <p className="text-cyan-400 text-sm">γ(z) = (z, 0)</p>
+                  <p className="text-slate-400 text-xs">{isZh ? '平面全纯曲线' : 'Planar holomorphic curve'}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ℂ² as E⁴ */}
           <div className="bg-slate-800 rounded-lg p-4 mb-4">
             <p className="text-cyan-400 font-semibold mb-2">
-              🔮 {isZh ? '什么是全纯曲线？' : 'What is a Holomorphic Curve?'}
+              🔄 {isZh ? 'ℂ² 和 E⁴ 的关系' : 'Relationship Between ℂ² and E⁴'}
             </p>
             <p className="text-slate-300 text-sm mb-2">
               {isZh 
-                ? '全纯曲线是复分析中的概念。简单说，它是可以用复变函数f(z)参数化的曲线，其中z是复数。'
-                : 'Holomorphic curve is a concept from complex analysis. Simply put, it\'s a curve that can be parameterized by a complex function f(z), where z is a complex number.'}
+                ? 'ℂ² 可以看作 E⁴（四维欧氏空间）：每个复数 z = x + iy 对应两个实数 (x, y)。'
+                : 'ℂ² can be viewed as E⁴ (4D Euclidean space): each complex number z = x + iy corresponds to two real numbers (x, y).'}
             </p>
-            <p className="text-slate-400 text-sm">
+            <div className="bg-slate-700 rounded-lg p-3">
+              <p className="text-slate-300 text-sm">
+                (z₁, z₂) = (x₁ + iy₁, x₂ + iy₂) ↔ (x₁, y₁, x₂, y₂) ∈ E⁴
+              </p>
+            </div>
+            <p className="text-slate-400 text-sm mt-2">
               {isZh 
-                ? '例如：f(z) = (z, z²) 定义了C²中的一条全纯曲线（抛物线）。'
-                : 'Example: f(z) = (z, z²) defines a holomorphic curve in C² (a parabola).'}
+                ? '所以ℂ²中的全纯曲线是E⁴中的一个二维曲面！'
+                : 'So a holomorphic curve in ℂ² is a 2D surface in E⁴!'}
             </p>
+          </div>
+
+          {/* Why c#=3 equals holomorphic */}
+          <div className="bg-slate-800 rounded-lg p-4 mb-4">
+            <p className="text-yellow-400 font-semibold mb-2">
+              🤔 {isZh ? '为什么 c# = 3 恰好对应全纯曲线？' : 'Why Does c# = 3 Exactly Correspond to Holomorphic Curves?'}
+            </p>
+            <p className="text-slate-300 text-sm mb-2">
+              {isZh 
+                ? '这是一个深刻的结果！直观理解：'
+                : 'This is a profound result! Intuitive understanding:'}
+            </p>
+            <ul className="text-slate-300 text-sm space-y-2">
+              <li>• {isZh 
+                ? '全纯函数满足 Cauchy-Riemann 方程，这是一种"额外对称性"'
+                : 'Holomorphic functions satisfy Cauchy-Riemann equations—an "extra symmetry"'}
+              </li>
+              <li>• {isZh 
+                ? 'c# = 3 的各向同性条件也是一种"额外对称性"'
+                : 'The isotropy condition for c# = 3 is also an "extra symmetry"'}
+              </li>
+              <li>• {isZh 
+                ? 'Chen-Li证明：这两种对称性恰好等价！'
+                : 'Chen-Li proved: these two symmetries are exactly equivalent!'}
+              </li>
+            </ul>
           </div>
 
           {/* Why surprising */}
           <div className="bg-slate-800 rounded-lg p-4 mb-4">
             <p className="text-purple-400 font-semibold mb-2">
-              🤔 {isZh ? '为什么这个定理令人惊讶？' : 'Why is This Theorem Surprising?'}
+              🎯 {isZh ? '为什么这个定理令人惊讶？' : 'Why is This Theorem Surprising?'}
             </p>
             <p className="text-slate-300 text-sm">
               {isZh 
-                ? '接触数是纯粹的微分几何概念，全纯曲线是复几何概念。这个定理说明：看似不同的数学领域（微分几何、复几何）之间存在深刻联系。c# = 3 恰好捕捉了"复结构"这一额外的几何结构！'
-                : 'Contact number is a purely differential geometric concept, while holomorphic curve is from complex geometry. This theorem shows: seemingly different mathematical fields (differential geometry, complex geometry) have deep connections. c# = 3 exactly captures the "complex structure"—an additional geometric structure!'}
+                ? '接触数是纯粹的微分几何概念（比较测地线和法截面），全纯曲线是复几何概念（涉及复数和解析函数）。这个定理揭示了两个看似无关的数学领域之间的深刻联系！'
+                : 'Contact number is purely differential geometric (comparing geodesic and normal section), while holomorphic curve is from complex geometry (involving complex numbers and analytic functions). This theorem reveals deep connections between two seemingly unrelated mathematical fields!'}
             </p>
           </div>
 
@@ -355,8 +483,8 @@ export default function Chapter6() {
             </p>
             <p className="text-slate-300 text-sm">
               {isZh 
-                ? '这类定理展示了数学的内在统一性：不同的数学分支通过深刻的定理联系在一起。接触数理论不仅是子流形几何的工具，也是连接不同数学领域的桥梁。'
-                : 'Such theorems demonstrate the inherent unity of mathematics: different branches are connected through deep theorems. Contact number theory is not just a tool in submanifold geometry, but a bridge connecting different mathematical fields.'}
+                ? '这类定理展示了数学的内在统一性：微分几何、复分析、代数几何等不同分支通过深刻的定理联系在一起。接触数理论不仅是子流形几何的工具，也是连接不同数学领域的桥梁。'
+                : 'Such theorems demonstrate the inherent unity of mathematics: differential geometry, complex analysis, algebraic geometry, and other branches are connected through profound theorems. Contact number theory is not just a tool in submanifold geometry, but a bridge connecting different mathematical fields.'}
             </p>
           </div>
         </section>
