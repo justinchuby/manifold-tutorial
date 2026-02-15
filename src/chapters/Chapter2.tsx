@@ -136,20 +136,118 @@ export default function Chapter2() {
             <MathBlock>{'M^n \\subset E^m \\quad (n < m)'}</MathBlock>
           </div>
 
-          <div className="bg-gradient-to-r from-purple-900/50 to-cyan-900/50 rounded-lg p-4 border border-purple-700">
+          <div className="bg-gradient-to-r from-purple-900/50 to-cyan-900/50 rounded-lg p-4 border border-purple-700 mb-4">
             <h3 className="text-purple-400 font-semibold mb-2">
-              🔑 {isZh ? '余维数 (Codimension)' : 'Codimension'}
+              🔑 {isZh ? '余维数 (Codimension) — 关键概念！' : 'Codimension — Key Concept!'}
             </h3>
             <p className="text-slate-300 mb-2">
               {isZh 
-                ? '余维数 = m - n，表示子流形"缺少"的维数。这在接触数理论中非常重要！'
-                : 'Codimension = m - n, representing the "missing" dimensions of the submanifold. This is crucial in contact number theory!'}
+                ? '余维数 = m - n，表示子流形"缺少"的维数，也就是法空间的维数。'
+                : 'Codimension = m - n, representing the "missing" dimensions of the submanifold, i.e., the dimension of the normal space.'}
             </p>
-            <div className="text-slate-400 text-sm space-y-1">
-              <p>• <Math>{'S^2 \\subset E^3'}</Math>: {isZh ? '余维数 1' : 'codimension 1'}</p>
-              <p>• {isZh ? '曲线' : 'Curve'} <Math>{'\\subset E^3'}</Math>: {isZh ? '余维数 2' : 'codimension 2'}</p>
-              <p>• {isZh ? '曲面' : 'Surface'} <Math>{'\\subset E^6'}</Math>: {isZh ? '余维数 4（接触数论文重要研究对象）' : 'codimension 4 (key in contact number paper)'}</p>
+            <MathBlock>{'\\text{codim}(M) = m - n = \\dim(T^\\perp_p M)'}</MathBlock>
+          </div>
+
+          {/* Codimension analogy */}
+          <div className="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 rounded-lg p-4 border border-yellow-700 mb-4">
+            <h3 className="text-yellow-400 font-semibold mb-2">
+              🏊 {isZh ? '游泳池类比' : 'Swimming Pool Analogy'}
+            </h3>
+            <p className="text-slate-300 text-sm mb-3">
+              {isZh 
+                ? '想象不同"自由度"的活动空间：'
+                : 'Imagine activity spaces with different "degrees of freedom":'}
+            </p>
+            <div className="grid md:grid-cols-3 gap-3 text-sm">
+              <div className="bg-slate-900 rounded p-3">
+                <p className="text-cyan-400 font-semibold">{isZh ? '走钢丝' : 'Tightrope Walking'}</p>
+                <p className="text-slate-400">{isZh ? '1维线 ⊂ 3维空间' : '1D line ⊂ 3D space'}</p>
+                <p className="text-purple-400">{isZh ? '余维数 = 2' : 'codim = 2'}</p>
+                <p className="text-slate-500 text-xs mt-1">{isZh ? '你可以向左右/上下"掉落"' : 'You can "fall" left-right or up-down'}</p>
+              </div>
+              <div className="bg-slate-900 rounded p-3">
+                <p className="text-cyan-400 font-semibold">{isZh ? '溜冰场' : 'Ice Skating Rink'}</p>
+                <p className="text-slate-400">{isZh ? '2维面 ⊂ 3维空间' : '2D surface ⊂ 3D space'}</p>
+                <p className="text-purple-400">{isZh ? '余维数 = 1' : 'codim = 1'}</p>
+                <p className="text-slate-500 text-xs mt-1">{isZh ? '只能向上"跳起"' : 'Can only "jump" upward'}</p>
+              </div>
+              <div className="bg-slate-900 rounded p-3">
+                <p className="text-cyan-400 font-semibold">{isZh ? '游泳池' : 'Swimming Pool'}</p>
+                <p className="text-slate-400">{isZh ? '3维体 ⊂ 3维空间' : '3D volume ⊂ 3D space'}</p>
+                <p className="text-purple-400">{isZh ? '余维数 = 0' : 'codim = 0'}</p>
+                <p className="text-slate-500 text-xs mt-1">{isZh ? '完全自由移动' : 'Complete freedom'}</p>
+              </div>
             </div>
+          </div>
+
+          {/* Why codimension matters */}
+          <div className="bg-slate-800 rounded-lg p-4 mb-4">
+            <h3 className="text-cyan-400 font-semibold mb-2">
+              💡 {isZh ? '为什么余维数重要？' : 'Why Does Codimension Matter?'}
+            </h3>
+            <ul className="text-slate-300 text-sm space-y-2">
+              <li>• <span className="text-green-400">{isZh ? '余维数 = 1' : 'Codim = 1'}</span>: {isZh ? '超曲面，法空间只有一个方向，几何相对简单' : 'Hypersurface, normal space has only one direction, geometry is simpler'}</li>
+              <li>• <span className="text-yellow-400">{isZh ? '余维数 = 2' : 'Codim = 2'}</span>: {isZh ? '"甜蜜点"——足够复杂但可以完全分类（Chen-Li论文重点）' : '"Sweet spot"—complex enough but fully classifiable (Chen-Li paper focus)'}</li>
+              <li>• <span className="text-orange-400">{isZh ? '余维数 ≥ 3' : 'Codim ≥ 3'}</span>: {isZh ? '非常复杂，难以完全分类' : 'Very complex, difficult to fully classify'}</li>
+            </ul>
+          </div>
+
+          {/* Examples with visualization */}
+          <div className="bg-slate-800 rounded-lg p-4">
+            <h3 className="text-cyan-400 font-semibold mb-3">
+              📊 {isZh ? '具体例子' : 'Concrete Examples'}
+            </h3>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="text-left border-b border-slate-600">
+                    <th className="py-2 text-slate-400">{isZh ? '子流形' : 'Submanifold'}</th>
+                    <th className="py-2 text-slate-400">n</th>
+                    <th className="py-2 text-slate-400">{isZh ? '环境' : 'Ambient'}</th>
+                    <th className="py-2 text-slate-400">m</th>
+                    <th className="py-2 text-purple-400">{isZh ? '余维数' : 'Codim'}</th>
+                    <th className="py-2 text-slate-400">{isZh ? '法空间' : 'Normal'}</th>
+                  </tr>
+                </thead>
+                <tbody className="text-slate-300">
+                  <tr className="border-b border-slate-700">
+                    <td className="py-2">{isZh ? '球面 S²' : 'Sphere S²'}</td>
+                    <td className="py-2">2</td>
+                    <td className="py-2">E³</td>
+                    <td className="py-2">3</td>
+                    <td className="py-2 text-green-400 font-semibold">1</td>
+                    <td className="py-2">{isZh ? '1维（法线）' : '1D (normal line)'}</td>
+                  </tr>
+                  <tr className="border-b border-slate-700">
+                    <td className="py-2">{isZh ? '空间曲线' : 'Space curve'}</td>
+                    <td className="py-2">1</td>
+                    <td className="py-2">E³</td>
+                    <td className="py-2">3</td>
+                    <td className="py-2 text-yellow-400 font-semibold">2</td>
+                    <td className="py-2">{isZh ? '2维（法平面）' : '2D (normal plane)'}</td>
+                  </tr>
+                  <tr className="border-b border-slate-700">
+                    <td className="py-2">{isZh ? '曲面 ⊂ E⁴' : 'Surface ⊂ E⁴'}</td>
+                    <td className="py-2">2</td>
+                    <td className="py-2">E⁴</td>
+                    <td className="py-2">4</td>
+                    <td className="py-2 text-yellow-400 font-semibold">2</td>
+                    <td className="py-2">{isZh ? '2维法空间' : '2D normal space'}</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2">{isZh ? '曲面 ⊂ E⁶' : 'Surface ⊂ E⁶'}</td>
+                    <td className="py-2">2</td>
+                    <td className="py-2">E⁶</td>
+                    <td className="py-2">6</td>
+                    <td className="py-2 text-orange-400 font-semibold">4</td>
+                    <td className="py-2">{isZh ? '4维法空间 ⭐' : '4D normal space ⭐'}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-slate-400 text-xs mt-2">
+              ⭐ {isZh ? 'Chen-Li论文研究的关键对象：E⁶中余维数4的曲面，几何结构最丰富' : 'Key object in Chen-Li paper: surfaces in E⁶ with codimension 4, richest geometry'}
+            </p>
           </div>
         </section>
 
@@ -168,6 +266,11 @@ export default function Chapter2() {
               {isZh 
                 ? '想象你站在山坡上。切空间就是你脚下的"坡面"——所有你可以沿着山坡走的方向。法空间就是"垂直于坡面"的方向——你需要用绳索才能去的方向（比如悬崖下方）。'
                 : 'Imagine standing on a mountainside. The tangent space is the "slope" under your feet—all directions you can walk along the mountain. The normal space is "perpendicular to the slope"—directions you need a rope to go (like down a cliff).'}
+            </p>
+            <p className="text-yellow-400 text-sm mt-2">
+              💡 {isZh 
+                ? '法空间的维数 = 余维数！例如：站在2维山坡（曲面）上，法空间是1维的（只有"上下"一个方向）。'
+                : 'Dimension of normal space = codimension! E.g., standing on a 2D slope (surface), normal space is 1D (only "up-down" direction).'}
             </p>
           </div>
           
