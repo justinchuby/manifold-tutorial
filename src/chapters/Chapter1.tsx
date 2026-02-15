@@ -251,6 +251,49 @@ export default function Chapter1() {
                 : <><Tooltip term="contact-number">Contact Number</Tooltip> is an invariant proposed by Prof. Shi-Jie Li and Prof. Bang-Yen Chen, used to study the geometric properties of <Tooltip term="submanifold">submanifolds</Tooltip> in <Tooltip term="euclidean-space">Euclidean space</Tooltip>. We will explore this theory in depth in later chapters.</>}
             </p>
           </div>
+
+          {/* Thinking Questions */}
+          <div className="mt-6 bg-slate-800 rounded-lg p-4">
+            <p className="text-yellow-400 font-semibold mb-3">
+              🤔 {isZh ? '思考题' : 'Questions to Think About'}
+            </p>
+            <div className="space-y-3">
+              <div>
+                <p className="text-slate-300 text-sm">
+                  {isZh 
+                    ? '1. 为什么地图总是会失真？能否画一张完美的世界地图？'
+                    : '1. Why do maps always distort? Is it possible to draw a perfect world map?'}
+                </p>
+                <details className="mt-1">
+                  <summary className="text-cyan-400 text-sm cursor-pointer hover:text-cyan-300">
+                    {isZh ? '点击查看答案' : 'Click to see answer'}
+                  </summary>
+                  <p className="text-slate-400 text-xs mt-1">
+                    {isZh 
+                      ? '不能！因为地球是球面（2维流形），而地图是平面（欧氏空间）。球面无法在不拉伸或撕裂的情况下展平——这就是流形的"整体不平"性质。'
+                      : 'No! Because Earth is a sphere (2-manifold) and maps are flat (Euclidean). A sphere cannot be flattened without stretching or tearing—this is the "globally not flat" property of manifolds.'}
+                  </p>
+                </details>
+              </div>
+              <div>
+                <p className="text-slate-300 text-sm">
+                  {isZh 
+                    ? '2. 莫比乌斯带有几个面？它是流形吗？'
+                    : '2. How many sides does a Möbius strip have? Is it a manifold?'}
+                </p>
+                <details className="mt-1">
+                  <summary className="text-cyan-400 text-sm cursor-pointer hover:text-cyan-300">
+                    {isZh ? '点击查看答案' : 'Click to see answer'}
+                  </summary>
+                  <p className="text-slate-400 text-xs mt-1">
+                    {isZh 
+                      ? '莫比乌斯带只有一个面！是的，它是2维流形（局部像平面），但它是"不可定向"的——你无法一致地区分"正面"和"背面"。'
+                      : 'The Möbius strip has only one side! Yes, it\'s a 2-manifold (locally flat), but it\'s "non-orientable"—you can\'t consistently distinguish "front" from "back".'}
+                  </p>
+                </details>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* Navigation */}

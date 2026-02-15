@@ -333,6 +333,49 @@ export default function Chapter10() {
             <li>✅ {isZh ? 'Wang-Li定理：有平行等周截面且正曲率 → 含于超球面' : 'Wang-Li theorem: parallel isoperimetric section + positive curvature → contained in hypersphere'}</li>
             <li>✅ {isZh ? '这项工作推广了陈邦彦的平行截面定理' : 'This work generalizes Chen\'s parallel section theorem'}</li>
           </ul>
+
+          {/* Thinking Questions */}
+          <div className="mt-6 bg-slate-900 rounded-lg p-4">
+            <p className="text-yellow-400 font-semibold mb-3">
+              🤔 {isZh ? '思考题' : 'Questions to Think About'}
+            </p>
+            <div className="space-y-3">
+              <div>
+                <p className="text-slate-300 text-sm">
+                  {isZh 
+                    ? '1. "含于超球面"意味着什么？这对子流形的形状有什么限制？'
+                    : '1. What does "contained in a hypersphere" mean? How does this restrict the shape of a submanifold?'}
+                </p>
+                <details className="mt-1">
+                  <summary className="text-cyan-400 text-sm cursor-pointer hover:text-cyan-300">
+                    {isZh ? '点击查看答案' : 'Click to see answer'}
+                  </summary>
+                  <p className="text-slate-400 text-xs mt-1">
+                    {isZh 
+                      ? '这意味着子流形整体"包裹"在一个球面上！就像所有国家都在地球表面上一样。这是很强的几何约束——子流形不能"伸展"到无穷远，也不能太"扁平"。'
+                      : 'This means the entire submanifold is "wrapped" on a sphere! Like all countries being on Earth\'s surface. This is a strong geometric constraint—the submanifold cannot "stretch" to infinity, nor be too "flat".'}
+                  </p>
+                </details>
+              </div>
+              <div>
+                <p className="text-slate-300 text-sm">
+                  {isZh 
+                    ? '2. 为什么需要"正曲率"条件？负曲率或零曲率的情况会有什么不同？'
+                    : '2. Why is "positive curvature" needed? What would be different with negative or zero curvature?'}
+                </p>
+                <details className="mt-1">
+                  <summary className="text-cyan-400 text-sm cursor-pointer hover:text-cyan-300">
+                    {isZh ? '点击查看答案' : 'Click to see answer'}
+                  </summary>
+                  <p className="text-slate-400 text-xs mt-1">
+                    {isZh 
+                      ? '正曲率使得流形"向内弯曲"（像球面），这自然导致它被"包住"。负曲率流形会"向外展开"（像马鞍），可能无限延伸。零曲率（平面）也可以无限延伸。正曲率是唯一导致"有界"几何的情况。'
+                      : 'Positive curvature makes the manifold "curve inward" (like a sphere), naturally leading to it being "enclosed". Negative curvature manifolds "spread outward" (like saddles), potentially extending infinitely. Zero curvature (planes) can also extend infinitely. Positive curvature is the only case leading to "bounded" geometry.'}
+                  </p>
+                </details>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* Navigation */}

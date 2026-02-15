@@ -493,6 +493,49 @@ export default function Chapter9() {
             <li>✅ {isZh ? 'Qin-Li定理2：卵形面上闭曲率线的全挠率 = 0' : 'Qin-Li Theorem 2: total torsion on ovaloids = 0'}</li>
             <li>✅ {isZh ? '这项工作推广了Geppert定理，回应了Blaschke的经典问题' : 'This work generalizes Geppert\'s theorem and addresses Blaschke\'s classical problem'}</li>
           </ul>
+
+          {/* Thinking Questions */}
+          <div className="mt-6 bg-slate-900 rounded-lg p-4">
+            <p className="text-yellow-400 font-semibold mb-3">
+              🤔 {isZh ? '思考题' : 'Questions to Think About'}
+            </p>
+            <div className="space-y-3">
+              <div>
+                <p className="text-slate-300 text-sm">
+                  {isZh 
+                    ? '1. 为什么全挠率一定是π的整数倍？这个"整数"从何而来？'
+                    : '1. Why must total torsion be an integer multiple of π? Where does this "integer" come from?'}
+                </p>
+                <details className="mt-1">
+                  <summary className="text-cyan-400 text-sm cursor-pointer hover:text-cyan-300">
+                    {isZh ? '点击查看答案' : 'Click to see answer'}
+                  </summary>
+                  <p className="text-slate-400 text-xs mt-1">
+                    {isZh 
+                      ? '这是拓扑学的魔力！当曲线绕回原点时，它的切线（和随之旋转的标架）必须"对齐"回来。这种"必须对齐"的约束导致旋转角度只能是某些离散值——就像你转一圈后手腕必须回到原位。'
+                      : 'This is the magic of topology! When a curve returns to its starting point, its tangent (and accompanying frame) must "align" back. This "must align" constraint forces rotation angles to be discrete values—like your wrist must return to original position after a full turn.'}
+                  </p>
+                </details>
+              </div>
+              <div>
+                <p className="text-slate-300 text-sm">
+                  {isZh 
+                    ? '2. 卵形面上的闭曲率线全挠率为0，而一般曲面上可以是kπ。什么几何性质导致了这个差异？'
+                    : '2. Closed lines of curvature on ovaloids have zero total torsion, while general surfaces have kπ. What geometric property causes this difference?'}
+                </p>
+                <details className="mt-1">
+                  <summary className="text-cyan-400 text-sm cursor-pointer hover:text-cyan-300">
+                    {isZh ? '点击查看答案' : 'Click to see answer'}
+                  </summary>
+                  <p className="text-slate-400 text-xs mt-1">
+                    {isZh 
+                      ? '卵形面处处有正曲率（像鸡蛋），这意味着它是"凸"的。凸性限制了曲率线的"扭曲"方式——曲率线不能绕得太复杂。在更一般的曲面上（如马鞍面附近），曲率有正有负，允许曲率线有更复杂的扭曲行为。'
+                      : 'Ovaloids have positive curvature everywhere (like an egg), meaning they\'re "convex". Convexity constrains how lines of curvature can "twist"—they can\'t wind too complexly. On general surfaces (like near saddle points), curvature varies sign, allowing more complex twisting behavior.'}
+                  </p>
+                </details>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* Navigation */}

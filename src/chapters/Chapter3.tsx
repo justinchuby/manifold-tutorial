@@ -202,6 +202,49 @@ export default function Chapter3() {
                 : 'This geodesic γ_u is the first curve in the contact number definition! It represents the "intrinsic" geometry of the manifold—completely determined by the manifold itself, independent of how it\'s embedded in ambient space.'}
             </p>
           </div>
+
+          {/* Thinking Questions */}
+          <div className="mt-4 bg-slate-800 rounded-lg p-4">
+            <p className="text-yellow-400 font-semibold mb-3">
+              🤔 {isZh ? '思考题' : 'Questions to Think About'}
+            </p>
+            <div className="space-y-3">
+              <div>
+                <p className="text-slate-300 text-sm">
+                  {isZh 
+                    ? '1. 在环面（甜甜圈）上，从某点出发的测地线会绕回原点吗？'
+                    : '1. On a torus (donut), will geodesics starting from a point return to that point?'}
+                </p>
+                <details className="mt-1">
+                  <summary className="text-cyan-400 text-sm cursor-pointer hover:text-cyan-300">
+                    {isZh ? '点击查看答案' : 'Click to see answer'}
+                  </summary>
+                  <p className="text-slate-400 text-xs mt-1">
+                    {isZh 
+                      ? '取决于方向！某些方向的测地线会闭合（绕回来），而另一些方向的测地线永远不会闭合——它会无限地缠绕在环面上，越来越密集地覆盖表面。'
+                      : 'It depends on direction! Some directions give closed geodesics (return), while others never close—they wind infinitely around the torus, covering the surface more and more densely.'}
+                  </p>
+                </details>
+              </div>
+              <div>
+                <p className="text-slate-300 text-sm">
+                  {isZh 
+                    ? '2. 为什么飞机从北京飞往纽约不走"直线"（地图上的直线）？'
+                    : '2. Why don\'t planes fly in a "straight line" (straight on a map) from Beijing to New York?'}
+                </p>
+                <details className="mt-1">
+                  <summary className="text-cyan-400 text-sm cursor-pointer hover:text-cyan-300">
+                    {isZh ? '点击查看答案' : 'Click to see answer'}
+                  </summary>
+                  <p className="text-slate-400 text-xs mt-1">
+                    {isZh 
+                      ? '因为地球是球面，最短路径是大圆弧（测地线），而不是地图上的直线！地图会扭曲距离，所以"地图直线"实际上比大圆弧更长。飞机走的弧形路线才是真正的"最短路径"。'
+                      : 'Because Earth is a sphere, the shortest path is a great circle arc (geodesic), not a straight line on a map! Maps distort distances, so "map straight lines" are actually longer than great circle arcs. The curved flight path is the true "shortest path".'}
+                  </p>
+                </details>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* Navigation */}

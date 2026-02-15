@@ -826,6 +826,49 @@ export default function Chapter2() {
               ? '下一章：我们将利用这些工具来精确定义"接触"的概念——子流形与超球面的切触程度！'
               : 'Next chapter: We\'ll use these tools to precisely define "contact"—the degree of tangency between submanifold and hyperspheres!'}
           </p>
+
+          {/* Thinking Questions */}
+          <div className="mt-6 bg-slate-800 rounded-lg p-4">
+            <p className="text-yellow-400 font-semibold mb-3">
+              🤔 {isZh ? '思考题' : 'Questions to Think About'}
+            </p>
+            <div className="space-y-3">
+              <div>
+                <p className="text-slate-300 text-sm">
+                  {isZh 
+                    ? '1. 为什么平面ℝ²的第二基本形式是零？'
+                    : '1. Why is the second fundamental form of a plane ℝ² equal to zero?'}
+                </p>
+                <details className="mt-1">
+                  <summary className="text-cyan-400 text-sm cursor-pointer hover:text-cyan-300">
+                    {isZh ? '点击查看答案' : 'Click to see answer'}
+                  </summary>
+                  <p className="text-slate-400 text-xs mt-1">
+                    {isZh 
+                      ? '因为平面是完全"平"的！沿着平面走，你永远不会偏离平面方向。第二基本形式测量的就是这种偏离（弯曲），平面没有弯曲所以 h = 0。'
+                      : 'Because a plane is completely "flat"! Walking along a plane, you never deviate from the plane direction. The second fundamental form measures this deviation (bending), and planes don\'t bend, so h = 0.'}
+                  </p>
+                </details>
+              </div>
+              <div>
+                <p className="text-slate-300 text-sm">
+                  {isZh 
+                    ? '2. 球面的形状算子 A = (1/r)I，这告诉我们球面的什么性质？'
+                    : '2. The shape operator of a sphere is A = (1/r)I. What does this tell us about spheres?'}
+                </p>
+                <details className="mt-1">
+                  <summary className="text-cyan-400 text-sm cursor-pointer hover:text-cyan-300">
+                    {isZh ? '点击查看答案' : 'Click to see answer'}
+                  </summary>
+                  <p className="text-slate-400 text-xs mt-1">
+                    {isZh 
+                      ? '这说明球面各个方向的弯曲程度完全相同（都是1/r）！这就是为什么球面被称为"全脐"的——它是最对称的曲面之一。'
+                      : 'This means the sphere bends equally in all directions (all 1/r)! This is why spheres are called "totally umbilical"—they are among the most symmetric surfaces.'}
+                  </p>
+                </details>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* Navigation */}

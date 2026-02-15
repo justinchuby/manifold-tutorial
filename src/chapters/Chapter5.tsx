@@ -385,6 +385,49 @@ export default function Chapter5() {
             <li>✅ {isZh ? '接触数通过第二基本形式h的性质刻画' : 'Contact number is characterized by properties of second fundamental form h'}</li>
             <li>✅ {isZh ? '高接触数 = 更"对称"的几何结构' : 'Higher contact number = more "symmetric" geometric structure'}</li>
           </ul>
+
+          {/* Thinking Questions */}
+          <div className="mt-6 bg-slate-900 rounded-lg p-4">
+            <p className="text-yellow-400 font-semibold mb-3">
+              🤔 {isZh ? '思考题' : 'Questions to Think About'}
+            </p>
+            <div className="space-y-3">
+              <div>
+                <p className="text-slate-300 text-sm">
+                  {isZh 
+                    ? '1. 如果一个子流形的接触数是∞，这在几何上意味着什么？'
+                    : '1. If a submanifold has contact number ∞, what does this mean geometrically?'}
+                </p>
+                <details className="mt-1">
+                  <summary className="text-cyan-400 text-sm cursor-pointer hover:text-cyan-300">
+                    {isZh ? '点击查看答案' : 'Click to see answer'}
+                  </summary>
+                  <p className="text-slate-400 text-xs mt-1">
+                    {isZh 
+                      ? 'c# = ∞ 意味着测地线和法截面在每一点都完全重合！这种子流形的内蕴几何和外蕴几何完美一致——它以最"自然"的方式嵌入外部空间。'
+                      : 'c# = ∞ means geodesics and normal sections coincide completely at every point! The intrinsic and extrinsic geometry are in perfect agreement—the submanifold is embedded in the most "natural" way possible.'}
+                  </p>
+                </details>
+              </div>
+              <div>
+                <p className="text-slate-300 text-sm">
+                  {isZh 
+                    ? '2. 为什么我们要取"最小接触阶数"来定义c#(M)？'
+                    : '2. Why do we take the "minimum contact order" to define c#(M)?'}
+                </p>
+                <details className="mt-1">
+                  <summary className="text-cyan-400 text-sm cursor-pointer hover:text-cyan-300">
+                    {isZh ? '点击查看答案' : 'Click to see answer'}
+                  </summary>
+                  <p className="text-slate-400 text-xs mt-1">
+                    {isZh 
+                      ? '因为我们想刻画整个子流形的"全局"性质。如果某个方向的接触阶数较低，说明那里的几何"不够对称"。取最小值确保我们捕捉到了最"差"的情况，这才能真正反映子流形的几何本质。'
+                      : 'Because we want to characterize a "global" property of the entire submanifold. If some direction has lower contact order, it means geometry is "less symmetric" there. Taking minimum ensures we capture the "worst" case, which truly reflects the geometric essence of the submanifold.'}
+                  </p>
+                </details>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* Navigation */}

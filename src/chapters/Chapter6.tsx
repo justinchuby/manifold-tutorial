@@ -547,6 +547,49 @@ export default function Chapter6() {
             <li>✅ {isZh ? '定理2：c# ≥ 4 ⟺ 常各向同性（三阶导数相等 ⟺ 弯曲不随位置变化）' : 'Theorem 2: c# ≥ 4 ⟺ constant isotropic (3rd derivatives equal ⟺ curvature doesn\'t vary)'}</li>
             <li>✅ {isZh ? '定理3：曲面c# = 3 ⟺ 全纯曲线（微分几何与复几何的联系）' : 'Theorem 3: surface c# = 3 ⟺ holomorphic curve (link between differential and complex geometry)'}</li>
           </ul>
+
+          {/* Thinking Questions */}
+          <div className="mt-6 bg-slate-900 rounded-lg p-4">
+            <p className="text-yellow-400 font-semibold mb-3">
+              🤔 {isZh ? '思考题' : 'Questions to Think About'}
+            </p>
+            <div className="space-y-3">
+              <div>
+                <p className="text-slate-300 text-sm">
+                  {isZh 
+                    ? '1. 为什么"全纯曲线"会和接触数产生联系？复数的什么特性导致了这种联系？'
+                    : '1. Why do "holomorphic curves" relate to contact number? What property of complex numbers leads to this connection?'}
+                </p>
+                <details className="mt-1">
+                  <summary className="text-cyan-400 text-sm cursor-pointer hover:text-cyan-300">
+                    {isZh ? '点击查看答案' : 'Click to see answer'}
+                  </summary>
+                  <p className="text-slate-400 text-xs mt-1">
+                    {isZh 
+                      ? '因为乘以i实现了90°旋转！全纯映射保持这种旋转结构，这意味着在每个方向上的行为是"对称"的。而各向同性恰好要求各方向行为一致——这就是两者联系的几何根源。'
+                      : 'Because multiplication by i achieves 90° rotation! Holomorphic maps preserve this rotational structure, meaning behavior is "symmetric" in all directions. Isotropy requires exactly this direction-independence—that\'s the geometric root of their connection.'}
+                  </p>
+                </details>
+              </div>
+              <div>
+                <p className="text-slate-300 text-sm">
+                  {isZh 
+                    ? '2. 在物理学中，"各向同性"意味着材料各方向性质相同。子流形的各向同性和材料的各向同性有什么本质区别？'
+                    : '2. In physics, "isotropy" means a material has the same properties in all directions. What\'s the essential difference between isotropic submanifolds and isotropic materials?'}
+                </p>
+                <details className="mt-1">
+                  <summary className="text-cyan-400 text-sm cursor-pointer hover:text-cyan-300">
+                    {isZh ? '点击查看答案' : 'Click to see answer'}
+                  </summary>
+                  <p className="text-slate-400 text-xs mt-1">
+                    {isZh 
+                      ? '材料各向同性是关于材料内部性质（如导电性、强度）的；子流形各向同性是关于它在外部空间中如何"弯曲"的。前者是内蕴性质，后者是外蕴性质——但两者都表达了某种"对称性"的概念！'
+                      : 'Material isotropy is about internal properties (conductivity, strength); submanifold isotropy is about how it "bends" in ambient space. Former is intrinsic, latter is extrinsic—but both express a concept of "symmetry"!'}
+                  </p>
+                </details>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* Navigation */}

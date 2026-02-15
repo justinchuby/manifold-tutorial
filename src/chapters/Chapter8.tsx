@@ -349,6 +349,49 @@ export default function Chapter8() {
             <li>✅ {isZh ? 'Simons公式连接几何与分析' : 'Simons formula connects geometry and analysis'}</li>
             <li>✅ {isZh ? 'Pinching定理：弯曲程度有界 → 形状受限' : 'Pinching theorem: bounded bending → restricted shape'}</li>
           </ul>
+
+          {/* Thinking Questions */}
+          <div className="mt-6 bg-slate-900 rounded-lg p-4">
+            <p className="text-yellow-400 font-semibold mb-3">
+              🤔 {isZh ? '思考题' : 'Questions to Think About'}
+            </p>
+            <div className="space-y-3">
+              <div>
+                <p className="text-slate-300 text-sm">
+                  {isZh 
+                    ? '1. 肥皂泡是极小曲面（H=0）的经典例子。为什么肥皂泡总是球形的？'
+                    : '1. Soap bubbles are classic examples of minimal surfaces (H=0). Why are soap bubbles always spherical?'}
+                </p>
+                <details className="mt-1">
+                  <summary className="text-cyan-400 text-sm cursor-pointer hover:text-cyan-300">
+                    {isZh ? '点击查看答案' : 'Click to see answer'}
+                  </summary>
+                  <p className="text-slate-400 text-xs mt-1">
+                    {isZh 
+                      ? '准确地说，肥皂泡不是极小曲面（H≠0），而是常平均曲率曲面！极小曲面如肥皂膜（有边界）才是H=0。肥皂泡由于内外压力差，H是非零常数，而球面恰好是闭合的常平均曲率曲面。'
+                      : 'Actually, soap bubbles are NOT minimal surfaces (H≠0), but constant mean curvature surfaces! Soap films (with boundaries) have H=0. Due to pressure difference inside/outside, bubbles have constant nonzero H, and spheres are exactly closed constant mean curvature surfaces.'}
+                  </p>
+                </details>
+              </div>
+              <div>
+                <p className="text-slate-300 text-sm">
+                  {isZh 
+                    ? '2. Pinching定理为什么需要"弯曲程度有上界"的条件？如果去掉这个条件会怎样？'
+                    : '2. Why does the Pinching theorem need "bounded bending" condition? What happens if we remove it?'}
+                </p>
+                <details className="mt-1">
+                  <summary className="text-cyan-400 text-sm cursor-pointer hover:text-cyan-300">
+                    {isZh ? '点击查看答案' : 'Click to see answer'}
+                  </summary>
+                  <p className="text-slate-400 text-xs mt-1">
+                    {isZh 
+                      ? '如果允许任意大的弯曲，子流形可以有非常复杂的形状——想象一张纸被随意揉皱。Pinching条件限制了"皱"的程度，使得子流形必须相对"平滑"，从而只能是少数几种规则形状。'
+                      : 'If arbitrary bending is allowed, submanifolds can have very complex shapes—imagine paper crumpled arbitrarily. Pinching condition limits the "wrinkliness", forcing the submanifold to be relatively "smooth", leaving only a few regular shapes possible.'}
+                  </p>
+                </details>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* Navigation */}
