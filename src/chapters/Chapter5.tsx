@@ -286,29 +286,47 @@ export default function Chapter5() {
             {isZh ? '5.4 接触数与第二基本形式的深层联系' : '5.4 Deep Connection with Second Fundamental Form'}
           </h2>
           
+          {/* Why second fundamental form */}
+          <div className="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 rounded-lg p-4 border border-yellow-700 mb-4">
+            <p className="text-yellow-400 font-semibold mb-2">
+              🤔 {isZh ? '为什么接触数和第二基本形式有关？' : 'Why is Contact Number Related to Second Fundamental Form?'}
+            </p>
+            <p className="text-slate-300 text-sm">
+              {isZh 
+                ? '第二基本形式h测量子流形如何"弯曲地嵌入"外部空间。而接触数比较测地线（内蕴）和法截面（外蕴）的差异。两者都涉及"内蕴vs外蕴"的比较，所以它们通过第二基本形式联系起来是自然的！'
+                : 'The second fundamental form h measures how the submanifold "curves into" ambient space. Contact number compares geodesic (intrinsic) with normal section (extrinsic). Both involve "intrinsic vs extrinsic" comparison, so their connection through h is natural!'}
+            </p>
+          </div>
+          
           <div className="space-y-4">
             <div className="bg-slate-800 rounded-lg p-4">
               <p className="text-purple-400 font-semibold mb-2">
-                {isZh ? '接触数 ≥ 3 的条件' : 'Condition for Contact Number ≥ 3'}
+                📊 {isZh ? '接触数 ≥ 3 的条件' : 'Condition for Contact Number ≥ 3'}
               </p>
               <p className="text-slate-300 text-sm mb-2">
                 {isZh 
-                  ? '涉及h(u,u)的性质：'
-                  : 'Involves properties of h(u,u):'}
+                  ? '涉及h(u,u)的性质（各向同性条件）：'
+                  : 'Involves properties of h(u,u) (isotropy condition):'}
               </p>
               <MathBlock>{'\\langle h(u,u), h(u,v) \\rangle = 0 \\quad \\text{for orthogonal } u, v'}</MathBlock>
+              <p className="text-slate-400 text-sm mt-2">
+                {isZh ? '→ 下一章将详细解释这是"各向同性"条件' : '→ Next chapter will explain this is the "isotropy" condition'}
+              </p>
             </div>
             
             <div className="bg-slate-800 rounded-lg p-4">
               <p className="text-purple-400 font-semibold mb-2">
-                {isZh ? '接触数 ≥ 4 的条件' : 'Condition for Contact Number ≥ 4'}
+                📊 {isZh ? '接触数 ≥ 4 的条件' : 'Condition for Contact Number ≥ 4'}
               </p>
               <p className="text-slate-300 text-sm mb-2">
                 {isZh 
-                  ? '涉及h的高阶协变导数：'
-                  : 'Involves higher covariant derivatives of h:'}
+                  ? '涉及h的高阶协变导数（常各向同性条件）：'
+                  : 'Involves higher covariant derivatives of h (constant isotropy condition):'}
               </p>
               <MathBlock>{'A_{(\\bar{\\nabla}h)(u^3)} u = 0'}</MathBlock>
+              <p className="text-slate-400 text-sm mt-2">
+                {isZh ? '→ 下一章将解释这是"常各向同性"条件' : '→ Next chapter will explain this is the "constant isotropy" condition'}
+              </p>
             </div>
 
             <div className="bg-gradient-to-r from-cyan-900/50 to-purple-900/50 rounded-lg p-4 border border-cyan-700">
@@ -322,6 +340,51 @@ export default function Chapter5() {
               </p>
             </div>
           </div>
+        </section>
+
+        {/* Why study contact number */}
+        <section className="bg-gradient-to-r from-green-900/30 to-teal-900/30 rounded-xl p-6 border border-green-700">
+          <h2 className="text-xl font-semibold text-green-400 mb-4">
+            🤔 {isZh ? '为什么研究接触数？' : 'Why Study Contact Number?'}
+          </h2>
+          
+          <div className="space-y-3 text-slate-300">
+            <div className="flex items-start gap-3">
+              <span className="text-green-400 text-xl">①</span>
+              <div>
+                <p className="font-semibold">{isZh ? '分类工具' : 'Classification Tool'}</p>
+                <p className="text-sm text-slate-400">{isZh ? '接触数给子流形一个"评分"，可以按此分类研究' : 'Contact number gives submanifolds a "score" for classification'}</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-green-400 text-xl">②</span>
+              <div>
+                <p className="font-semibold">{isZh ? '测量对称性' : 'Measuring Symmetry'}</p>
+                <p className="text-sm text-slate-400">{isZh ? '高接触数意味着更"对称"的嵌入方式' : 'Higher contact number means more "symmetric" embedding'}</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-green-400 text-xl">③</span>
+              <div>
+                <p className="font-semibold">{isZh ? '连接不同几何' : 'Connecting Geometries'}</p>
+                <p className="text-sm text-slate-400">{isZh ? '桥接内蕴几何和外蕴几何的研究' : 'Bridges intrinsic and extrinsic geometry research'}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Chapter Summary */}
+        <section className="bg-slate-800 rounded-xl p-6">
+          <h2 className="text-lg font-semibold text-slate-400 mb-4">
+            📝 {isZh ? '本章小结' : 'Chapter Summary'}
+          </h2>
+          <ul className="text-slate-300 text-sm space-y-2">
+            <li>✅ {isZh ? '接触阶数：两条曲线在接触点处前k阶导数相等' : 'Contact order: two curves have first k derivatives equal at contact point'}</li>
+            <li>✅ {isZh ? '接触数c#(M)：测地线γ_u和法截面β_u在所有(p,u)处的最小接触阶数' : 'Contact number c#(M): minimum contact order of geodesic γ_u and normal section β_u over all (p,u)'}</li>
+            <li>✅ {isZh ? '任何子流形c# ≥ 2（二阶导数总是相等）' : 'Any submanifold has c# ≥ 2 (2nd derivatives always equal)'}</li>
+            <li>✅ {isZh ? '接触数通过第二基本形式h的性质刻画' : 'Contact number is characterized by properties of second fundamental form h'}</li>
+            <li>✅ {isZh ? '高接触数 = 更"对称"的几何结构' : 'Higher contact number = more "symmetric" geometric structure'}</li>
+          </ul>
         </section>
 
         {/* Navigation */}
