@@ -89,7 +89,7 @@ export default function Chapter4() {
 
           <div className="bg-slate-800 rounded-lg p-4">
             <p className="text-cyan-300 font-semibold mb-2">
-              📐 {isZh ? '仿射子空间 E(p, u)' : 'Affine Subspace E(p, u)'}
+              📐 {isZh ? <><Tooltip term="affine-subspace">仿射子空间</Tooltip> E(p, u)</> : <><Tooltip term="affine-subspace">Affine Subspace</Tooltip> E(p, u)</>}
             </p>
             <MathBlock>{'E(p, u) = p + \\text{span}\\{u\\} + T^\\perp_p M'}</MathBlock>
             <p className="text-slate-400 text-sm mt-2">
