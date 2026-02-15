@@ -283,6 +283,134 @@ export default function Chapter7() {
                   : 'This discovery demonstrates the power of contact number theory: it not only classifies known objects but also discovers new geometric objects! Higher dimensional spaces contain geometric structures we cannot imagine in lower dimensions.'}
               </p>
             </div>
+
+            {/* What does it look like - NEW SECTION */}
+            <div className="bg-gradient-to-r from-cyan-900/30 to-blue-900/30 rounded-lg p-4 border border-cyan-700">
+              <h3 className="text-cyan-400 font-semibold mb-3">
+                👁️ {isZh ? '非球面 Pseudo-Umbilical 曲面长什么样？' : 'What Do Non-Spherical Pseudo-Umbilical Surfaces Look Like?'}
+              </h3>
+              
+              <p className="text-slate-300 text-sm mb-4">
+                {isZh 
+                  ? '这是一个很好的问题！由于这些曲面存在于6维空间中，我们无法直接"看到"它们。但我们可以通过以下方式理解：'
+                  : 'Great question! Since these surfaces exist in 6-dimensional space, we cannot directly "see" them. But we can understand them through:'}
+              </p>
+
+              {/* Analogy 1 */}
+              <div className="bg-slate-800 rounded-lg p-3 mb-3">
+                <p className="text-yellow-400 font-semibold mb-2">
+                  🎭 {isZh ? '类比1：变形但不裂开的气球' : 'Analogy 1: Deformed But Unbroken Balloon'}
+                </p>
+                <p className="text-slate-300 text-sm mb-2">
+                  {isZh 
+                    ? '想象一个完美的球形气球。Pseudo-umbilical的含义是：'
+                    : 'Imagine a perfectly spherical balloon. Pseudo-umbilical means:'}
+                </p>
+                <ul className="text-slate-400 text-xs space-y-1 ml-4">
+                  <li>• {isZh 
+                    ? '球面：在每个方向、每个法方向上，弯曲程度都一样（像完美球形气球）'
+                    : 'Sphere: bending is the same in every direction, every normal direction (like a perfect balloon)'}
+                  </li>
+                  <li>• {isZh 
+                    ? 'Pseudo-umbilical：只要求在"平均弯曲方向"(H)上保持对称，其他法方向可以不同'
+                    : 'Pseudo-umbilical: only requires symmetry in the "average bending direction" (H), other normal directions can differ'}
+                  </li>
+                </ul>
+                <p className="text-green-400 text-xs mt-2">
+                  💡 {isZh 
+                    ? '就像一个气球被特殊力量拉扯变形，但在某个特定方向看过去，它仍然"各处一样"！'
+                    : 'Like a balloon deformed by special forces, but from a specific direction, it still "looks uniform everywhere"!'}
+                </p>
+              </div>
+
+              {/* Analogy 2 */}
+              <div className="bg-slate-800 rounded-lg p-3 mb-3">
+                <p className="text-purple-400 font-semibold mb-2">
+                  🌊 {isZh ? '类比2：高维空间中的"波浪"' : 'Analogy 2: "Waves" in High Dimensions'}
+                </p>
+                <p className="text-slate-300 text-sm">
+                  {isZh 
+                    ? '在E³中，曲面弯曲只能"向上或向下"（只有1个法方向）。在E⁶中，曲面有4个独立的法方向可以弯曲！Chen-Li的曲面像是：'
+                    : 'In E³, surfaces can only bend "up or down" (just 1 normal direction). In E⁶, surfaces have 4 independent normal directions to bend! Chen-Li\'s surface is like:'}
+                </p>
+                <ul className="text-slate-400 text-xs space-y-1 ml-4 mt-2">
+                  <li>• {isZh ? '在某些法方向上弯曲得像球（均匀）' : 'Bending like a sphere (uniform) in some normal directions'}</li>
+                  <li>• {isZh ? '在其他法方向上弯曲得不均匀（像马鞍或波浪）' : 'Bending non-uniformly in other directions (like saddle or waves)'}</li>
+                  <li>• {isZh ? '但"平均"起来恰好满足pseudo-umbilical条件！' : 'But "on average" it exactly satisfies the pseudo-umbilical condition!'}</li>
+                </ul>
+              </div>
+
+              {/* Mathematical insight */}
+              <div className="bg-slate-800 rounded-lg p-3 mb-3">
+                <p className="text-red-400 font-semibold mb-2">
+                  📐 {isZh ? '数学洞察：为什么需要E⁶？' : 'Mathematical Insight: Why E⁶?'}
+                </p>
+                <p className="text-slate-300 text-sm mb-2">
+                  {isZh 
+                    ? '在低维空间中（E³, E⁴, E⁵）没有足够的"自由度"来构造这种曲面：'
+                    : 'In lower dimensional spaces (E³, E⁴, E⁵), there\'s not enough "freedom" to construct such surfaces:'}
+                </p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+                  <div className="bg-slate-700 rounded p-2 text-center">
+                    <p className="text-slate-400">E³</p>
+                    <p className="text-slate-500">{isZh ? '余维数1' : 'codim 1'}</p>
+                    <p className="text-red-400">❌</p>
+                  </div>
+                  <div className="bg-slate-700 rounded p-2 text-center">
+                    <p className="text-slate-400">E⁴</p>
+                    <p className="text-slate-500">{isZh ? '余维数2' : 'codim 2'}</p>
+                    <p className="text-red-400">❌</p>
+                  </div>
+                  <div className="bg-slate-700 rounded p-2 text-center">
+                    <p className="text-slate-400">E⁵</p>
+                    <p className="text-slate-500">{isZh ? '余维数3' : 'codim 3'}</p>
+                    <p className="text-red-400">❌</p>
+                  </div>
+                  <div className="bg-slate-700 rounded p-2 text-center">
+                    <p className="text-cyan-400">E⁶</p>
+                    <p className="text-slate-500">{isZh ? '余维数4' : 'codim 4'}</p>
+                    <p className="text-green-400">✓</p>
+                  </div>
+                </div>
+                <p className="text-slate-400 text-xs mt-2">
+                  {isZh 
+                    ? '余维数4（4个法方向）恰好提供了足够的空间来"藏"非均匀的弯曲，同时保持pseudo-umbilical性质！'
+                    : 'Codimension 4 (4 normal directions) provides exactly enough room to "hide" non-uniform bending while maintaining pseudo-umbilical property!'}
+                </p>
+              </div>
+
+              {/* Concrete construction hint */}
+              <div className="bg-slate-800 rounded-lg p-3">
+                <p className="text-green-400 font-semibold mb-2">
+                  🔧 {isZh ? '具体构造（简化版）' : 'Concrete Construction (Simplified)'}
+                </p>
+                <p className="text-slate-300 text-sm mb-2">
+                  {isZh 
+                    ? 'Chen-Li的构造利用了复几何。在C³ = E⁶中，考虑这样的曲面：'
+                    : 'Chen-Li\'s construction uses complex geometry. In C³ = E⁶, consider a surface like:'}
+                </p>
+                <div className="bg-slate-900 rounded p-2 text-center mb-2">
+                  <MathBlock>{'M = \\{(z, w, f(z,w)) : (z,w) \\in D \\subset \\mathbb{C}^2\\}'}</MathBlock>
+                </div>
+                <p className="text-slate-400 text-xs">
+                  {isZh 
+                    ? '其中 f 是精心选择的函数，使得 M 满足 c# = 4 和 pseudo-umbilical 条件，但不是任何球面的一部分。这需要 f 满足特定的偏微分方程。'
+                    : 'Where f is carefully chosen so M satisfies c# = 4 and pseudo-umbilical, but is not part of any sphere. This requires f to satisfy specific partial differential equations.'}
+                </p>
+              </div>
+
+              {/* Take-away */}
+              <div className="mt-4 p-3 bg-yellow-900/30 border border-yellow-700 rounded-lg">
+                <p className="text-yellow-400 font-semibold text-sm">
+                  🎯 {isZh ? '直观总结' : 'Intuitive Summary'}
+                </p>
+                <p className="text-slate-300 text-sm mt-1">
+                  {isZh 
+                    ? '非球面pseudo-umbilical曲面就像是一个"伪装成球的非球"——它在"平均意义"上各处一样对称，但实际上在某些隐藏的维度里是不均匀的。只有在6维及以上的空间里，才有足够的"躲藏空间"让这种伪装成为可能！'
+                    : 'A non-spherical pseudo-umbilical surface is like a "non-sphere disguised as a sphere"—it\'s uniformly symmetric "on average", but actually non-uniform in some hidden dimensions. Only in 6D and above is there enough "hiding space" for this disguise to be possible!'}
+                </p>
+              </div>
+            </div>
           </div>
         </section>
 
