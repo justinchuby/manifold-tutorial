@@ -168,18 +168,6 @@ export default function Chapter2() {
             {isZh ? '2.2 嵌入与浸入' : '2.2 Embeddings and Immersions'}
           </h2>
 
-          {/* Intuitive analogy */}
-          <div className="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 rounded-lg p-4 border border-yellow-700 mb-4">
-            <p className="text-yellow-400 font-semibold mb-2">
-              🧵 {isZh ? '绳子类比' : 'String Analogy'}
-            </p>
-            <p className="text-slate-300 text-sm">
-              {isZh 
-                ? '想象把一根绳子放在桌面上。如果绳子没有打结、没有交叉，这就是"嵌入"。如果绳子像8字形那样交叉了，这就是"浸入"——局部看起来没问题，但整体上有交叉。'
-                : 'Imagine placing a string on a table. If the string has no knots and no crossings, this is an "embedding". If the string crosses itself like a figure-8, this is an "immersion"—locally it looks fine, but globally there are crossings.'}
-            </p>
-          </div>
-          
           <p className="text-slate-300 mb-4">
             {isZh 
               ? '子流形是"住在"另一个流形里的流形。我们需要精确定义这种"住在"的含义。'
@@ -214,6 +202,18 @@ export default function Chapter2() {
                 🎯 {isZh ? '例：8字形（有交叉点）' : 'Example: figure-8 (has crossing point)'}
               </p>
             </div>
+          </div>
+
+          {/* Intuitive analogy */}
+          <div className="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 rounded-lg p-4 border border-yellow-700 mb-4">
+            <p className="text-yellow-400 font-semibold mb-2">
+              🧵 {isZh ? '绳子类比' : 'String Analogy'}
+            </p>
+            <p className="text-slate-300 text-sm">
+              {isZh 
+                ? '想象把一根绳子放在桌面上。如果绳子没有打结、没有交叉，这就是"嵌入"。如果绳子像8字形那样交叉了，这就是"浸入"——局部看起来没问题，但整体上有交叉。'
+                : 'Imagine placing a string on a table. If the string has no knots and no crossings, this is an "embedding". If the string crosses itself like a figure-8, this is an "immersion"—locally it looks fine, but globally there are crossings.'}
+            </p>
           </div>
 
           {/* Embedding visualization */}
