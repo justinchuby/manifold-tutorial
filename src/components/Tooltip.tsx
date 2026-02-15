@@ -144,8 +144,8 @@ const definitions: Record<string, { zh: string; en: string }> = {
     en: 'Parallel transport moves vectors along curves while "keeping them as unchanged as possible". On plane it\'s direct translation, but on curved spaces subtle effects occur (e.g., vectors on sphere rotate after a loop).'
   },
   'umbilical': {
-    zh: '脐点是曲面上各方向主曲率相同的点，即形状算子A = λI（恒等的倍数）。球面的每个点都是脐点。椭球只有4个脐点。',
-    en: 'An umbilical point is where all principal curvatures are equal in all directions, i.e., shape operator A = λI (scalar identity). Every point on a sphere is umbilical. An ellipsoid has only 4 umbilical points.'
+    zh: '脐点是曲面上各方向主曲率相同的点，即形状算子A = λI（恒等的倍数）。球面的每个点都是脐点。椭球只有4个脐点。全脐子流形指每个点都是脐点，如球面。',
+    en: 'An umbilical point is where all principal curvatures are equal in all directions, i.e., shape operator A = λI (scalar identity). Every point on a sphere is umbilical. An ellipsoid has only 4 umbilical points. Totally umbilical = every point is umbilical, like spheres.'
   },
   'pseudo-umbilical': {
     zh: '伪脐是更弱的条件：只要求沿平均曲率方向H的形状算子满足A_H = λI。球面是伪脐的，但存在非球面的伪脐曲面（Chen-Li在E⁶中发现）。',

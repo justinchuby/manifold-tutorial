@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { MathBlock } from '../components';
+import { MathBlock, Math, Tooltip } from '../components';
 import { NormalSectionVizWithLabels, Chapter4VizCollection } from '../visualizations';
 
 export default function Chapter4() {
@@ -317,8 +317,8 @@ export default function Chapter4() {
               </summary>
               <p className="text-slate-400 text-sm mt-2">
                 {isZh 
-                  ? '球面的c# = ∞！因为测地线和法截面都是大圆，它们完全重合。这是因为球面是高度对称的"全脐"子流形。'
-                  : 'Sphere has c# = ∞! Because both geodesics and normal sections are great circles—they coincide completely. This is because the sphere is a highly symmetric "totally umbilical" submanifold.'}
+                  ? <>球面的 <Math>{'c^{\\#} = \\infty'}</Math>！因为测地线和法截面都是大圆，它们完全重合。这是因为球面是高度对称的"<Tooltip term="umbilical">全脐</Tooltip>"子流形。</>
+                  : <>Sphere has <Math>{'c^{\\#} = \\infty'}</Math>! Because both geodesics and normal sections are great circles—they coincide completely. This is because the sphere is a highly symmetric "<Tooltip term="umbilical">totally umbilical</Tooltip>" submanifold.</>}
               </p>
             </details>
           </div>
