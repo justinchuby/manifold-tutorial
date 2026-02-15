@@ -1,0 +1,83 @@
+{
+  "app": {
+    "title": "Contact Number 互动教程",
+    "subtitle": "李世杰教授流形几何研究"
+  },
+  "nav": {
+    "home": "首页",
+    "part1": "流形基础",
+    "part2": "接触数理论",
+    "part3": "进阶内容",
+    "part4": "总结应用",
+    "chapter": "第{{num}}章"
+  },
+  "chapters": {
+    "ch1": {
+      "title": "什么是流形？",
+      "subtitle": "从地球表面到抽象数学"
+    },
+    "ch2": {
+      "title": "子流形",
+      "subtitle": "流形中的流形"
+    },
+    "ch3": {
+      "title": "测地线",
+      "subtitle": "流形上的「直线」"
+    },
+    "ch4": {
+      "title": "法截面",
+      "subtitle": "接触数的第二条曲线"
+    },
+    "ch5": {
+      "title": "接触数",
+      "subtitle": "核心概念"
+    },
+    "ch6": {
+      "title": "主要定理",
+      "subtitle": "接触数与各向同性"
+    },
+    "ch7": {
+      "title": "分类与发现",
+      "subtitle": "新的几何对象"
+    },
+    "ch8": {
+      "title": "平行平均曲率向量",
+      "subtitle": "Wang-Li 1998"
+    },
+    "ch9": {
+      "title": "曲率线的全挠率",
+      "subtitle": "Qin-Li 2002"
+    },
+    "ch10": {
+      "title": "等周截面",
+      "subtitle": "超球面包含定理"
+    },
+    "ch11": {
+      "title": "后续发展",
+      "subtitle": "学术影响力"
+    },
+    "ch12": {
+      "title": "研究意义与应用",
+      "subtitle": "致敬李世杰教授"
+    }
+  },
+  "home": {
+    "welcome": "欢迎来到 Contact Number 互动教程",
+    "intro": "本教程将带您深入了解李世杰教授与陈邦彦教授合作提出的「接触数」理论——一个连接微分几何与复几何的优美数学不变量。",
+    "startLearning": "开始学习",
+    "professor": "李世杰教授",
+    "affiliation": "华南师范大学数学系",
+    "collaborator": "与陈邦彦教授（密歇根州立大学）合作"
+  },
+  "common": {
+    "definition": "定义",
+    "theorem": "定理",
+    "proof": "证明",
+    "example": "例子",
+    "animation": "动画",
+    "interactive": "交互",
+    "next": "下一章",
+    "prev": "上一章",
+    "language": "语言"
+  }
+}

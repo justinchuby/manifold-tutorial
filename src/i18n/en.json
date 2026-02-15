@@ -1,0 +1,83 @@
+{
+  "app": {
+    "title": "Contact Number Interactive Tutorial",
+    "subtitle": "Prof. Shi-Jie Li's Research on Manifold Geometry"
+  },
+  "nav": {
+    "home": "Home",
+    "part1": "Manifold Foundations",
+    "part2": "Contact Number Theory",
+    "part3": "Advanced Topics",
+    "part4": "Summary & Applications",
+    "chapter": "Chapter {{num}}"
+  },
+  "chapters": {
+    "ch1": {
+      "title": "What is a Manifold?",
+      "subtitle": "From Earth's Surface to Abstract Mathematics"
+    },
+    "ch2": {
+      "title": "Submanifolds",
+      "subtitle": "Manifolds within Manifolds"
+    },
+    "ch3": {
+      "title": "Geodesics",
+      "subtitle": "Straight Lines on Manifolds"
+    },
+    "ch4": {
+      "title": "Normal Sections",
+      "subtitle": "The Second Curve in Contact Number"
+    },
+    "ch5": {
+      "title": "Contact Number",
+      "subtitle": "The Core Concept"
+    },
+    "ch6": {
+      "title": "Main Theorems",
+      "subtitle": "Contact Number and Isotropy"
+    },
+    "ch7": {
+      "title": "Classification & Discoveries",
+      "subtitle": "New Geometric Objects"
+    },
+    "ch8": {
+      "title": "Parallel Mean Curvature Vector",
+      "subtitle": "Wang-Li 1998"
+    },
+    "ch9": {
+      "title": "Total Torsion of Lines of Curvature",
+      "subtitle": "Qin-Li 2002"
+    },
+    "ch10": {
+      "title": "Isoperimetric Sections",
+      "subtitle": "Hypersphere Containment Theorem"
+    },
+    "ch11": {
+      "title": "Subsequent Developments",
+      "subtitle": "Academic Impact"
+    },
+    "ch12": {
+      "title": "Significance & Applications",
+      "subtitle": "Tribute to Prof. Shi-Jie Li"
+    }
+  },
+  "home": {
+    "welcome": "Welcome to the Contact Number Interactive Tutorial",
+    "intro": "This tutorial explores the 'Contact Number' theory proposed by Prof. Shi-Jie Li and Prof. Bang-Yen Chen—an elegant mathematical invariant connecting differential geometry and complex geometry.",
+    "startLearning": "Start Learning",
+    "professor": "Prof. Shi-Jie Li",
+    "affiliation": "Department of Mathematics, South China Normal University",
+    "collaborator": "In collaboration with Prof. Bang-Yen Chen (Michigan State University)"
+  },
+  "common": {
+    "definition": "Definition",
+    "theorem": "Theorem",
+    "proof": "Proof",
+    "example": "Example",
+    "animation": "Animation",
+    "interactive": "Interactive",
+    "next": "Next Chapter",
+    "prev": "Previous Chapter",
+    "language": "Language"
+  }
+}
