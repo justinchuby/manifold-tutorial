@@ -16,11 +16,42 @@ export default function Chapter6() {
       </header>
 
       <div className="space-y-8">
+        {/* Chapter Overview */}
+        <section className="bg-gradient-to-r from-green-900/30 to-cyan-900/30 rounded-xl p-6 border border-green-700">
+          <h2 className="text-xl font-semibold text-green-400 mb-4">
+            📋 {isZh ? '本章概览' : 'Chapter Overview'}
+          </h2>
+          <p className="text-slate-300 mb-4">
+            {isZh 
+              ? '本章是Chen-Li接触数理论的核心！我们将看到接触数如何与"各向同性"这一几何性质建立精确对应。这些定理揭示了接触数的深刻几何意义。'
+              : 'This chapter is the core of Chen-Li contact number theory! We\'ll see how contact number establishes precise correspondence with the geometric property of "isotropy". These theorems reveal the deep geometric meaning of contact number.'}
+          </p>
+          <div className="grid md:grid-cols-3 gap-3">
+            <div className="bg-slate-800 rounded-lg p-3 text-center">
+              <div className="text-2xl mb-1">⭐</div>
+              <p className="text-slate-300 text-sm">c# ≥ 3 ⟺ {isZh ? '各向同性' : 'Isotropic'}</p>
+            </div>
+            <div className="bg-slate-800 rounded-lg p-3 text-center">
+              <div className="text-2xl mb-1">⭐⭐</div>
+              <p className="text-slate-300 text-sm">c# ≥ 4 ⟺ {isZh ? '常各向同性' : 'Const. Isotropic'}</p>
+            </div>
+            <div className="bg-slate-800 rounded-lg p-3 text-center">
+              <div className="text-2xl mb-1">🔮</div>
+              <p className="text-slate-300 text-sm">c# = 3 ⟺ {isZh ? '全纯曲线' : 'Holomorphic'}</p>
+            </div>
+          </div>
+        </section>
+
         {/* Interactive visualization */}
         <section className="bg-slate-900 rounded-xl p-6">
           <h2 className="text-xl font-semibold text-cyan-400 mb-4">
             🎮 {isZh ? '交互可视化：各向同性 vs 非各向同性' : 'Interactive: Isotropic vs Non-Isotropic'}
           </h2>
+          <p className="text-slate-400 text-sm mb-4">
+            {isZh 
+              ? '观察球面（各向同性）和椭球面（非各向同性）的法曲率差异。在球面上，各方向的法曲率相同；在椭球面上，不同方向法曲率不同。'
+              : 'Observe the difference in normal curvature between sphere (isotropic) and ellipsoid (non-isotropic). On a sphere, normal curvature is the same in all directions; on an ellipsoid, it varies.'}
+          </p>
           <IsotropyComparisonViz />
         </section>
 
@@ -30,9 +61,25 @@ export default function Chapter6() {
             {isZh ? '6.1 各向同性子流形' : '6.1 Isotropic Submanifolds'}
           </h2>
           
+          {/* Intuitive understanding */}
+          <div className="bg-gradient-to-r from-blue-900/30 to-cyan-900/30 rounded-lg p-4 border border-blue-700 mb-4">
+            <p className="text-blue-400 font-semibold mb-2">
+              🌐 {isZh ? '直观理解："各向同性"是什么意思？' : 'Intuition: What Does "Isotropic" Mean?'}
+            </p>
+            <p className="text-slate-300 text-sm mb-2">
+              {isZh 
+                ? '"各向同性"字面意思是"各个方向都一样"。想象你站在曲面上的一点：'
+                : '"Isotropic" literally means "same in all directions". Imagine standing at a point on a surface:'}
+            </p>
+            <ul className="text-slate-300 text-sm space-y-1">
+              <li>🔵 {isZh ? '球面：无论你朝哪个方向看，曲面的弯曲程度都一样——这是各向同性的！' : 'Sphere: No matter which direction you look, the surface bends the same—this is isotropic!'}</li>
+              <li>🥚 {isZh ? '椭球面：沿长轴和短轴方向，弯曲程度不同——这不是各向同性的。' : 'Ellipsoid: Along major vs minor axis, bending differs—this is NOT isotropic.'}</li>
+            </ul>
+          </div>
+          
           <div className="bg-slate-800 rounded-lg p-4 mb-4">
             <p className="text-cyan-300 font-semibold mb-2">
-              {isZh ? '定义（各向同性）' : 'Definition (Isotropic)'}
+              📝 {isZh ? '定义（各向同性）' : 'Definition (Isotropic)'}
             </p>
             <p className="text-slate-300 mb-2">
               {isZh 
@@ -40,17 +87,34 @@ export default function Chapter6() {
                 : 'A submanifold M is isotropic if, at each point p, the length of the normal curvature vector is independent of direction:'}
             </p>
             <MathBlock>{'|h(u,u)| = \\lambda(p) \\quad \\text{for all unit } u \\in T_pM'}</MathBlock>
+            <p className="text-slate-400 text-sm mt-2">
+              {isZh 
+                ? '这里h(u,u)是沿方向u的法曲率向量，λ(p)只依赖于点p，不依赖于方向u。'
+                : 'Here h(u,u) is the normal curvature vector in direction u, λ(p) depends only on point p, not on direction u.'}
+            </p>
+          </div>
+
+          {/* Why this matters */}
+          <div className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 rounded-lg p-4 border border-purple-700 mb-4">
+            <p className="text-purple-400 font-semibold mb-2">
+              💡 {isZh ? '为什么这个性质重要？' : 'Why Does This Property Matter?'}
+            </p>
+            <p className="text-slate-300 text-sm">
+              {isZh 
+                ? '各向同性是一种"对称性"。在物理中，各向同性材料在各方向有相同的性质（如玻璃）。在几何中，各向同性子流形在各方向有相同的弯曲特性，这使它们具有特殊的几何结构。'
+                : 'Isotropy is a form of "symmetry". In physics, isotropic materials have the same properties in all directions (like glass). In geometry, isotropic submanifolds have the same curvature characteristics in all directions, giving them special geometric structure.'}
+            </p>
           </div>
 
           <div className="bg-slate-800 rounded-lg p-4">
             <p className="text-green-400 font-semibold mb-2">
-              {isZh ? '等价条件' : 'Equivalent Condition'}
+              🔄 {isZh ? '等价条件' : 'Equivalent Condition'}
             </p>
             <MathBlock>{'\\langle h(u,u), h(u,v) \\rangle = 0 \\quad \\text{for orthogonal } u, v'}</MathBlock>
             <p className="text-slate-400 text-sm mt-2">
               {isZh 
-                ? '几何含义：法曲率向量与任何"混合"方向正交。'
-                : 'Geometric meaning: Normal curvature vector is orthogonal to any "mixed" direction.'}
+                ? '几何含义：法曲率向量h(u,u)与任何"混合"方向h(u,v)正交。这是验证各向同性的另一种方式。'
+                : 'Geometric meaning: Normal curvature vector h(u,u) is orthogonal to any "mixed" direction h(u,v). This is another way to verify isotropy.'}
             </p>
           </div>
         </section>
@@ -58,12 +122,12 @@ export default function Chapter6() {
         {/* Theorem 1: c# ≥ 3 ⟺ Isotropic */}
         <section className="bg-gradient-to-r from-green-900/30 to-cyan-900/30 rounded-xl p-6 border-2 border-green-700">
           <h2 className="text-xl font-semibold text-green-400 mb-4">
-            ⭐ {isZh ? '定理：c#(M) ≥ 3 ⟺ 各向同性' : 'Theorem: c#(M) ≥ 3 ⟺ Isotropic'}
+            ⭐ {isZh ? '定理1：c#(M) ≥ 3 ⟺ 各向同性' : 'Theorem 1: c#(M) ≥ 3 ⟺ Isotropic'}
           </h2>
           
           <div className="bg-slate-900 rounded-lg p-4 mb-4">
             <p className="text-white font-semibold mb-3">
-              {isZh ? '陈-李定理 (Chen-Li, 2004)' : 'Chen-Li Theorem (2004)'}
+              📜 {isZh ? '陈-李定理 (Chen-Li, 2004)' : 'Chen-Li Theorem (2004)'}
             </p>
             <p className="text-slate-300">
               {isZh 
@@ -72,35 +136,88 @@ export default function Chapter6() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-4">
+          {/* Why is 3 special? */}
+          <div className="bg-slate-800 rounded-lg p-4 mb-4">
+            <p className="text-yellow-400 font-semibold mb-2">
+              🤔 {isZh ? '为什么是3？为什么不是2或4？' : 'Why 3? Why Not 2 or 4?'}
+            </p>
+            <p className="text-slate-300 text-sm mb-2">
+              {isZh 
+                ? '回忆接触数的定义：c# ≥ k 意味着测地线和法截面在起点处前k-1阶导数都相等。'
+                : 'Recall the definition: c# ≥ k means geodesic and normal section have equal derivatives up to order k-1 at the starting point.'}
+            </p>
+            <ul className="text-slate-300 text-sm space-y-1">
+              <li>• c# ≥ 2: {isZh ? '一阶导数相等（切向量相同）——所有子流形都满足' : '1st derivatives equal (same tangent)—all submanifolds satisfy this'}</li>
+              <li>• c# ≥ 3: {isZh ? '二阶导数相等——这正好对应曲率条件，即各向同性！' : '2nd derivatives equal—this exactly corresponds to curvature condition, i.e., isotropy!'}</li>
+              <li>• c# ≥ 4: {isZh ? '三阶导数相等——需要更强的条件（常各向同性）' : '3rd derivatives equal—requires stronger condition (constant isotropic)'}</li>
+            </ul>
+          </div>
+
+          {/* Intuitive meaning */}
+          <div className="bg-slate-800 rounded-lg p-4 mb-4">
+            <p className="text-purple-400 font-semibold mb-2">
+              💡 {isZh ? '直观理解：为什么接触数和各向同性有关？' : 'Intuition: Why Are Contact Number and Isotropy Related?'}
+            </p>
+            <p className="text-slate-300 text-sm">
+              {isZh 
+                ? '想象在曲面上沿不同方向出发。如果曲面是各向同性的，各方向的弯曲程度相同，那么测地线和法截面在各方向的"贴合程度"也相同——这意味着它们在更高阶上也保持接触。反之，如果各方向弯曲不同，两条曲线会更快地分离。'
+                : 'Imagine starting in different directions on a surface. If the surface is isotropic, bending is the same in all directions, so geodesic and normal section have the same "closeness" in all directions—meaning they maintain contact to higher order. Conversely, if bending differs by direction, the curves separate faster.'}
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-4 mb-4">
             <div className="bg-slate-800 rounded-lg p-4">
-              <p className="text-cyan-400 font-semibold mb-2">→ {isZh ? '正向' : 'Forward'}</p>
+              <p className="text-cyan-400 font-semibold mb-2">→ {isZh ? '正向证明思路' : 'Forward Proof Idea'}</p>
               <p className="text-slate-300 text-sm">
                 {isZh 
-                  ? '若 c#(M) ≥ 3，利用三阶导数相等的条件，可以推出各向同性条件。'
-                  : 'If c#(M) ≥ 3, using the third derivative equality condition, we can derive the isotropic condition.'}
+                  ? '若 c#(M) ≥ 3，则测地线和法截面的二阶导数相等。通过计算，这等价于 |h(u,u)| 与方向u无关，即各向同性。'
+                  : 'If c#(M) ≥ 3, geodesic and normal section have equal 2nd derivatives. By calculation, this is equivalent to |h(u,u)| being independent of direction u, i.e., isotropy.'}
               </p>
             </div>
             <div className="bg-slate-800 rounded-lg p-4">
-              <p className="text-pink-400 font-semibold mb-2">← {isZh ? '逆向' : 'Backward'}</p>
+              <p className="text-pink-400 font-semibold mb-2">← {isZh ? '逆向证明思路' : 'Backward Proof Idea'}</p>
               <p className="text-slate-300 text-sm">
                 {isZh 
-                  ? '若M是各向同性的，利用Codazzi方程可以证明三阶导数相等。'
-                  : 'If M is isotropic, using the Codazzi equation we can prove third derivative equality.'}
+                  ? '若M是各向同性的，利用Codazzi方程（描述曲率如何变化的方程），可以验证三阶导数相等，从而c# ≥ 3。'
+                  : 'If M is isotropic, using the Codazzi equation (which describes how curvature varies), we can verify 3rd derivative equality, hence c# ≥ 3.'}
               </p>
             </div>
           </div>
+
+          {/* What does this tell us */}
+          <div className="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 rounded-lg p-4 border border-yellow-700">
+            <p className="text-orange-400 font-semibold mb-2">
+              🎯 {isZh ? '这个定理告诉我们什么？' : 'What Does This Theorem Tell Us?'}
+            </p>
+            <p className="text-slate-300 text-sm">
+              {isZh 
+                ? '接触数不是随意的数字——它精确地刻画了子流形的几何对称性。c# ≥ 3 恰好捕捉了"各向同性"这一重要的几何性质。这建立了一个纯粹分析定义（导数相等的阶数）与几何性质（各向同性）之间的桥梁。'
+                : 'Contact number isn\'t arbitrary—it precisely characterizes submanifold geometric symmetry. c# ≥ 3 exactly captures the important property of "isotropy". This bridges a purely analytic definition (order of derivative equality) with a geometric property (isotropy).'}
+            </p>
+          </div>
         </section>
 
-        {/* Section 6.3 - Constant Isotropic */}
+        {/* Section 6.2 - Constant Isotropic */}
         <section className="bg-slate-900 rounded-xl p-6">
           <h2 className="text-xl font-semibold text-cyan-400 mb-4">
-            {isZh ? '6.3 常各向同性子流形' : '6.3 Constant Isotropic Submanifolds'}
+            {isZh ? '6.2 常各向同性子流形' : '6.2 Constant Isotropic Submanifolds'}
           </h2>
+          
+          {/* Why constant */}
+          <div className="bg-gradient-to-r from-blue-900/30 to-cyan-900/30 rounded-lg p-4 border border-blue-700 mb-4">
+            <p className="text-blue-400 font-semibold mb-2">
+              🤔 {isZh ? '为什么要考虑"常"各向同性？' : 'Why Consider "Constant" Isotropy?'}
+            </p>
+            <p className="text-slate-300 text-sm">
+              {isZh 
+                ? '各向同性说的是：在每一点，各方向弯曲相同。但不同点的弯曲程度λ(p)可能不同。常各向同性更强：不仅每点各向同性，而且λ在整个M上是同一个常数！'
+                : 'Isotropy says: at each point, bending is the same in all directions. But the bending magnitude λ(p) might differ between points. Constant isotropy is stronger: not only is each point isotropic, but λ is the same constant over all of M!'}
+            </p>
+          </div>
           
           <div className="bg-slate-800 rounded-lg p-4 mb-4">
             <p className="text-cyan-300 font-semibold mb-2">
-              {isZh ? '定义（常各向同性）' : 'Definition (Constant Isotropic)'}
+              📝 {isZh ? '定义（常各向同性）' : 'Definition (Constant Isotropic)'}
             </p>
             <p className="text-slate-300 mb-2">
               {isZh 
@@ -110,23 +227,48 @@ export default function Chapter6() {
             <MathBlock>{'\\lambda = |h(u,u)| = \\text{const for all } p \\in M, u \\in U_pM'}</MathBlock>
           </div>
 
+          {/* Example comparison */}
+          <div className="grid md:grid-cols-2 gap-4 mb-4">
+            <div className="bg-slate-800 rounded-lg p-4">
+              <p className="text-cyan-400 font-semibold mb-2">🔵 {isZh ? '各向同性但非常各向同性' : 'Isotropic but NOT Constant'}</p>
+              <p className="text-slate-300 text-sm">
+                {isZh 
+                  ? '想象一个"变半径的球面"——在每点各方向弯曲相同，但不同点的弯曲程度不同。'
+                  : 'Imagine a "sphere with varying radius"—at each point bending is same in all directions, but different points have different bending.'}
+              </p>
+            </div>
+            <div className="bg-slate-800 rounded-lg p-4">
+              <p className="text-green-400 font-semibold mb-2">⚪ {isZh ? '常各向同性' : 'Constant Isotropic'}</p>
+              <p className="text-slate-300 text-sm">
+                {isZh 
+                  ? '标准球面S^n——所有点的弯曲程度都是1/r，完全均匀。'
+                  : 'Standard sphere S^n—bending is 1/r at all points, completely uniform.'}
+              </p>
+            </div>
+          </div>
+
           <div className="bg-slate-800 rounded-lg p-4">
             <p className="text-green-400 font-semibold mb-2">
-              {isZh ? '等价条件' : 'Equivalent Condition'}
+              🔄 {isZh ? '等价条件（技术性）' : 'Equivalent Condition (Technical)'}
             </p>
             <MathBlock>{'A_{(\\bar{\\nabla}h)(u^3)} u = 0'}</MathBlock>
+            <p className="text-slate-400 text-sm mt-2">
+              {isZh 
+                ? '这里∇̄h是第二基本形式的协变导数。这个条件刻画了弯曲如何随位置变化。'
+                : 'Here ∇̄h is the covariant derivative of the second fundamental form. This condition characterizes how bending varies with position.'}
+            </p>
           </div>
         </section>
 
         {/* Theorem 2: c# ≥ 4 ⟺ Constant Isotropic */}
         <section className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 rounded-xl p-6 border-2 border-purple-700">
           <h2 className="text-xl font-semibold text-purple-400 mb-4">
-            ⭐ {isZh ? '定理：c#(M) ≥ 4 ⟺ 常各向同性' : 'Theorem: c#(M) ≥ 4 ⟺ Constant Isotropic'}
+            ⭐ {isZh ? '定理2：c#(M) ≥ 4 ⟺ 常各向同性' : 'Theorem 2: c#(M) ≥ 4 ⟺ Constant Isotropic'}
           </h2>
           
-          <div className="bg-slate-900 rounded-lg p-4">
+          <div className="bg-slate-900 rounded-lg p-4 mb-4">
             <p className="text-white font-semibold mb-3">
-              {isZh ? '陈-李定理 (Chen-Li, 2004)' : 'Chen-Li Theorem (2004)'}
+              📜 {isZh ? '陈-李定理 (Chen-Li, 2004)' : 'Chen-Li Theorem (2004)'}
             </p>
             <p className="text-slate-300">
               {isZh 
@@ -134,17 +276,42 @@ export default function Chapter6() {
                 : 'The contact number c#(M) ≥ 4 if and only if M is constant isotropic.'}
             </p>
           </div>
+
+          {/* Why 4 */}
+          <div className="bg-slate-800 rounded-lg p-4 mb-4">
+            <p className="text-yellow-400 font-semibold mb-2">
+              🤔 {isZh ? '为什么c# ≥ 4对应常各向同性？' : 'Why Does c# ≥ 4 Correspond to Constant Isotropy?'}
+            </p>
+            <p className="text-slate-300 text-sm">
+              {isZh 
+                ? 'c# ≥ 4 意味着三阶导数也相等。三阶导数涉及曲率的导数（曲率如何随位置变化）。如果测地线和法截面在三阶导数上也一致，说明曲率在空间上不变化——这正是"常"各向同性！'
+                : 'c# ≥ 4 means 3rd derivatives are also equal. 3rd derivatives involve curvature derivatives (how curvature varies with position). If geodesic and normal section agree at 3rd order, curvature doesn\'t vary spatially—this is exactly "constant" isotropy!'}
+            </p>
+          </div>
+
+          {/* Pattern */}
+          <div className="bg-slate-800 rounded-lg p-4">
+            <p className="text-green-400 font-semibold mb-2">
+              📊 {isZh ? '规律总结' : 'Pattern Summary'}
+            </p>
+            <ul className="text-slate-300 text-sm space-y-1">
+              <li>• c# ≥ 2: {isZh ? '无条件（所有子流形）' : 'No condition (all submanifolds)'}</li>
+              <li>• c# ≥ 3: {isZh ? '各向同性（各方向弯曲相同）' : 'Isotropic (same bending in all directions)'}</li>
+              <li>• c# ≥ 4: {isZh ? '常各向同性（各方向、各位置弯曲都相同）' : 'Constant isotropic (same bending everywhere)'}</li>
+              <li>• c# = ∞: {isZh ? '全脐（弯曲完全均匀，如球面）' : 'Totally umbilical (completely uniform bending, like sphere)'}</li>
+            </ul>
+          </div>
         </section>
 
         {/* Theorem 3: Surfaces with c# = 3 */}
         <section className="bg-gradient-to-r from-orange-900/30 to-yellow-900/30 rounded-xl p-6 border-2 border-orange-700">
           <h2 className="text-xl font-semibold text-orange-400 mb-4">
-            ⭐ {isZh ? '曲面的特殊定理' : 'Special Theorem for Surfaces'}
+            ⭐ {isZh ? '定理3：曲面的特殊定理' : 'Theorem 3: Special Theorem for Surfaces'}
           </h2>
           
           <div className="bg-slate-900 rounded-lg p-4 mb-4">
             <p className="text-white font-semibold mb-3">
-              {isZh ? '定理：曲面与全纯曲线' : 'Theorem: Surfaces and Holomorphic Curves'}
+              📜 {isZh ? '定理：曲面与全纯曲线' : 'Theorem: Surfaces and Holomorphic Curves'}
             </p>
             <p className="text-slate-300">
               {isZh 
@@ -153,14 +320,43 @@ export default function Chapter6() {
             </p>
           </div>
 
-          <div className="bg-slate-800 rounded-lg p-4">
-            <p className="text-yellow-400 font-semibold mb-2">
-              🔗 {isZh ? '重要联系' : 'Important Connection'}
+          {/* What is holomorphic */}
+          <div className="bg-slate-800 rounded-lg p-4 mb-4">
+            <p className="text-cyan-400 font-semibold mb-2">
+              🔮 {isZh ? '什么是全纯曲线？' : 'What is a Holomorphic Curve?'}
+            </p>
+            <p className="text-slate-300 text-sm mb-2">
+              {isZh 
+                ? '全纯曲线是复分析中的概念。简单说，它是可以用复变函数f(z)参数化的曲线，其中z是复数。'
+                : 'Holomorphic curve is a concept from complex analysis. Simply put, it\'s a curve that can be parameterized by a complex function f(z), where z is a complex number.'}
+            </p>
+            <p className="text-slate-400 text-sm">
+              {isZh 
+                ? '例如：f(z) = (z, z²) 定义了C²中的一条全纯曲线（抛物线）。'
+                : 'Example: f(z) = (z, z²) defines a holomorphic curve in C² (a parabola).'}
+            </p>
+          </div>
+
+          {/* Why surprising */}
+          <div className="bg-slate-800 rounded-lg p-4 mb-4">
+            <p className="text-purple-400 font-semibold mb-2">
+              🤔 {isZh ? '为什么这个定理令人惊讶？' : 'Why is This Theorem Surprising?'}
             </p>
             <p className="text-slate-300 text-sm">
               {isZh 
-                ? '这个定理建立了微分几何（接触数）与复几何（全纯曲线）之间的深刻联系！'
-                : 'This theorem establishes a deep connection between differential geometry (contact number) and complex geometry (holomorphic curves)!'}
+                ? '接触数是纯粹的微分几何概念，全纯曲线是复几何概念。这个定理说明：看似不同的数学领域（微分几何、复几何）之间存在深刻联系。c# = 3 恰好捕捉了"复结构"这一额外的几何结构！'
+                : 'Contact number is a purely differential geometric concept, while holomorphic curve is from complex geometry. This theorem shows: seemingly different mathematical fields (differential geometry, complex geometry) have deep connections. c# = 3 exactly captures the "complex structure"—an additional geometric structure!'}
+            </p>
+          </div>
+
+          <div className="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 rounded-lg p-4 border border-yellow-700">
+            <p className="text-yellow-400 font-semibold mb-2">
+              🔗 {isZh ? '数学统一性的体现' : 'Manifestation of Mathematical Unity'}
+            </p>
+            <p className="text-slate-300 text-sm">
+              {isZh 
+                ? '这类定理展示了数学的内在统一性：不同的数学分支通过深刻的定理联系在一起。接触数理论不仅是子流形几何的工具，也是连接不同数学领域的桥梁。'
+                : 'Such theorems demonstrate the inherent unity of mathematics: different branches are connected through deep theorems. Contact number theory is not just a tool in submanifold geometry, but a bridge connecting different mathematical fields.'}
             </p>
           </div>
         </section>
@@ -168,7 +364,7 @@ export default function Chapter6() {
         {/* Summary Table */}
         <section className="bg-slate-900 rounded-xl p-6">
           <h2 className="text-xl font-semibold text-cyan-400 mb-4">
-            {isZh ? '定理总结' : 'Theorem Summary'}
+            📊 {isZh ? '定理总结' : 'Theorem Summary'}
           </h2>
           
           <div className="overflow-x-auto">
@@ -177,28 +373,52 @@ export default function Chapter6() {
                 <tr className="border-b border-slate-700">
                   <th className="py-2 px-4">{isZh ? '接触数' : 'Contact Number'}</th>
                   <th className="py-2 px-4">{isZh ? '等价条件' : 'Equivalent Condition'}</th>
+                  <th className="py-2 px-4">{isZh ? '几何意义' : 'Geometric Meaning'}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr className="border-b border-slate-800">
                   <td className="py-3 px-4"><Math>{'c^\\#(M) \\geq 2'}</Math></td>
-                  <td className="py-3 px-4">{isZh ? '所有子流形（无条件）' : 'All submanifolds (no condition)'}</td>
+                  <td className="py-3 px-4">{isZh ? '无条件' : 'No condition'}</td>
+                  <td className="py-3 px-4 text-sm">{isZh ? '所有子流形' : 'All submanifolds'}</td>
                 </tr>
                 <tr className="border-b border-slate-800">
                   <td className="py-3 px-4"><Math>{'c^\\#(M) \\geq 3'}</Math></td>
-                  <td className="py-3 px-4">{isZh ? '各向同性 (Isotropic)' : 'Isotropic'}</td>
+                  <td className="py-3 px-4">{isZh ? '各向同性' : 'Isotropic'}</td>
+                  <td className="py-3 px-4 text-sm">{isZh ? '各方向弯曲相同' : 'Same bending all directions'}</td>
                 </tr>
                 <tr className="border-b border-slate-800">
                   <td className="py-3 px-4"><Math>{'c^\\#(M) \\geq 4'}</Math></td>
-                  <td className="py-3 px-4">{isZh ? '常各向同性 (Constant Isotropic)' : 'Constant Isotropic'}</td>
+                  <td className="py-3 px-4">{isZh ? '常各向同性' : 'Constant Isotropic'}</td>
+                  <td className="py-3 px-4 text-sm">{isZh ? '各处各方向弯曲都相同' : 'Same bending everywhere'}</td>
+                </tr>
+                <tr className="border-b border-slate-800">
+                  <td className="py-3 px-4"><Math>{'c^\\#(M) = 3'}</Math></td>
+                  <td className="py-3 px-4">{isZh ? 'C²中全纯曲线' : 'Holomorphic in C²'}</td>
+                  <td className="py-3 px-4 text-sm">{isZh ? '仅对曲面' : 'Surfaces only'}</td>
                 </tr>
                 <tr>
-                  <td className="py-3 px-4"><Math>{'c^\\#(M) = 3'}</Math> ({isZh ? '曲面' : 'surface'})</td>
-                  <td className="py-3 px-4">{isZh ? 'C²中的非平面全纯曲线' : 'Non-planar holomorphic curve in C²'}</td>
+                  <td className="py-3 px-4"><Math>{'c^\\#(M) = \\infty'}</Math></td>
+                  <td className="py-3 px-4">{isZh ? '全脐' : 'Totally umbilical'}</td>
+                  <td className="py-3 px-4 text-sm">{isZh ? '如球面、平面' : 'Like spheres, planes'}</td>
                 </tr>
               </tbody>
             </table>
           </div>
+        </section>
+
+        {/* Chapter Summary */}
+        <section className="bg-slate-800 rounded-xl p-6">
+          <h2 className="text-lg font-semibold text-slate-400 mb-4">
+            📝 {isZh ? '本章小结' : 'Chapter Summary'}
+          </h2>
+          <ul className="text-slate-300 text-sm space-y-2">
+            <li>✅ {isZh ? '各向同性：在每点，各方向的法曲率向量长度相同' : 'Isotropic: at each point, normal curvature vector length is same in all directions'}</li>
+            <li>✅ {isZh ? '常各向同性：各向同性 + λ在整个M上是常数' : 'Constant isotropic: isotropic + λ is constant over all M'}</li>
+            <li>✅ {isZh ? '定理1：c# ≥ 3 ⟺ 各向同性（二阶导数相等 ⟺ 各向同性条件）' : 'Theorem 1: c# ≥ 3 ⟺ isotropic (2nd derivatives equal ⟺ isotropy condition)'}</li>
+            <li>✅ {isZh ? '定理2：c# ≥ 4 ⟺ 常各向同性（三阶导数相等 ⟺ 弯曲不随位置变化）' : 'Theorem 2: c# ≥ 4 ⟺ constant isotropic (3rd derivatives equal ⟺ curvature doesn\'t vary)'}</li>
+            <li>✅ {isZh ? '定理3：曲面c# = 3 ⟺ 全纯曲线（微分几何与复几何的联系）' : 'Theorem 3: surface c# = 3 ⟺ holomorphic curve (link between differential and complex geometry)'}</li>
+          </ul>
         </section>
 
         {/* Navigation */}
