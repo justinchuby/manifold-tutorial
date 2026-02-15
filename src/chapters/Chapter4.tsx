@@ -16,19 +16,6 @@ export default function Chapter4() {
       </header>
 
       <div className="space-y-8">
-        {/* Interactive visualization */}
-        <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
-            🎮 {isZh ? '交互可视化：法截面构造' : 'Interactive: Normal Section Construction'}
-          </h2>
-          <NormalSectionVizWithLabels />
-          <p className="text-slate-400 text-sm mt-4">
-            {isZh 
-              ? '拖动旋转。观察切向量（绿）、法向量（红）如何确定切割平面（紫），产生法截面（粉）。'
-              : 'Drag to rotate. See how tangent (green) and normal (red) determine the cutting plane (purple), producing the normal section (pink).'}
-          </p>
-        </section>
-
         {/* Intro analogy */}
         <section className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 rounded-xl p-6 border border-purple-700">
           <h2 className="text-xl font-semibold text-purple-400 mb-4">
@@ -133,6 +120,19 @@ export default function Chapter4() {
               </p>
             </div>
           </div>
+        </section>
+
+        {/* Interactive visualization - after normal section concept introduced */}
+        <section className="bg-slate-900 rounded-xl p-6">
+          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+            🎮 {isZh ? '交互可视化：法截面构造' : 'Interactive: Normal Section Construction'}
+          </h2>
+          <NormalSectionVizWithLabels />
+          <p className="text-slate-400 text-sm mt-4">
+            {isZh 
+              ? '拖动旋转。观察切向量（绿）、法向量（红）如何确定切割平面（紫），产生法截面（粉）。'
+              : 'Drag to rotate. See how tangent (green) and normal (red) determine the cutting plane (purple), producing the normal section (pink).'}
+          </p>
         </section>
 
         {/* Section 4.2 */}

@@ -16,19 +16,6 @@ export default function Chapter3() {
       </header>
 
       <div className="space-y-8">
-        {/* Interactive visualization */}
-        <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
-            🎮 {isZh ? '交互可视化：球面上的测地线' : 'Interactive: Geodesics on a Sphere'}
-          </h2>
-          <GeodesicVizWithLabels />
-          <p className="text-slate-400 text-sm mt-4">
-            {isZh 
-              ? '拖动旋转球面。青色实线是测地线（大圆），橙色虚线是纬线圈（不是测地线）。'
-              : 'Drag to rotate. Cyan solid lines are geodesics (great circles), orange dashed lines are latitude circles (not geodesics).'}
-          </p>
-        </section>
-
         {/* Intro analogy */}
         <section className="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 rounded-xl p-6 border border-yellow-700">
           <h2 className="text-xl font-semibold text-yellow-400 mb-4">
@@ -85,6 +72,19 @@ export default function Chapter3() {
               </ul>
             </div>
           </div>
+        </section>
+
+        {/* Interactive visualization - after geodesic concept introduced */}
+        <section className="bg-slate-900 rounded-xl p-6">
+          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+            🎮 {isZh ? '交互可视化：球面上的测地线' : 'Interactive: Geodesics on a Sphere'}
+          </h2>
+          <GeodesicVizWithLabels />
+          <p className="text-slate-400 text-sm mt-4">
+            {isZh 
+              ? '拖动旋转球面。青色实线是测地线（大圆），橙色虚线是纬线圈（不是测地线）。'
+              : 'Drag to rotate. Cyan solid lines are geodesics (great circles), orange dashed lines are latitude circles (not geodesics).'}
+          </p>
         </section>
 
         {/* Section 3.2 */}
