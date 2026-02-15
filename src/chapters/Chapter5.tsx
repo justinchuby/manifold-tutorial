@@ -252,12 +252,31 @@ export default function Chapter5() {
         {/* Section 5.3 */}
         <section className="bg-slate-900 rounded-xl p-6">
           <h2 className="text-xl font-semibold text-cyan-400 mb-4">
-            {isZh ? '5.3 为什么接触数至少为2？' : '5.3 Why is Contact Number at Least 2?'}
+            {isZh ? '5.3 接触数至少为2' : '5.3 Contact Number is at Least 2'}
           </h2>
-          
+
+          {/* Theorem statement first */}
+          <div className="bg-gradient-to-r from-green-900/30 to-emerald-900/30 rounded-lg p-4 border-2 border-green-600 mb-4">
+            <p className="text-green-400 font-bold text-lg mb-2">
+              {isZh ? '定理 (Chen-Li)' : 'Theorem (Chen-Li)'}
+            </p>
+            <p className="text-slate-200">
+              {isZh 
+                ? '对于欧氏空间中的任何子流形 M（dim ≥ 2），接触数满足：'
+                : 'For any submanifold M (dim ≥ 2) in Euclidean space, the contact number satisfies:'}
+            </p>
+            <MathBlock>{'c^{\\#}(M) \\geq 2'}</MathBlock>
+            <p className="text-slate-300 text-sm">
+              {isZh 
+                ? '也就是说，测地线和法截面至少有前两阶导数相同。这是一个普遍成立的结果——不依赖于流形的特殊性质。'
+                : 'That is, geodesics and normal sections always agree up to at least the 2nd derivative. This holds universally—independent of any special properties of the manifold.'}
+            </p>
+          </div>
+
+          {/* Why question */}
           <div className="bg-slate-800 rounded-lg p-4 mb-4">
-            <p className="text-green-400 font-semibold mb-3">
-              {isZh ? '定理：任何子流形的接触数 c#(M) ≥ 2' : 'Theorem: For any submanifold, c#(M) ≥ 2'}
+            <p className="text-yellow-400 font-semibold mb-3">
+              🤔 {isZh ? '为什么？让我们逐阶分析：' : 'Why? Let\'s analyze order by order:'}
             </p>
             
             <div className="space-y-3 text-slate-300">
