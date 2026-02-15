@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { MathBlock } from '../components';
+import { MathBlock, Math } from '../components';
 
 export default function Chapter8() {
   const { t, i18n } = useTranslation();
@@ -18,121 +18,248 @@ export default function Chapter8() {
       </header>
 
       <div className="space-y-8">
-        {/* Paper info */}
-        <section className="bg-gradient-to-r from-blue-900/30 to-indigo-900/30 rounded-xl p-6 border border-blue-700">
+        {/* Introduction */}
+        <section className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 rounded-xl p-6 border border-blue-700">
           <h2 className="text-xl font-semibold text-blue-400 mb-4">
-            📄 {isZh ? '原始论文' : 'Original Paper'}
+            📖 {isZh ? '本章导读' : 'Chapter Overview'}
           </h2>
+          <p className="text-slate-300 mb-4">
+            {isZh 
+              ? '本章介绍李世杰教授与王美娇1998年的合作研究。这篇论文研究了球面中具有"平行平均曲率向量"的子流形，得到了重要的刚性定理。'
+              : 'This chapter introduces Prof. Li\'s 1998 collaboration with Wang Mei-Jiao. This paper studies submanifolds with "parallel mean curvature vector" in spheres, obtaining important rigidity theorems.'}
+          </p>
           <div className="bg-slate-900 rounded-lg p-4">
-            <p className="text-slate-300 font-semibold">Wang, M.-J. & Li, S.-J. (1998)</p>
-            <p className="text-cyan-400">"Submanifolds with Parallel Mean Curvature Vector in a Sphere"</p>
-            <p className="text-slate-400 text-sm">Kodai Mathematical Journal, 21, 201-207</p>
+            <p className="text-slate-400 text-sm font-semibold">📄 {isZh ? '原始论文' : 'Original Paper'}</p>
+            <p className="text-cyan-400">Wang, M.-J. & Li, S.-J. (1998)</p>
+            <p className="text-slate-300">"Submanifolds with Parallel Mean Curvature Vector in a Sphere"</p>
+            <p className="text-slate-500 text-sm">Kodai Mathematical Journal, 21, 201-207</p>
           </div>
         </section>
 
-        {/* Section 8.1 */}
+        {/* Prerequisites */}
         <section className="bg-slate-900 rounded-xl p-6">
           <h2 className="text-xl font-semibold text-cyan-400 mb-4">
-            {isZh ? '8.1 平均曲率向量' : '8.1 Mean Curvature Vector'}
+            📚 {isZh ? '预备知识回顾' : 'Prerequisites Review'}
           </h2>
-          
-          <div className="bg-gradient-to-r from-green-900/30 to-cyan-900/30 rounded-lg p-4 border border-green-700 mb-4">
-            <p className="text-green-400 font-semibold mb-2">
-              🎈 {isZh ? '气球类比' : 'Balloon Analogy'}
-            </p>
-            <p className="text-slate-300 text-sm">
-              {isZh 
-                ? '想象一个气球表面。平均曲率向量指向气球"想要收缩"的方向——就像气球内部气压小于外部时，表面会向内凹。'
-                : 'Imagine a balloon surface. The mean curvature vector points in the direction the balloon "wants to shrink"—like when internal pressure is less than external, the surface curves inward.'}
-            </p>
-          </div>
-
-          <div className="bg-slate-800 rounded-lg p-4 mb-4">
-            <p className="text-cyan-300 font-semibold mb-2">
-              {isZh ? '定义' : 'Definition'}
-            </p>
-            <MathBlock>{'H = \\frac{1}{n} \\sum_{i=1}^{n} h(e_i, e_i) = \\frac{1}{n} \\text{trace}(h)'}</MathBlock>
-            <p className="text-slate-400 text-sm mt-2">
-              {isZh 
-                ? '其中 {e₁, ..., eₙ} 是切空间的正交基，h 是第二基本形式。'
-                : 'where {e₁, ..., eₙ} is an orthonormal basis of the tangent space, h is the second fundamental form.'}
-            </p>
-          </div>
-
+          <p className="text-slate-300 mb-4">
+            {isZh 
+              ? '在深入本章内容之前，让我们回顾几个关键概念：'
+              : 'Before diving into this chapter, let\'s review some key concepts:'}
+          </p>
           <div className="grid md:grid-cols-2 gap-4">
             <div className="bg-slate-800 rounded-lg p-4">
-              <h3 className="text-cyan-400 font-semibold mb-2">
-                {isZh ? '例：球面' : 'Example: Sphere'}
+              <h3 className="text-green-400 font-semibold mb-2">
+                {isZh ? '第二基本形式 h' : 'Second Fundamental Form h'}
               </h3>
-              <p className="text-slate-300 text-sm">
+              <p className="text-slate-400 text-sm">
                 {isZh 
-                  ? '半径为r的球面S²：H指向球心，|H| = 1/r。小球面曲率大，大球面曲率小。'
-                  : 'Sphere S² of radius r: H points to center, |H| = 1/r. Small sphere has large curvature, large sphere has small curvature.'}
+                  ? '测量子流形如何"弯曲"地嵌入外部空间（第2章介绍）'
+                  : 'Measures how the submanifold "bends" in ambient space (introduced in Chapter 2)'}
               </p>
             </div>
             <div className="bg-slate-800 rounded-lg p-4">
               <h3 className="text-purple-400 font-semibold mb-2">
-                {isZh ? '例：极小曲面' : 'Example: Minimal Surface'}
+                {isZh ? '法丛 T⊥M' : 'Normal Bundle T⊥M'}
               </h3>
-              <p className="text-slate-300 text-sm">
+              <p className="text-slate-400 text-sm">
                 {isZh 
-                  ? '肥皂膜是极小曲面：H = 0。曲面不"想"向任何方向收缩。'
-                  : 'Soap films are minimal surfaces: H = 0. The surface doesn\'t "want" to shrink in any direction.'}
+                  ? '所有法向量组成的向量丛，维数 = 余维数'
+                  : 'Vector bundle of all normal vectors, dimension = codimension'}
               </p>
             </div>
           </div>
         </section>
 
-        {/* Section 8.2 */}
+        {/* Section 8.1 - Mean Curvature */}
         <section className="bg-slate-900 rounded-xl p-6">
           <h2 className="text-xl font-semibold text-cyan-400 mb-4">
-            {isZh ? '8.2 平行平均曲率向量' : '8.2 Parallel Mean Curvature Vector'}
+            {isZh ? '8.1 什么是平均曲率？' : '8.1 What is Mean Curvature?'}
           </h2>
           
+          {/* Intuitive explanation first */}
+          <div className="bg-gradient-to-r from-green-900/30 to-cyan-900/30 rounded-lg p-4 border border-green-700 mb-4">
+            <p className="text-green-400 font-semibold mb-2">
+              🎈 {isZh ? '气球类比' : 'Balloon Analogy'}
+            </p>
+            <p className="text-slate-300 text-sm mb-3">
+              {isZh 
+                ? '想象一个气球表面。在每一点，曲面都有一个"想要移动"的方向：'
+                : 'Imagine a balloon surface. At each point, the surface has a direction it "wants to move":'}
+            </p>
+            <ul className="text-slate-300 text-sm space-y-2">
+              <li>• {isZh ? '气球内压力小：表面想向内凹' : 'Low pressure inside: surface wants to curve inward'}</li>
+              <li>• {isZh ? '气球内压力大：表面想向外凸' : 'High pressure inside: surface wants to curve outward'}</li>
+              <li>• {isZh ? '压力平衡（肥皂膜）：表面哪儿都不想去' : 'Balanced pressure (soap film): surface doesn\'t want to go anywhere'}</li>
+            </ul>
+            <p className="text-yellow-400 text-sm mt-3">
+              💡 {isZh ? '平均曲率向量H就是这个"想要移动的方向和强度"的数学描述！' : 'The mean curvature vector H is the mathematical description of this "direction and intensity of wanting to move"!'}
+            </p>
+          </div>
+
+          {/* Mathematical definition */}
           <div className="bg-slate-800 rounded-lg p-4 mb-4">
             <p className="text-cyan-300 font-semibold mb-2">
-              {isZh ? '定义' : 'Definition'}
+              📐 {isZh ? '数学定义' : 'Mathematical Definition'}
+            </p>
+            <p className="text-slate-300 text-sm mb-2">
+              {isZh 
+                ? '平均曲率向量是第二基本形式的"平均值"：'
+                : 'The mean curvature vector is the "average" of the second fundamental form:'}
+            </p>
+            <MathBlock>{'H = \\frac{1}{n} \\sum_{i=1}^{n} h(e_i, e_i) = \\frac{1}{n} \\text{trace}(h)'}</MathBlock>
+            <div className="mt-3 text-slate-400 text-sm space-y-1">
+              <p>• <Math>{'\\{e_1, \\ldots, e_n\\}'}</Math>: {isZh ? '切空间的正交基' : 'orthonormal basis of tangent space'}</p>
+              <p>• <Math>{'h'}</Math>: {isZh ? '第二基本形式' : 'second fundamental form'}</p>
+              <p>• <Math>{'H \\in T^\\perp_p M'}</Math>: {isZh ? 'H是法向量！' : 'H is a normal vector!'}</p>
+            </div>
+          </div>
+
+          {/* Why "mean"? */}
+          <div className="bg-slate-800 rounded-lg p-4 mb-4">
+            <p className="text-purple-400 font-semibold mb-2">
+              🤔 {isZh ? '为什么叫"平均"曲率？' : 'Why "Mean" Curvature?'}
+            </p>
+            <p className="text-slate-300 text-sm">
+              {isZh 
+                ? '因为它是所有方向上"法曲率"的平均值。在每个方向u上，h(u,u)给出那个方向的弯曲程度，H是所有这些弯曲的平均。'
+                : 'Because it\'s the average of "normal curvatures" over all directions. In each direction u, h(u,u) gives the bending in that direction, and H is the average of all these bendings.'}
+            </p>
+          </div>
+
+          {/* Examples */}
+          <div className="grid md:grid-cols-3 gap-4">
+            <div className="bg-slate-800 rounded-lg p-4">
+              <h3 className="text-cyan-400 font-semibold mb-2">
+                🔵 {isZh ? '球面' : 'Sphere'}
+              </h3>
+              <p className="text-slate-300 text-sm mb-2">
+                {isZh ? '半径为r的球面：' : 'Sphere of radius r:'}
+              </p>
+              <p className="text-slate-400 text-sm">• H {isZh ? '指向球心' : 'points to center'}</p>
+              <p className="text-slate-400 text-sm">• |H| = 1/r</p>
+              <p className="text-yellow-400 text-xs mt-2">
+                {isZh ? '小球弯曲大，大球弯曲小' : 'Small sphere bends more'}
+              </p>
+            </div>
+            <div className="bg-slate-800 rounded-lg p-4">
+              <h3 className="text-purple-400 font-semibold mb-2">
+                🫧 {isZh ? '肥皂膜' : 'Soap Film'}
+              </h3>
+              <p className="text-slate-300 text-sm mb-2">
+                {isZh ? '极小曲面：' : 'Minimal surface:'}
+              </p>
+              <p className="text-slate-400 text-sm">• H = 0</p>
+              <p className="text-yellow-400 text-xs mt-2">
+                {isZh ? '曲面不"想"收缩或膨胀' : 'Surface doesn\'t "want" to shrink'}
+              </p>
+            </div>
+            <div className="bg-slate-800 rounded-lg p-4">
+              <h3 className="text-orange-400 font-semibold mb-2">
+                🥤 {isZh ? '圆柱面' : 'Cylinder'}
+              </h3>
+              <p className="text-slate-300 text-sm mb-2">
+                {isZh ? '半径为r的圆柱：' : 'Cylinder of radius r:'}
+              </p>
+              <p className="text-slate-400 text-sm">• H {isZh ? '指向轴心' : 'points to axis'}</p>
+              <p className="text-slate-400 text-sm">• |H| = 1/(2r)</p>
+              <p className="text-yellow-400 text-xs mt-2">
+                {isZh ? '只在一个方向弯曲' : 'Bends in only one direction'}
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 8.2 - Parallel Mean Curvature */}
+        <section className="bg-slate-900 rounded-xl p-6">
+          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+            {isZh ? '8.2 什么是"平行"平均曲率？' : '8.2 What is "Parallel" Mean Curvature?'}
+          </h2>
+          
+          {/* Intuitive explanation */}
+          <div className="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 rounded-lg p-4 border border-yellow-700 mb-4">
+            <p className="text-yellow-400 font-semibold mb-2">
+              🧭 {isZh ? '指南针类比' : 'Compass Analogy'}
+            </p>
+            <p className="text-slate-300 text-sm mb-3">
+              {isZh 
+                ? '想象你在曲面上走，手里拿着一个"曲率指南针"，指针指向H的方向：'
+                : 'Imagine walking on a surface with a "curvature compass" pointing in the direction of H:'}
+            </p>
+            <ul className="text-slate-300 text-sm space-y-2">
+              <li>• <span className="text-green-400">{isZh ? '平行' : 'Parallel'}</span>: {isZh ? '无论你怎么走，指针始终保持相同的"姿态"' : 'No matter how you walk, the pointer maintains the same "attitude"'}</li>
+              <li>• <span className="text-red-400">{isZh ? '不平行' : 'Not parallel'}</span>: {isZh ? '走动时指针会"旋转"或"摆动"' : 'The pointer "rotates" or "wobbles" as you walk'}</li>
+            </ul>
+          </div>
+
+          {/* Mathematical definition */}
+          <div className="bg-slate-800 rounded-lg p-4 mb-4">
+            <p className="text-cyan-300 font-semibold mb-2">
+              📐 {isZh ? '数学定义' : 'Mathematical Definition'}
             </p>
             <MathBlock>{'\\nabla^\\perp H = 0'}</MathBlock>
             <p className="text-slate-400 text-sm mt-2">
               {isZh 
-                ? 'H的法向协变导数为零，即H在法丛中"平行移动"。'
-                : 'The normal covariant derivative of H is zero, meaning H "parallel transports" in the normal bundle.'}
+                ? '其中 ∇⊥ 是法丛上的联络（法向协变导数）。这个条件说H在法丛中"不变化"。'
+                : 'where ∇⊥ is the connection on the normal bundle. This condition says H "doesn\'t change" in the normal bundle.'}
             </p>
           </div>
 
-          <div className="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 rounded-lg p-4 border border-yellow-700">
-            <p className="text-yellow-400 font-semibold mb-2">
-              🚶 {isZh ? '走路类比' : 'Walking Analogy'}
+          {/* Why is this important */}
+          <div className="bg-slate-800 rounded-lg p-4 mb-4">
+            <p className="text-purple-400 font-semibold mb-2">
+              💡 {isZh ? '为什么这个条件重要？' : 'Why is This Condition Important?'}
             </p>
-            <p className="text-slate-300 text-sm">
-              {isZh 
-                ? '想象你在曲面上走，手里拿着一根指向"曲率方向"的棍子。平行平均曲率意味着无论你怎么走，棍子相对于曲面的方向始终"平行"不变。'
-                : 'Imagine walking on a surface holding a stick pointing in the "curvature direction". Parallel mean curvature means no matter how you walk, the stick\'s direction relative to the surface stays "parallel" unchanged.'}
+            <ul className="text-slate-300 text-sm space-y-2">
+              <li>• {isZh ? '它是极小曲面（H=0）的自然推广' : 'It\'s a natural generalization of minimal surfaces (H=0)'}</li>
+              <li>• {isZh ? '满足这个条件的子流形有特殊的几何结构' : 'Submanifolds satisfying this condition have special geometric structure'}</li>
+              <li>• {isZh ? '可以用来证明"刚性定理"——某些条件下子流形必须是特殊形状' : 'Can be used to prove "rigidity theorems"—under certain conditions, submanifolds must be special shapes'}</li>
+            </ul>
+          </div>
+
+          {/* Examples */}
+          <div className="bg-gradient-to-r from-green-900/30 to-cyan-900/30 rounded-lg p-4 border border-green-700">
+            <p className="text-green-400 font-semibold mb-2">
+              ✅ {isZh ? '哪些子流形有平行平均曲率？' : 'Which Submanifolds Have Parallel Mean Curvature?'}
             </p>
+            <ul className="text-slate-300 text-sm space-y-2">
+              <li>• {isZh ? '所有极小子流形（H=0，当然"平行"）' : 'All minimal submanifolds (H=0, trivially "parallel")'}</li>
+              <li>• {isZh ? '球面中的"小球面"（全脐子流形）' : '"Small spheres" in spheres (totally umbilical submanifolds)'}</li>
+              <li>• {isZh ? '球面中的环面 S¹×Sⁿ⁻¹' : 'Tori S¹×Sⁿ⁻¹ in spheres'}</li>
+            </ul>
           </div>
         </section>
 
-        {/* Section 8.3 */}
+        {/* Section 8.3 - Simons Formula */}
         <section className="bg-slate-900 rounded-xl p-6">
           <h2 className="text-xl font-semibold text-cyan-400 mb-4">
-            {isZh ? '8.3 Simons型公式' : '8.3 Simons-Type Formula'}
+            {isZh ? '8.3 Simons公式简介' : '8.3 Introduction to Simons Formula'}
           </h2>
           
           <p className="text-slate-300 mb-4">
             {isZh 
-              ? 'Simons公式是子流形几何中的重要工具，它将第二基本形式的Laplacian与曲率联系起来。'
-              : 'The Simons formula is a key tool in submanifold geometry, relating the Laplacian of the second fundamental form to curvature.'}
+              ? 'Simons公式是子流形几何中的"超级工具"，以数学家James Simons（后来创立了文艺复兴科技公司）命名。'
+              : 'The Simons formula is a "super tool" in submanifold geometry, named after mathematician James Simons (who later founded Renaissance Technologies).'}
           </p>
 
           <div className="bg-slate-800 rounded-lg p-4 mb-4">
             <p className="text-cyan-300 font-semibold mb-2">
-              {isZh ? 'Wang-Li的贡献' : 'Wang-Li\'s Contribution'}
+              🔧 {isZh ? '公式的作用' : 'What the Formula Does'}
             </p>
             <p className="text-slate-300 text-sm">
               {isZh 
-                ? 'Wang-Li将Simons公式推广到球面S^(n+p)中有平行平均曲率向量的子流形，得到了新的不等式和刚性定理。'
-                : 'Wang-Li extended the Simons formula to submanifolds with parallel mean curvature vector in sphere S^(n+p), obtaining new inequalities and rigidity theorems.'}
+                ? 'Simons公式将第二基本形式h的"Laplacian"（一种二阶导数）与曲率联系起来。这让我们可以用分析学的工具研究几何问题。'
+                : 'The Simons formula relates the "Laplacian" of the second fundamental form h (a type of second derivative) to curvature. This allows us to use analytical tools to study geometric problems.'}
+            </p>
+          </div>
+
+          <div className="bg-slate-800 rounded-lg p-4">
+            <p className="text-purple-400 font-semibold mb-2">
+              📊 {isZh ? 'Wang-Li的贡献' : 'Wang-Li\'s Contribution'}
+            </p>
+            <p className="text-slate-300 text-sm">
+              {isZh 
+                ? 'Wang-Li将Simons公式推广到球面S^(n+p)中有平行平均曲率向量的子流形。他们的版本考虑了球面的曲率（不同于欧氏空间），得到了新的不等式。'
+                : 'Wang-Li extended the Simons formula to submanifolds with parallel mean curvature vector in spheres S^(n+p). Their version accounts for the sphere\'s curvature (different from Euclidean space), obtaining new inequalities.'}
             </p>
           </div>
         </section>
@@ -140,12 +267,28 @@ export default function Chapter8() {
         {/* Section 8.4 - Main Theorem */}
         <section className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 rounded-xl p-6 border-2 border-purple-600">
           <h2 className="text-xl font-semibold text-purple-400 mb-4">
-            ⭐ {isZh ? '8.4 Pinching定理' : '8.4 Pinching Theorem'}
+            ⭐ {isZh ? '8.4 主要定理：Pinching定理' : '8.4 Main Theorem: Pinching Theorem'}
           </h2>
           
+          {/* What is Pinching */}
           <div className="bg-slate-900 rounded-lg p-4 mb-4">
             <p className="text-cyan-300 font-semibold mb-2">
-              {isZh ? '定理 (Wang-Li 1998)' : 'Theorem (Wang-Li 1998)'}
+              🤏 {isZh ? '什么是"Pinching"？' : 'What is "Pinching"?'}
+            </p>
+            <p className="text-slate-300 text-sm mb-2">
+              {isZh 
+                ? '"Pinching"意为"夹挤"或"束缚"。Pinching定理说：如果某个几何量被"夹"在一定范围内，那么子流形只能是几种特殊形状。'
+                : '"Pinching" means "squeezing" or "constraining". Pinching theorems say: if some geometric quantity is "squeezed" within a certain range, then the submanifold can only be one of a few special shapes.'}
+            </p>
+            <p className="text-yellow-400 text-sm">
+              💡 {isZh ? '这是"刚性"的体现——几何对象没有太多"自由度"。' : 'This is a manifestation of "rigidity"—geometric objects have limited "degrees of freedom".'}
+            </p>
+          </div>
+
+          {/* The theorem */}
+          <div className="bg-slate-900 rounded-lg p-4 mb-4">
+            <p className="text-cyan-300 font-semibold mb-2">
+              📜 {isZh ? '定理 (Wang-Li 1998)' : 'Theorem (Wang-Li 1998)'}
             </p>
             <p className="text-slate-300 text-sm mb-2">
               {isZh 
@@ -153,48 +296,25 @@ export default function Chapter8() {
                 : 'Let M be a compact submanifold in the unit sphere S^(n+p) with parallel mean curvature vector. If the squared norm of the second fundamental form S satisfies:'}
             </p>
             <MathBlock>{'S < \\frac{n}{\\alpha}, \\quad \\alpha = \\max\\left\\{\\frac{3}{2}, \\frac{n}{2\\sqrt{n-1}}\\right\\}'}</MathBlock>
-            <p className="text-slate-300 text-sm mt-2">
-              {isZh ? '则 M 是以下之一：' : 'Then M is one of:'}
+            <p className="text-slate-300 text-sm mt-3">
+              {isZh ? '则 M 必须是以下之一：' : 'Then M must be one of:'}
             </p>
             <ul className="text-slate-300 text-sm mt-2 space-y-1 list-disc list-inside">
-              <li>{isZh ? '全脐子流形（小球面 S^n(r)）' : 'Totally umbilical submanifold (small sphere S^n(r))'}</li>
-              <li>{isZh ? 'S^(n+1) 中的超曲面 S^n(r₀) 或 S¹(r) × S^(n-1)(s)' : 'Hypersurface in S^(n+1): S^n(r₀) or S¹(r) × S^(n-1)(s)'}</li>
+              <li>{isZh ? '全脐子流形（"小球面" S^n(r)）' : 'Totally umbilical submanifold ("small sphere" S^n(r))'}</li>
+              <li>{isZh ? 'S^(n+1) 中的超曲面 S^n(r₀)' : 'Hypersurface S^n(r₀) in S^(n+1)'}</li>
+              <li>{isZh ? '环面 S¹(r) × S^(n-1)(s)' : 'Torus S¹(r) × S^(n-1)(s)'}</li>
             </ul>
           </div>
 
+          {/* Intuitive meaning */}
           <div className="bg-slate-900 rounded-lg p-4">
             <p className="text-green-400 font-semibold mb-2">
-              💡 {isZh ? '直观理解' : 'Intuitive Understanding'}
+              🎯 {isZh ? '直观理解' : 'Intuitive Understanding'}
             </p>
             <p className="text-slate-300 text-sm">
               {isZh 
-                ? '"Pinching"意为"夹挤"。如果子流形的弯曲程度（S）被"夹"在某个界限以下，那么它只能是几种非常特殊的形状。这是刚性定理的典型形式。'
-                : '"Pinching" means "squeezing". If the bending degree (S) of a submanifold is "squeezed" below a certain bound, it can only be one of a few very special shapes. This is a typical form of rigidity theorem.'}
-            </p>
-          </div>
-        </section>
-
-        {/* Section 8.5 */}
-        <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
-            {isZh ? '8.5 后续发展：Chen-Ricci不等式' : '8.5 Later Development: Chen-Ricci Inequality'}
-          </h2>
-          
-          <p className="text-slate-300 mb-4">
-            {isZh 
-              ? 'Wang-Li的工作与陈邦彦的Chen-Ricci不等式密切相关。2024年，Chen和Blaga综述了30年来这个领域的发展。'
-              : 'Wang-Li\'s work is closely related to Bang-Yen Chen\'s Chen-Ricci inequality. In 2024, Chen and Blaga surveyed 30 years of development in this field.'}
-          </p>
-
-          <div className="bg-slate-800 rounded-lg p-4">
-            <p className="text-cyan-300 font-semibold mb-2">
-              📚 {isZh ? '参考文献' : 'Reference'}
-            </p>
-            <p className="text-slate-400 text-sm">
-              Chen, B.-Y. & Blaga, A.M. (2024). "Recent developments on Chen-Ricci inequalities"
-            </p>
-            <p className="text-slate-500 text-sm">
-              In: <em>Geometry of Submanifolds and Applications</em>, Springer
+                ? 'S 测量子流形的"弯曲程度"。定理说：如果一个子流形弯曲得"不太厉害"（S足够小），又有平行平均曲率，那它一定是几种标准的对称形状之一。没有"奇怪"的形状可以满足这些条件！'
+                : 'S measures how much the submanifold "bends". The theorem says: if a submanifold doesn\'t bend "too much" (S is small enough), and has parallel mean curvature, then it must be one of a few standard symmetric shapes. No "weird" shapes can satisfy these conditions!'}
             </p>
           </div>
         </section>
@@ -202,13 +322,33 @@ export default function Chapter8() {
         {/* Connection to Contact Number */}
         <section className="bg-gradient-to-r from-red-900/30 to-orange-900/30 rounded-xl p-6 border border-red-700">
           <h2 className="text-xl font-semibold text-red-400 mb-4">
-            🔗 {isZh ? '与接触数的联系' : 'Connection to Contact Number'}
+            🔗 {isZh ? '与接触数理论的联系' : 'Connection to Contact Number Theory'}
           </h2>
-          <p className="text-slate-300">
-            {isZh 
-              ? '平行平均曲率向量条件与各向同性条件有深刻联系。全脐子流形（接触数为∞）是最特殊的平行平均曲率子流形。Wang-Li的Pinching定理可以看作是"接近全脐"条件下的刚性结果。'
-              : 'The parallel mean curvature vector condition is deeply connected to the isotropic condition. Totally umbilical submanifolds (contact number ∞) are the most special parallel mean curvature submanifolds. Wang-Li\'s Pinching theorem can be viewed as a rigidity result under "nearly umbilical" conditions.'}
-          </p>
+          <div className="space-y-3 text-slate-300">
+            <p>
+              {isZh 
+                ? '平行平均曲率条件与各向同性条件有深刻联系：'
+                : 'The parallel mean curvature condition is deeply connected to the isotropic condition:'}
+            </p>
+            <ul className="text-sm space-y-2">
+              <li>• {isZh ? '全脐子流形（接触数 = ∞）是最特殊的平行平均曲率子流形' : 'Totally umbilical submanifolds (contact number = ∞) are the most special parallel mean curvature submanifolds'}</li>
+              <li>• {isZh ? '高接触数蕴含更强的对称性，这与平行平均曲率条件相关' : 'Higher contact number implies stronger symmetry, which relates to parallel mean curvature condition'}</li>
+              <li>• {isZh ? 'Pinching定理可以看作是"接近全脐"条件下的刚性结果' : 'Pinching theorem can be viewed as a rigidity result under "nearly umbilical" conditions'}</li>
+            </ul>
+          </div>
+        </section>
+
+        {/* Summary */}
+        <section className="bg-slate-800 rounded-xl p-6">
+          <h2 className="text-lg font-semibold text-slate-400 mb-4">
+            📝 {isZh ? '本章小结' : 'Chapter Summary'}
+          </h2>
+          <ul className="text-slate-300 text-sm space-y-2">
+            <li>✅ {isZh ? '平均曲率向量H描述曲面"想要移动"的方向' : 'Mean curvature vector H describes the direction a surface "wants to move"'}</li>
+            <li>✅ {isZh ? '∇⊥H = 0 表示H在法丛中"不变化"（平行）' : '∇⊥H = 0 means H "doesn\'t change" in the normal bundle (parallel)'}</li>
+            <li>✅ {isZh ? 'Simons公式连接几何与分析' : 'Simons formula connects geometry and analysis'}</li>
+            <li>✅ {isZh ? 'Pinching定理：弯曲程度有界 → 形状受限' : 'Pinching theorem: bounded bending → restricted shape'}</li>
+          </ul>
         </section>
 
         {/* Navigation */}
