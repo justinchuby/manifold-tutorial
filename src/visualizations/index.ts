@@ -7,3 +7,4 @@ export { default as TangentNormalViz, TangentNormalVizWithLabels } from './Tange
 export { EmbeddingViz, EmbeddingVizWithLabels, SecondFundamentalFormViz, SecondFundamentalFormVizWithLabels } from './SubmanifoldViz';
 export { IsotropicViz, NonIsotropicViz, IsotropyComparisonViz } from './IsotropicViz';
 export { TorsionViz, PlanarCurveViz, TorsionComparisonViz } from './TorsionViz';
+export { MultiDirectionViz, GeodesicNormalComparisonViz, DifferentCurvesViz, Chapter4VizCollection } from './Chapter4Viz';

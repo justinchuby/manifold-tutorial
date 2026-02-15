@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { MathBlock } from '../components';
-import { NormalSectionVizWithLabels } from '../visualizations';
+import { NormalSectionVizWithLabels, Chapter4VizCollection } from '../visualizations';
 
 export default function Chapter4() {
   const { t, i18n } = useTranslation();
@@ -203,6 +203,14 @@ export default function Chapter4() {
               {isZh ? '这个问题的答案就是接触数！' : 'The answer to this question is the Contact Number!'}
             </p>
           </div>
+        </section>
+
+        {/* Comprehensive visualizations */}
+        <section className="bg-slate-900 rounded-xl p-6">
+          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+            🎬 {isZh ? '深入可视化：测地线与法截面的关系' : 'Deep Dive: Geodesic vs Normal Section Relationship'}
+          </h2>
+          <Chapter4VizCollection />
         </section>
 
         {/* Section 4.4 */}
