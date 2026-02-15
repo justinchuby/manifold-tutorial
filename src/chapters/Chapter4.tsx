@@ -53,7 +53,7 @@ export default function Chapter4() {
 
         {/* Section 4.1 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-4.1" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '4.1 法截面的几何构造' : '4.1 Geometric Construction of Normal Section'}
           </h2>
           
@@ -137,7 +137,7 @@ export default function Chapter4() {
 
         {/* Section 4.2 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-4.2" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '4.2 法截面的参数化' : '4.2 Parametrization of Normal Section'}
           </h2>
           
@@ -159,7 +159,7 @@ export default function Chapter4() {
 
         {/* Section 4.3 - Key comparison */}
         <section className="bg-gradient-to-r from-green-900/30 to-emerald-900/30 rounded-xl p-6 border border-green-700">
-          <h2 className="text-xl font-semibold text-green-400 mb-4">
+          <h2 id="section-4.3" className="text-xl font-semibold text-green-400 mb-4">
             ⚔️ {isZh ? '4.3 测地线 vs 法截面' : '4.3 Geodesic vs Normal Section'}
           </h2>
           
@@ -315,7 +315,7 @@ export default function Chapter4() {
 
         {/* Section 4.4 */}
         <section className="bg-gradient-to-r from-red-900/30 to-orange-900/30 rounded-xl p-6 border-2 border-red-700">
-          <h2 className="text-xl font-semibold text-red-400 mb-4">
+          <h2 id="section-4.4" className="text-xl font-semibold text-red-400 mb-4">
             🔬 {isZh ? '4.4 为什么比较它们？' : '4.4 Why Compare Them?'}
           </h2>
           

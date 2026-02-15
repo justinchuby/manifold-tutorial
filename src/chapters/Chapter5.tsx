@@ -25,7 +25,7 @@ export default function Chapter5() {
       <div className="space-y-8">
         {/* Section 5.1 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-5.1" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '5.1 曲线的"接触"是什么意思？' : '5.1 What Does "Contact" Between Curves Mean?'}
           </h2>
 
@@ -114,7 +114,7 @@ export default function Chapter5() {
 
         {/* Section 5.2 - THE DEFINITION */}
         <section className="bg-gradient-to-r from-red-900/30 to-orange-900/30 rounded-xl p-6 border-2 border-red-700">
-          <h2 className="text-xl font-semibold text-red-400 mb-4">
+          <h2 id="section-5.2" className="text-xl font-semibold text-red-400 mb-4">
             ⭐ {isZh ? '5.2 接触数的正式定义' : '5.2 Formal Definition of Contact Number'}
           </h2>
 
@@ -251,7 +251,7 @@ export default function Chapter5() {
 
         {/* Section 5.3 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-5.3" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '5.3 接触数至少为2' : '5.3 Contact Number is at Least 2'}
           </h2>
 
@@ -392,7 +392,7 @@ export default function Chapter5() {
 
         {/* Section 5.4 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-5.4" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '5.4 接触数与第二基本形式的深层联系' : '5.4 Deep Connection with Second Fundamental Form'}
           </h2>
           

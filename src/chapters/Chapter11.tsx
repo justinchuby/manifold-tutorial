@@ -76,7 +76,7 @@ export default function Chapter11() {
 
         {/* Section 11.1 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-11.1" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '11.1 伪欧氏空间的接触数 (2008)' : '11.1 Contact Number in Pseudo-Euclidean Spaces (2008)'}
           </h2>
           
@@ -137,7 +137,7 @@ export default function Chapter11() {
 
         {/* Section 11.2 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-11.2" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '11.2 高接触数曲面的特征 (2006)' : '11.2 Characterization of High Contact Number Surfaces (2006)'}
           </h2>
           
@@ -159,7 +159,7 @@ export default function Chapter11() {
 
         {/* Section 11.3 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-11.3" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '11.3 陈邦彦教授的持续贡献' : '11.3 Prof. Chen\'s Continued Contributions'}
           </h2>
           
@@ -205,7 +205,7 @@ export default function Chapter11() {
 
         {/* Section 11.4 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-11.4" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '11.4 曲率线全挠率的推广 (2023)' : '11.4 Generalization of Total Torsion (2023)'}
           </h2>
           
@@ -230,7 +230,7 @@ export default function Chapter11() {
 
         {/* Section 11.5 */}
         <section className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 rounded-xl p-6 border border-purple-700">
-          <h2 className="text-xl font-semibold text-purple-400 mb-4">
+          <h2 id="section-11.5" className="text-xl font-semibold text-purple-400 mb-4">
             🎓 {isZh ? '11.5 学术传承' : '11.5 Academic Legacy'}
           </h2>
           

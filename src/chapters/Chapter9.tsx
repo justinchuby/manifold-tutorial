@@ -97,7 +97,7 @@ export default function Chapter9() {
 
         {/* Section 9.1 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-9.1" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '9.1 曲率线是什么？' : '9.1 What are Lines of Curvature?'}
           </h2>
           
@@ -201,7 +201,7 @@ export default function Chapter9() {
 
         {/* Section 9.2 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-9.2" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '9.2 什么是挠率？' : '9.2 What is Torsion?'}
           </h2>
           
@@ -320,7 +320,7 @@ export default function Chapter9() {
 
         {/* Section 9.3 - Main Theorem */}
         <section className="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 rounded-xl p-6 border-2 border-yellow-600">
-          <h2 className="text-xl font-semibold text-yellow-400 mb-4">
+          <h2 id="section-9.3" className="text-xl font-semibold text-yellow-400 mb-4">
             ⭐ {isZh ? '9.3 Qin-Li 全挠率定理' : '9.3 Qin-Li Total Torsion Theorem'}
           </h2>
           
@@ -416,7 +416,7 @@ export default function Chapter9() {
 
         {/* Section 9.4 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-9.4" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '9.4 历史背景与意义' : '9.4 Historical Background & Significance'}
           </h2>
           
@@ -447,7 +447,7 @@ export default function Chapter9() {
 
         {/* Section 9.5 - Later developments */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-9.5" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '9.5 后续发展' : '9.5 Later Developments'}
           </h2>
           

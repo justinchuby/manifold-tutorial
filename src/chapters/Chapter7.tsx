@@ -43,7 +43,7 @@ export default function Chapter7() {
 
         {/* Section 7.1 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-7.1" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '7.1 余维数为2的子流形分类' : '7.1 Classification of Codimension-2 Submanifolds'}
           </h2>
           
@@ -130,7 +130,7 @@ export default function Chapter7() {
 
         {/* Section 7.2 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-7.2" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '7.2 E⁶中的曲面' : '7.2 Surfaces in E⁶'}
           </h2>
           
@@ -176,7 +176,7 @@ export default function Chapter7() {
 
         {/* Section 7.3 - Major discovery */}
         <section className="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 rounded-xl p-6 border-2 border-yellow-600">
-          <h2 className="text-xl font-semibold text-yellow-400 mb-4">
+          <h2 id="section-7.3" className="text-xl font-semibold text-yellow-400 mb-4">
             ⭐ {isZh ? '7.3 重大发现：首例非球面 Pseudo-Umbilical 曲面' : '7.3 Major Discovery: First Non-Spherical Pseudo-Umbilical Surfaces'}
           </h2>
           
@@ -461,7 +461,7 @@ export default function Chapter7() {
 
         {/* Section 7.4 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-7.4" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '7.4 与复几何的联系' : '7.4 Connection with Complex Geometry'}
           </h2>
           

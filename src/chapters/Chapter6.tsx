@@ -57,7 +57,7 @@ export default function Chapter6() {
 
         {/* Section 6.1 - Isotropic */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-6.1" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '6.1 各向同性子流形' : '6.1 Isotropic Submanifolds'}
           </h2>
           
@@ -199,7 +199,7 @@ export default function Chapter6() {
 
         {/* Section 6.2 - Constant Isotropic */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-6.2" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '6.2 常各向同性子流形' : '6.2 Constant Isotropic Submanifolds'}
           </h2>
           

@@ -1,8 +1,29 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import Sidebar from './Sidebar';
 import Header from './Header';
 
 export default function Layout() {
+  const location = useLocation();
+
+  // Scroll to section when URL has hash (e.g. #section-2.3)
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.slice(1);
+      // Delay to allow page render after navigation
+      const timer = setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 200);
+      return () => clearTimeout(timer);
+    } else {
+      // No hash: scroll to top
+      window.scrollTo(0, 0);
+    }
+  }, [location]);
+
   return (
     <div className="min-h-screen bg-slate-950 text-white flex flex-col">
       <Sidebar />

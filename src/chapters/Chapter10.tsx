@@ -83,7 +83,7 @@ export default function Chapter10() {
 
         {/* Section 10.1 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-10.1" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '10.1 等周截面的定义' : '10.1 Definition of Isoperimetric Section'}
           </h2>
           
@@ -179,7 +179,7 @@ export default function Chapter10() {
 
         {/* Section 10.2 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-10.2" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '10.2 平行等周截面' : '10.2 Parallel Isoperimetric Section'}
           </h2>
           
@@ -228,7 +228,7 @@ export default function Chapter10() {
 
         {/* Section 10.3 - Main Theorem */}
         <section className="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 rounded-xl p-6 border-2 border-yellow-600">
-          <h2 className="text-xl font-semibold text-yellow-400 mb-4">
+          <h2 id="section-10.3" className="text-xl font-semibold text-yellow-400 mb-4">
             ⭐ {isZh ? '10.3 超球面包含定理' : '10.3 Hypersphere Containment Theorem'}
           </h2>
           
@@ -262,7 +262,7 @@ export default function Chapter10() {
 
         {/* Section 10.4 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-10.4" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '10.4 与陈邦彦平行截面定理的关系' : '10.4 Relation to Chen\'s Parallel Section Theorem'}
           </h2>
           

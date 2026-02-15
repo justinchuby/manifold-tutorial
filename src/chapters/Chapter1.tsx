@@ -20,7 +20,7 @@ export default function Chapter1() {
       <div className="space-y-8">
         {/* Section 1.1 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-1.1" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '1.1 从日常生活到数学抽象' : '1.1 From Daily Life to Mathematical Abstraction'}
           </h2>
           
@@ -79,7 +79,7 @@ export default function Chapter1() {
 
         {/* Section 1.2 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-1.2" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '1.2 流形的正式定义' : '1.2 Formal Definition of a Manifold'}
           </h2>
 
@@ -139,7 +139,7 @@ export default function Chapter1() {
 
         {/* Section 1.3 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-1.3" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '1.3 流形的例子' : '1.3 Examples of Manifolds'}
           </h2>
           
@@ -199,7 +199,7 @@ export default function Chapter1() {
 
         {/* Section 1.4 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-1.4" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '1.4 为什么流形重要？' : '1.4 Why Are Manifolds Important?'}
           </h2>
           

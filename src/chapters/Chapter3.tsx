@@ -53,7 +53,7 @@ export default function Chapter3() {
 
         {/* Section 3.1 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-3.1" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '3.1 什么是"直"？' : '3.1 What is "Straight"?'}
           </h2>
           
@@ -89,7 +89,7 @@ export default function Chapter3() {
 
         {/* Section 3.2 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-3.2" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '3.2 测地线的定义' : '3.2 Definition of Geodesic'}
           </h2>
 
@@ -142,7 +142,7 @@ export default function Chapter3() {
 
         {/* Section 3.3 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-3.3" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '3.3 单位切丛' : '3.3 Unit Tangent Bundle'}
           </h2>
           
@@ -178,7 +178,7 @@ export default function Chapter3() {
 
         {/* Section 3.4 - Key connection */}
         <section className="bg-gradient-to-r from-red-900/30 to-orange-900/30 rounded-xl p-6 border-2 border-red-700">
-          <h2 className="text-xl font-semibold text-red-400 mb-4">
+          <h2 id="section-3.4" className="text-xl font-semibold text-red-400 mb-4">
             ⭐ {isZh ? '3.4 测地线的重要性' : '3.4 Why Geodesics Matter'}
           </h2>
           

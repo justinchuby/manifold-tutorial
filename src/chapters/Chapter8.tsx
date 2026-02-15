@@ -72,7 +72,7 @@ export default function Chapter8() {
 
         {/* Section 8.1 - Mean Curvature */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-8.1" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '8.1 什么是平均曲率？' : '8.1 What is Mean Curvature?'}
           </h2>
           
@@ -171,7 +171,7 @@ export default function Chapter8() {
 
         {/* Section 8.2 - Parallel Mean Curvature */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-8.2" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '8.2 什么是"平行"平均曲率？' : '8.2 What is "Parallel" Mean Curvature?'}
           </h2>
           
@@ -231,7 +231,7 @@ export default function Chapter8() {
 
         {/* Section 8.3 - Simons Formula */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-8.3" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '8.3 Simons公式简介' : '8.3 Introduction to Simons Formula'}
           </h2>
           
@@ -266,7 +266,7 @@ export default function Chapter8() {
 
         {/* Section 8.4 - Main Theorem */}
         <section className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 rounded-xl p-6 border-2 border-purple-600">
-          <h2 className="text-xl font-semibold text-purple-400 mb-4">
+          <h2 id="section-8.4" className="text-xl font-semibold text-purple-400 mb-4">
             ⭐ {isZh ? '8.4 主要定理：Pinching定理' : '8.4 Main Theorem: Pinching Theorem'}
           </h2>
           

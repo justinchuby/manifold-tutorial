@@ -18,7 +18,7 @@ export default function Chapter2() {
       <div className="space-y-8">
         {/* Section 2.1 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-2.1" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '2.1 切空间与法空间' : '2.1 Tangent and Normal Spaces'}
           </h2>
 
@@ -164,7 +164,7 @@ export default function Chapter2() {
 
         {/* Section 2.2 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-2.2" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '2.2 嵌入与浸入' : '2.2 Embeddings and Immersions'}
           </h2>
 
@@ -332,7 +332,7 @@ export default function Chapter2() {
 
         {/* Section 2.3 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-2.3" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '2.3 欧氏空间中的子流形' : '2.3 Submanifolds in Euclidean Space'}
           </h2>
           
@@ -500,7 +500,7 @@ export default function Chapter2() {
 
         {/* Section 2.4 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-2.4" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '2.4 直和分解' : '2.4 Direct Sum Decomposition'}
           </h2>
 
@@ -624,7 +624,7 @@ export default function Chapter2() {
 
         {/* Section 2.5 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-2.5" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '2.5 第二基本形式' : '2.5 Second Fundamental Form'}
           </h2>
           
@@ -796,7 +796,7 @@ export default function Chapter2() {
         {/* Section 2.5 */}
         {/* Section 2.6 */}
         <section className="bg-slate-900 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-cyan-400 mb-4">
+          <h2 id="section-2.6" className="text-xl font-semibold text-cyan-400 mb-4">
             {isZh ? '2.6 形状算子' : '2.6 Shape Operator'}
           </h2>
 

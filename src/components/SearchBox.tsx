@@ -15,18 +15,18 @@ const searchIndex = {
     { term: '图册', chapter: 1, section: '1.2', description: '坐标卡的集合' },
     
     // Chapter 2
-    { term: '子流形', chapter: 2, section: '2.1', description: '住在另一个流形里的流形' },
-    { term: '嵌入', chapter: 2, section: '2.1', description: '保持拓扑结构的映射' },
-    { term: '浸入', chapter: 2, section: '2.1', description: '允许自交的局部嵌入' },
-    { term: '欧氏空间', chapter: 2, section: '2.2', description: '配备标准内积的实向量空间' },
-    { term: '余维数', chapter: 2, section: '2.2', description: '外部空间维数减去子流形维数' },
-    { term: '切空间', chapter: 2, section: '2.3', description: '在点p处与M相切的向量空间' },
-    { term: '法空间', chapter: 2, section: '2.3', description: '与切空间正交的向量空间' },
-    { term: '直和分解', chapter: 2, section: '2.3', description: '空间分解为切向和法向部分' },
-    { term: '第二基本形式', chapter: 2, section: '2.4', description: '测量子流形如何弯曲' },
-    { term: '形状算子', chapter: 2, section: '2.5', description: '第二基本形式的切空间版本' },
-    { term: 'Gauss公式', chapter: 2, section: '2.4', description: '分解外部导数' },
-    { term: 'Weingarten公式', chapter: 2, section: '2.5', description: '分解法向量导数' },
+    { term: '切空间', chapter: 2, section: '2.1', description: '在点p处与M相切的向量空间' },
+    { term: '法空间', chapter: 2, section: '2.1', description: '与切空间正交的向量空间' },
+    { term: '嵌入', chapter: 2, section: '2.2', description: '保持拓扑结构的映射' },
+    { term: '浸入', chapter: 2, section: '2.2', description: '允许自交的局部嵌入' },
+    { term: '子流形', chapter: 2, section: '2.2', description: '住在另一个流形里的流形' },
+    { term: '欧氏空间', chapter: 2, section: '2.3', description: '配备标准内积的实向量空间' },
+    { term: '余维数', chapter: 2, section: '2.3', description: '外部空间维数减去子流形维数' },
+    { term: '直和分解', chapter: 2, section: '2.4', description: '空间分解为切向和法向部分' },
+    { term: '第二基本形式', chapter: 2, section: '2.5', description: '测量子流形如何弯曲' },
+    { term: '形状算子', chapter: 2, section: '2.6', description: '第二基本形式的切空间版本' },
+    { term: 'Gauss公式', chapter: 2, section: '2.5', description: '分解外部导数' },
+    { term: 'Weingarten公式', chapter: 2, section: '2.6', description: '分解法向量导数' },
     
     // Chapter 3
     { term: '测地线', chapter: 3, section: '3.1', description: '流形上的最短路径' },
@@ -95,18 +95,18 @@ const searchIndex = {
     { term: 'atlas', chapter: 1, section: '1.2', description: 'Collection of charts' },
     
     // Chapter 2
-    { term: 'submanifold', chapter: 2, section: '2.1', description: 'Manifold living inside another' },
-    { term: 'embedding', chapter: 2, section: '2.1', description: 'Topology-preserving map' },
-    { term: 'immersion', chapter: 2, section: '2.1', description: 'Local embedding allowing self-intersection' },
-    { term: 'Euclidean space', chapter: 2, section: '2.2', description: 'Real vector space with standard inner product' },
-    { term: 'codimension', chapter: 2, section: '2.2', description: 'Ambient dimension minus submanifold dimension' },
-    { term: 'tangent space', chapter: 2, section: '2.3', description: 'Vector space tangent to M at p' },
-    { term: 'normal space', chapter: 2, section: '2.3', description: 'Vector space orthogonal to tangent space' },
-    { term: 'direct sum', chapter: 2, section: '2.3', description: 'Decomposition into tangent and normal parts' },
-    { term: 'second fundamental form', chapter: 2, section: '2.4', description: 'Measures how submanifold bends' },
-    { term: 'shape operator', chapter: 2, section: '2.5', description: 'Tangent space version of h' },
-    { term: 'Gauss formula', chapter: 2, section: '2.4', description: 'Decomposes ambient derivative' },
-    { term: 'Weingarten formula', chapter: 2, section: '2.5', description: 'Decomposes normal vector derivative' },
+    { term: 'tangent space', chapter: 2, section: '2.1', description: 'Vector space tangent to M at p' },
+    { term: 'normal space', chapter: 2, section: '2.1', description: 'Vector space orthogonal to tangent space' },
+    { term: 'embedding', chapter: 2, section: '2.2', description: 'Topology-preserving map' },
+    { term: 'immersion', chapter: 2, section: '2.2', description: 'Local embedding allowing self-intersection' },
+    { term: 'submanifold', chapter: 2, section: '2.2', description: 'Manifold living inside another' },
+    { term: 'Euclidean space', chapter: 2, section: '2.3', description: 'Real vector space with standard inner product' },
+    { term: 'codimension', chapter: 2, section: '2.3', description: 'Ambient dimension minus submanifold dimension' },
+    { term: 'direct sum', chapter: 2, section: '2.4', description: 'Decomposition into tangent and normal parts' },
+    { term: 'second fundamental form', chapter: 2, section: '2.5', description: 'Measures how submanifold bends' },
+    { term: 'shape operator', chapter: 2, section: '2.6', description: 'Tangent space version of h' },
+    { term: 'Gauss formula', chapter: 2, section: '2.5', description: 'Decomposes ambient derivative' },
+    { term: 'Weingarten formula', chapter: 2, section: '2.6', description: 'Decomposes normal vector derivative' },
     
     // Chapter 3
     { term: 'geodesic', chapter: 3, section: '3.1', description: 'Shortest path on manifold' },
@@ -202,10 +202,18 @@ export default function SearchBox() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleSelect = (chapter: number) => {
-    navigate(`/chapter/${chapter}`);
+  const handleSelect = (chapter: number, section: string) => {
+    const sectionId = `section-${section}`;
+    navigate(`/chapter/${chapter}#${sectionId}`);
     setQuery('');
     setIsOpen(false);
+    // Scroll after navigation with a short delay for page render
+    setTimeout(() => {
+      const el = document.getElementById(sectionId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
   };
 
   return (
@@ -230,7 +238,7 @@ export default function SearchBox() {
           {results.map((result, idx) => (
             <button
               key={idx}
-              onClick={() => handleSelect(result.chapter)}
+              onClick={() => handleSelect(result.chapter, result.section)}
               className="w-full px-4 py-3 text-left hover:bg-slate-700 border-b border-slate-700 last:border-b-0 transition-colors"
             >
               <div className="flex items-center justify-between">
