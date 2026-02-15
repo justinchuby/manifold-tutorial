@@ -339,9 +339,9 @@ export default function Chapter8() {
         </section>
 
         {/* Summary */}
-        <section className="bg-slate-800 rounded-xl p-6">
-          <h2 className="text-lg font-semibold text-slate-400 mb-4">
-            📝 {isZh ? '本章小结' : 'Chapter Summary'}
+        <section className="bg-gradient-to-r from-green-900/50 to-cyan-900/50 rounded-xl p-6 border border-green-700">
+          <h2 className="text-xl font-semibold text-green-400 mb-4">
+            ✅ {isZh ? '本章小结' : 'Chapter Summary'}
           </h2>
           <ul className="text-slate-300 text-sm space-y-2">
             <li>✅ {isZh ? '平均曲率向量H描述曲面"想要移动"的方向' : 'Mean curvature vector H describes the direction a surface "wants to move"'}</li>

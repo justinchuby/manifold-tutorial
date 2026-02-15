@@ -301,9 +301,9 @@ export default function Chapter11() {
         </section>
 
         {/* Chapter Summary */}
-        <section className="bg-slate-800 rounded-xl p-6">
-          <h2 className="text-lg font-semibold text-slate-400 mb-4">
-            📝 {isZh ? '本章小结' : 'Chapter Summary'}
+        <section className="bg-gradient-to-r from-green-900/50 to-cyan-900/50 rounded-xl p-6 border border-green-700">
+          <h2 className="text-xl font-semibold text-green-400 mb-4">
+            ✅ {isZh ? '本章小结' : 'Chapter Summary'}
           </h2>
           <ul className="text-slate-300 text-sm space-y-2">
             <li>✅ {isZh ? '接触数概念已被推广到伪欧氏空间（2008年Cabrerizo等）' : 'Contact number concept extended to pseudo-Euclidean spaces (Cabrerizo et al. 2008)'}</li>

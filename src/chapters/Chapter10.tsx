@@ -323,9 +323,9 @@ export default function Chapter10() {
         </section>
 
         {/* Chapter Summary */}
-        <section className="bg-slate-800 rounded-xl p-6">
-          <h2 className="text-lg font-semibold text-slate-400 mb-4">
-            📝 {isZh ? '本章小结' : 'Chapter Summary'}
+        <section className="bg-gradient-to-r from-green-900/50 to-cyan-900/50 rounded-xl p-6 border border-green-700">
+          <h2 className="text-xl font-semibold text-green-400 mb-4">
+            ✅ {isZh ? '本章小结' : 'Chapter Summary'}
           </h2>
           <ul className="text-slate-300 text-sm space-y-2">
             <li>✅ {isZh ? '等周截面：M₁(ξ)处处相等的单位法向量场' : 'Isoperimetric section: unit normal field with constant M₁(ξ)'}</li>

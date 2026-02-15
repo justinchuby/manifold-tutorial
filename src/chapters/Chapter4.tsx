@@ -465,9 +465,9 @@ export default function Chapter4() {
         </section>
 
         {/* Chapter Summary */}
-        <section className="bg-slate-800 rounded-xl p-6">
-          <h2 className="text-lg font-semibold text-slate-400 mb-4">
-            📝 {isZh ? '本章小结' : 'Chapter Summary'}
+        <section className="bg-gradient-to-r from-green-900/50 to-cyan-900/50 rounded-xl p-6 border border-green-700">
+          <h2 className="text-xl font-semibold text-green-400 mb-4">
+            ✅ {isZh ? '本章小结' : 'Chapter Summary'}
           </h2>
           <ul className="text-slate-300 text-sm space-y-2">
             <li>✅ {isZh ? '法截面 = 用包含切向量和法空间的平面切割子流形得到的曲线' : 'Normal section = curve from cutting submanifold with plane containing tangent and normal space'}</li>

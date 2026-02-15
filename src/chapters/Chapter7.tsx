@@ -489,9 +489,9 @@ export default function Chapter7() {
         </section>
 
         {/* Chapter Summary */}
-        <section className="bg-slate-800 rounded-xl p-6">
-          <h2 className="text-lg font-semibold text-slate-400 mb-4">
-            📝 {isZh ? '本章小结' : 'Chapter Summary'}
+        <section className="bg-gradient-to-r from-green-900/50 to-cyan-900/50 rounded-xl p-6 border border-green-700">
+          <h2 className="text-xl font-semibold text-green-400 mb-4">
+            ✅ {isZh ? '本章小结' : 'Chapter Summary'}
           </h2>
           <ul className="text-slate-300 text-sm space-y-2">
             <li>✅ {isZh ? '余维数2时，c# ≥ 3的子流形只有三类：球面、广义螺旋面、全纯曲线' : 'In codim 2, submanifolds with c# ≥ 3 are only: spheres, generalized helicoids, holomorphic curves'}</li>
