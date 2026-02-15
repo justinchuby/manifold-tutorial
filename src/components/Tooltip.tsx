@@ -49,6 +49,10 @@ const definitions: Record<string, { zh: string; en: string }> = {
     zh: '子流形是"住在"另一个流形里的流形。例如：球面S²是E³的2维子流形。子流形继承了外部流形的部分结构，但有自己的维数。',
     en: 'A submanifold is a manifold "living inside" another manifold. Example: sphere S² is a 2-dimensional submanifold of E³. It inherits partial structure from the ambient manifold but has its own dimension.'
   },
+  'compact-submanifold': {
+    zh: '紧致子流形是有界且"闭合"的子流形——直观上说，它是"有限大小"且没有边界的。例如：球面S²是紧致的（有限大小，没有边界），但平面ℝ²不是（无限延伸）。圆盘也不是紧致流形因为它有边界。紧致性保证了很多好的性质，如连续函数达到最大最小值。',
+    en: 'A compact submanifold is bounded and "closed"—intuitively, it has "finite size" and no boundary. Example: sphere S² is compact (finite size, no boundary), but plane ℝ² is not (infinite). A disk is not a compact manifold because it has a boundary. Compactness guarantees many nice properties, like continuous functions attaining max/min values.'
+  },
   'embedding': {
     zh: '嵌入是把一个流形"放进"另一个流形的映射f: M → N，要求f是单射、光滑，且f(M)在N中"不自交"。例如：把圆嵌入平面（不能自交叉）。',
     en: 'An embedding is a map f: M → N "placing" one manifold into another, requiring f to be injective, smooth, and f(M) has "no self-intersection" in N. Example: embedding a circle in the plane (no self-crossing).'
