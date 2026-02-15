@@ -233,7 +233,7 @@ export default function Chapter2() {
           </div>
 
           {/* Embedding vs Immersion Deep Dive */}
-          <div className="bg-gradient-to-r from-blue-900/30 to-indigo-900/30 rounded-lg p-4 border border-blue-700 mb-4">
+          <div className="bg-gradient-to-r from-blue-900/30 to-indigo-900/30 rounded-lg p-4 border border-blue-700 mb-4 mt-6">
             <p className="text-blue-400 font-semibold mb-3">
               🔬 {isZh ? '深入理解：嵌入与浸入的关系' : 'Deep Dive: Relationship Between Embedding and Immersion'}
             </p>
