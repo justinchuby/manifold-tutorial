@@ -1,10 +1,52 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/contact-number-tutorial/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>接触数理论互动教程 | Contact Number Tutorial</title>
+    <title>接触数理论互动教程 | Contact Number Theory Interactive Tutorial</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="An interactive bilingual (中文/English) tutorial on Contact Number theory in submanifold geometry. Based on the research of Professor Bang-Yen Chen (陳邦彦) and Professor Shi-Jie Li (李世杰). Covers manifolds, submanifolds, geodesics, normal sections, curvature, and the classification of Euclidean submanifolds by contact number." />
+    <meta name="keywords" content="contact number, 接触数, manifold, 流形, submanifold, 子流形, differential geometry, 微分几何, Bang-Yen Chen, 陳邦彦, 陈邦彦, Shi-Jie Li, 李世杰, geodesic, 测地线, normal section, 法截线, curvature, 曲率, pseudo-umbilical, Euclidean submanifold, Riemannian geometry, 黎曼几何, interactive tutorial, 互动教程" />
+    <meta name="author" content="Based on research by Bang-Yen Chen (陳邦彦) and Shi-Jie Li (李世杰)" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://justinchuby.github.io/contact-number-tutorial/" />
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="接触数理论互动教程 | Contact Number Theory Tutorial" />
+    <meta property="og:description" content="Interactive bilingual tutorial on Contact Number theory in submanifold geometry, based on research by Chen and Li." />
+    <meta property="og:url" content="https://justinchuby.github.io/contact-number-tutorial/" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:locale:alternate" content="en_US" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Contact Number Theory Interactive Tutorial" />
+    <meta name="twitter:description" content="Interactive bilingual tutorial on Contact Number theory in manifold geometry." />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "接触数理论互动教程 | Contact Number Theory Tutorial",
+      "url": "https://justinchuby.github.io/contact-number-tutorial/",
+      "description": "An interactive bilingual tutorial on Contact Number theory in submanifold geometry",
+      "inLanguage": ["zh-CN", "en"],
+      "about": {
+        "@type": "Thing",
+        "name": "Contact Number (Differential Geometry)",
+        "description": "A fundamental invariant in submanifold geometry measuring intrinsic-extrinsic geometric relationships"
+      },
+      "author": [
+        { "@type": "Person", "name": "Bang-Yen Chen", "alternateName": "陳邦彦" },
+        { "@type": "Person", "name": "Shi-Jie Li", "alternateName": "李世杰" }
+      ]
+    }
+    </script>
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GCPXYP1BQZ"></script>
     <script>
@@ -13,7 +55,25 @@
       gtag('js', new Date());
       gtag('config', 'G-GCPXYP1BQZ');
     </script>
-    <meta name="description" content="An interactive bilingual tutorial on Contact Number theory in manifold geometry, based on research by Professor Shi-Jie Li and Professor Bang-Yen Chen." />
+
+    <!-- Start Single Page Apps for GitHub Pages -->
+    <script type="text/javascript">
+      // This script checks to see if a redirect is present in the query string,
+      // converts it back into the correct url and adds it to the browser's history
+      // using window.history.replaceState(...). This is the second part of the
+      // spa-github-pages setup (the first part is in 404.html).
+      (function(l) {
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+            l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location))
+    </script>
+    <!-- End Single Page Apps for GitHub Pages -->
   </head>
   <body>
     <div id="root"></div>
