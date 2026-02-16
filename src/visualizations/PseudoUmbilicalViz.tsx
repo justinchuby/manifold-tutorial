@@ -62,7 +62,7 @@ const PROJECTIONS: { name_zh: string; name_en: string; desc_zh: string; matrix: 
   },
 ];
 
-function PseudoUmbilicalScene({ projIndex, highlightU }: { projIndex: number; highlightU: number }) {
+function PseudoUmbilicalScene({ projIndex, highlightV }: { projIndex: number; highlightV: number }) {
   const [time, setTime] = useState(0);
   useFrame(({ clock }) => setTime(clock.getElapsedTime()));
 
@@ -99,18 +99,18 @@ function PseudoUmbilicalScene({ projIndex, highlightU }: { projIndex: number; hi
     return { uLines: uL, vLines: vL };
   }, [proj]);
 
-  // Highlighted u-parameter curve
+  // Highlighted curve at constant v = highlightV * vPeriod
   const highlightCurve = useMemo(() => {
     const uPeriod = 2 * Math.PI * Math.sqrt(2) / a;
     const vPeriod = 2 * Math.PI * Math.sqrt(2) / (Math.sqrt(3) * a);
-    const v0 = ((highlightU + 1) / 2) * vPeriod; // map [-1,1] to [0, vPeriod]
+    const v0 = highlightV * vPeriod;
     const pts: THREE.Vector3[] = [];
     for (let i = 0; i <= 200; i++) {
       const u = (i / 200) * uPeriod;
       pts.push(project6Dto3D(torusE6(u, v0, a), proj));
     }
     return pts;
-  }, [proj, highlightU]);
+  }, [proj, highlightV]);
 
   const animIdx = Math.floor(((Math.sin(time * 0.4) + 1) / 2) * 199);
   const animPt = highlightCurve[animIdx];
@@ -139,13 +139,13 @@ function PseudoUmbilicalScene({ projIndex, highlightU }: { projIndex: number; hi
 
 export function PseudoUmbilicalViz() {
   const [projIndex, setProjIndex] = useState(0);
-  const [highlightU, setHighlightU] = useState(-1); // normalized: -1 = v=0
+  const [highlightV, setHighlightV] = useState(0); // 0 to 1, fraction of vPeriod
 
   return (
     <div>
       <div className="h-72 bg-slate-950 rounded-lg overflow-hidden mb-3">
         <Canvas camera={{ position: [1.5, 1, 1.2], fov: 50 }}>
-          <PseudoUmbilicalScene projIndex={projIndex} highlightU={highlightU} />
+          <PseudoUmbilicalScene projIndex={projIndex} highlightV={highlightV} />
         </Canvas>
       </div>
       <div className="flex flex-wrap gap-2 mb-2">
@@ -166,18 +166,18 @@ export function PseudoUmbilicalViz() {
       <p className="text-slate-500 text-xs mb-2 italic">{PROJECTIONS[projIndex].desc_zh}</p>
       <div className="flex items-center gap-3 text-xs text-slate-400">
         <span className="text-cyan-400 font-mono whitespace-nowrap">
-          v = {((highlightU + 1) / 2 * 100).toFixed(0)}% · T<sub>v</sub>
+          v₀ = {(highlightV * 100).toFixed(0)}% · T<sub>v</sub>
         </span>
         <input
           type="range"
-          min={-100}
+          min={0}
           max={100}
-          value={Math.round(highlightU * 100)}
-          onChange={e => setHighlightU(Number(e.target.value) / 100)}
+          value={Math.round(highlightV * 100)}
+          onChange={e => setHighlightV(Number(e.target.value) / 100)}
           className="flex-1 accent-cyan-500"
         />
         <button
-          onClick={() => setHighlightU(-1)}
+          onClick={() => setHighlightV(0)}
           className="px-2 py-0.5 rounded bg-slate-700 hover:bg-slate-600 text-slate-300"
         >
           v=0
