@@ -735,6 +735,141 @@ npm run dev
 
 ## 🔧 可视化算法详解 (Visualization Algorithm Details)
 
+### 6D曲面绘图总流程 (Surface Rendering Pipeline)
+
+整个可视化的核心挑战：**如何把6维空间中的曲面显示在3D场景中？** 流程如下：
+
+#### 第1步 — 参数曲面求值 (Parametric Surface Evaluation)
+
+两个曲面都是 E⁶ 中的参数曲面 `surface(u, v) → [x₁, x₂, x₃, x₄, x₅, x₆]`：
+
+**平坦环面 τ_a (Example 6.6)**:
+```
+τ_a(u,v) = (2/√6a) × (
+  cos(au/√2) cos(√3av/√2),    // x₁
+  cos(au/√2) sin(√3av/√2),    // x₂
+  cos(√2au) / √2,              // x₃
+  sin(au/√2) cos(√3av/√2),    // x₄
+  sin(au/√2) sin(√3av/√2),    // x₅
+  sin(√2au) / √2               // x₆
+)
+```
+- 参数 a = 1
+- u 周期 = 2π√2/a，v 周期 = 2π√2/(√3·a)
+- 两个方向都是周期的 → 真正的环面
+
+**非球面 pseudo-umbilical 曲面 ψ (Formula 10.20)**:
+```
+ψ(u,v) = cos²(au/√3) × (
+  (√3/a) tan(au/√3) cos(av/√3),                          // x₁: 旋转面 cos
+  (√3/a) tan(au/√3) sin(av/√3),                          // x₂: 旋转面 sin
+  复杂的 sin(√(β-δ)·v) 和 sin(√(β+δ)·v) 的线性组合,      // x₃
+  √2ac 的振荡项,                                           // x₄
+  cos(√(β±δ)·v) 的组合,                                    // x₅
+  含 √3 因子的振荡项                                        // x₆
+)
+```
+- 参数 a = 1, c = 0.5
+- β = 2(a² + 6c²)/3, δ = (2/3)√(a⁴ + 6a²c² + 36c⁴)
+- u ∈ (-√3π/2a × 0.92, +√3π/2a × 0.92) — 截断以避免极点处 tan 发散
+- v 方向**不是**周期的（v=0 和 v=vMax 在6D中相距约1.78）
+
+#### 第2步 — 6D→3D 线性投影 (Projection)
+
+使用 3×6 矩阵 `proj` 将6D点映射到3D：
+```
+[X]   [p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ p₁₆]   [x₁]
+[Y] = [p₂₁ p₂₂ p₂₃ p₂₄ p₂₅ p₂₆] × [x₂]
+[Z]   [p₃₁ p₃₂ p₃₃ p₃₄ p₃₅ p₃₆]   [x₃]
+                                       [x₄]
+                                       [x₅]
+                                       [x₆]
+```
+
+每个可视化有 **8个预设投影** + **自定义投影模式**（用户拖动3×6=18个滑块）。
+
+预设示例：
+- `(x₁,x₂,x₃)` = `[[1,0,0,0,0,0],[0,1,0,0,0,0],[0,0,1,0,0,0]]` — 取前3个坐标
+- `(x₁+x₄, x₂+x₅, x₃+x₆)` = `[[1,0,0,1,0,0],[0,1,0,0,1,0],[0,0,1,0,0,1]]` — 对应分量叠加
+- 混合投影使用任意系数，如 `[0.6, 0.3, 0, -0.3, 0.5, 0]`
+
+#### 第3步 — 网格线生成 (Wireframe Generation)
+
+不使用实体面片（会遮挡结构），而是用**参数网格线**勾勒曲面形状：
+
+**u方向线**（横线，constant v）：
+```
+for j = 0..N_grid:
+    v_j = j/N_grid × vPeriod
+    for i = 0..N_steps:
+        u_i = i/N_steps × uPeriod
+        point = proj(surface(u_i, v_j))  →  加入第j条u线
+```
+
+**v方向线**（竖线，constant u）：
+```
+for i = 0..N_grid:
+    u_i = i/N_grid × uPeriod
+    for j = 0..N_steps:
+        v_j = j/N_steps × vPeriod
+        point = proj(surface(u_i, v_j))  →  加入第i条v线
+```
+
+| 参数 | 平坦环面 | 非球面 |
+|------|----------|--------|
+| 网格线数量 | 21×21 | 17×17 |
+| 每条线采样点数 | 80 | 60–80 |
+| u方向线粗细 | 1.8 | 1.8 |
+| v方向线粗细 | 1.0 | 1.0 |
+| 非有限值处理 | 不需要（全域有限） | 跳过 `!isFinite` 的点 |
+
+使用 `@react-three/drei` 的 `<Line>` 组件渲染，底层为 Three.js `Line2`（支持任意线宽）。
+
+所有网格线在投影矩阵 `proj` 变化时重新计算（`useMemo` 依赖 `[proj]`）。
+
+#### 第4步 — 渐变着色 (Gradient Coloring)
+
+每条线根据其在网格中的索引分配唯一颜色：
+```typescript
+// u方向第i条线（共N条）的颜色：
+color = hsl(hueStart + (i/N) * hueRange, saturation, lightnessStart + (i/N) * lightnessRange)
+```
+色调和亮度同时渐变，使相邻线在视觉上有明显区分。
+
+#### 第5步 — 高亮曲线 + 动画点 (Highlighted Curve + Animated Point)
+
+**高亮曲线**：用户通过滑块选择一个参数值，以更粗（lineWidth=3）、更亮的颜色绘制该参数曲线。
+- 平坦环面：v₀ = highlightV × vPeriod，沿u扫描 → 高亮的u曲线（青色 #22d3ee）
+- 非球面：u₀ = highlightU × uMax，沿v扫描 → 高亮的v曲线（绿色 #4ade80）
+
+**动画点**：一个黄色发光球体 (`#facc15`) 沿高亮曲线来回移动：
+```
+animT = (sin(time × speed) + 1) / 2    // 0→1→0 来回运动
+animIdx = floor(animT × (点数-1))       // 映射到曲线上的索引
+animPt = highlightCurve[animIdx]        // 当前3D位置
+```
+速度：平坦环面 0.4 rad/s，非球面 0.3 rad/s。
+
+#### 第6步 — 法截线叠加 (Normal Section Overlay)
+
+在动画点处实时计算并显示法截线（粉色 #f472b6，lineWidth=2.5）。
+算法详见下方"法截线追踪算法"一节。
+
+#### 渲染栈 (Rendering Stack)
+```
+React组件 (PseudoUmbilicalViz / NonSphericalPUViz)
+  └── <Canvas> (react-three-fiber)
+       ├── <ambientLight> + <pointLight>
+       ├── <Line> × N_grid (u方向网格线，渐变色，lineWidth=1.8)
+       ├── <Line> × N_grid (v方向网格线，渐变色，lineWidth=1.0)
+       ├── <Line> (高亮曲线，lineWidth=3)
+       ├── <Line> (法截线，条件渲染，lineWidth=2.5)
+       ├── <mesh> (动画黄点，sphereGeometry + emissive材质)
+       └── <OrbitControls> (鼠标拖动旋转/缩放)
+```
+
+---
+
 ### 法截线 (Normal Section) 追踪算法
 
 #### 数学定义
