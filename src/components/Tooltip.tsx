@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
+import { useId, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 
 interface TooltipProps {
@@ -173,66 +174,80 @@ export default function Tooltip({ term, children }: TooltipProps) {
   const { i18n } = useTranslation();
   const isZh = i18n.language === 'zh';
   const [isVisible, setIsVisible] = useState(false);
-  const [position, setPosition] = useState({ top: 0, left: 0 });
+  const [position, setPosition] = useState<{
+    top: number;
+    left: number;
+    placement: 'top' | 'bottom';
+  }>({ top: 0, left: 0, placement: 'top' });
   const triggerRef = useRef<HTMLSpanElement>(null);
-  const tooltipRef = useRef<HTMLDivElement>(null);
+  const tooltipId = useId();
 
   const definition = definitions[term];
-  
-  useEffect(() => {
-    if (isVisible && triggerRef.current && tooltipRef.current) {
+
+  const showTooltip = () => {
+    if (triggerRef.current) {
       const triggerRect = triggerRef.current.getBoundingClientRect();
-      const tooltipRect = tooltipRef.current.getBoundingClientRect();
-      
-      let left = triggerRect.left + triggerRect.width / 2 - tooltipRect.width / 2;
-      let top = triggerRect.top - tooltipRect.height - 8;
-      
-      // Keep tooltip within viewport
-      if (left < 10) left = 10;
-      if (left + tooltipRect.width > window.innerWidth - 10) {
-        left = window.innerWidth - tooltipRect.width - 10;
-      }
-      if (top < 10) {
-        top = triggerRect.bottom + 8;
-      }
-      
-      setPosition({ top, left });
+      const tooltipWidth = Math.min(352, window.innerWidth - 20);
+      const placement = triggerRect.top < 170 ? 'bottom' : 'top';
+      const left = Math.min(
+        Math.max(10, triggerRect.left + triggerRect.width / 2 - tooltipWidth / 2),
+        window.innerWidth - tooltipWidth - 10,
+      );
+      const top = placement === 'top' ? triggerRect.top - 12 : triggerRect.bottom + 12;
+
+      setPosition({ top, left, placement });
     }
-  }, [isVisible]);
+    setIsVisible(true);
+  };
 
   if (!definition) {
     console.warn(`Tooltip: No definition found for term "${term}"`);
     return <>{children}</>;
   }
 
+  const tooltip = (
+    <div
+      id={tooltipId}
+      role="tooltip"
+      className="fixed z-[9999] max-w-sm rounded-xl border border-teal-800/20 bg-[#fffaf1] p-3 text-sm text-stone-800 shadow-[0_22px_60px_rgba(65,45,28,0.24)]"
+      style={{
+        top: position.top,
+        left: position.left,
+        width: 'min(22rem, calc(100vw - 20px))',
+        transform: position.placement === 'top' ? 'translateY(-100%)' : undefined,
+      }}
+    >
+      <div className="mb-1 text-xs font-semibold uppercase tracking-[0.18em] text-teal-800">
+        {isZh ? '术语解释' : 'Term Definition'}
+      </div>
+      <p className="leading-relaxed text-stone-700">
+        {isZh ? definition.zh : definition.en}
+      </p>
+      <div
+        className={`absolute left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 border-teal-800/20 bg-[#fffaf1] ${
+          position.placement === 'top'
+            ? '-bottom-1.5 border-r border-b'
+            : '-top-1.5 border-l border-t'
+        }`}
+      />
+    </div>
+  );
+
   return (
     <>
       <span
         ref={triggerRef}
-        className="text-cyan-400 border-b border-dashed border-cyan-400/50 cursor-help hover:text-cyan-300 hover:border-cyan-300 transition-colors"
-        onMouseEnter={() => setIsVisible(true)}
+        tabIndex={0}
+        aria-describedby={isVisible ? tooltipId : undefined}
+        className="cursor-help border-b border-dashed border-teal-700/45 text-teal-800 transition-colors hover:border-teal-700 hover:text-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-700/20"
+        onFocus={showTooltip}
+        onBlur={() => setIsVisible(false)}
+        onMouseEnter={showTooltip}
         onMouseLeave={() => setIsVisible(false)}
       >
         {children}
       </span>
-      {isVisible && (
-        <div
-          ref={tooltipRef}
-          className="fixed z-50 max-w-sm p-3 bg-slate-800 border border-cyan-500/50 rounded-lg shadow-xl text-sm"
-          style={{ top: position.top, left: position.left }}
-        >
-          <div className="text-cyan-400 font-semibold mb-1 text-xs uppercase tracking-wide">
-            {isZh ? '术语解释' : 'Term Definition'}
-          </div>
-          <p className="text-slate-300 leading-relaxed">
-            {isZh ? definition.zh : definition.en}
-          </p>
-          <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-slate-800 border-r border-b border-cyan-500/50 rotate-45" />
-        </div>
-      )}
+      {isVisible && createPortal(tooltip, document.body)}
     </>
   );
 }
-
-// Export a list of available terms for reference
-export const availableTerms = Object.keys(definitions);

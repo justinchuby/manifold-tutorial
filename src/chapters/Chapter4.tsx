@@ -130,8 +130,8 @@ export default function Chapter4() {
           <NormalSectionVizWithLabels />
           <p className="text-slate-400 text-sm mt-4">
             {isZh 
-              ? '拖动旋转。观察切向量（绿）、法向量（红）如何确定切割平面（紫），产生法截线（粉）。'
-              : 'Drag to rotate. See how tangent (green) and normal (red) determine the cutting plane (purple), producing the normal section (pink).'}
+              ? '拖动旋转。观察切向量与法向量如何确定切割平面，并在球面上产生法截线。'
+              : 'Drag to rotate. See how the tangent and normal vectors determine the cutting plane and produce the normal section on the sphere.'}
           </p>
         </section>
 

@@ -15,7 +15,7 @@ export default function Chapter5() {
         <p className="text-slate-400">{t('chapters.ch5.subtitle')}</p>
         <div className="mt-4 bg-gradient-to-r from-cyan-900/50 to-purple-900/50 rounded-lg p-3 border border-cyan-700">
           <p className="text-cyan-300 text-sm">
-            📄 {isZh 
+            {isZh 
               ? '本章基于：Chen, B.-Y. & Li, S.-J. (2004). "The Contact Number of a Euclidean Submanifold", Proc. Edinburgh Math. Soc., 47, 69-100'
               : 'Based on: Chen, B.-Y. & Li, S.-J. (2004). "The Contact Number of a Euclidean Submanifold", Proc. Edinburgh Math. Soc., 47, 69-100'}
           </p>
@@ -32,7 +32,7 @@ export default function Chapter5() {
           {/* Intuitive analogy */}
           <div className="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 rounded-lg p-4 border border-yellow-700 mb-4">
             <p className="text-yellow-400 font-semibold mb-2">
-              🚗 {isZh ? '物理类比：从速度到加速度' : 'Physics Analogy: From Velocity to Acceleration'}
+              {isZh ? '物理类比：从速度到加速度' : 'Physics Analogy: From Velocity to Acceleration'}
             </p>
             <p className="text-slate-300 text-sm mb-3">
               {isZh 
@@ -91,7 +91,7 @@ export default function Chapter5() {
           {/* Kissing + DNA analogy */}
           <div className="bg-gradient-to-r from-green-900/30 to-cyan-900/30 rounded-lg p-4 border border-green-700 mb-4">
             <p className="text-green-400 font-semibold mb-2">
-              💋 {isZh ? '两条曲线的"亲吻"' : 'Two Curves "Kissing"'}
+              {isZh ? '两条曲线的"亲吻"' : 'Two Curves "Kissing"'}
             </p>
             <p className="text-slate-300 text-sm mb-2">
               {isZh 
@@ -99,7 +99,7 @@ export default function Chapter5() {
                 : 'Contact order measures how tightly two curves "kiss" at their meeting point. 0th order is barely touching lips, 1st order means the same direction, 2nd order means even the curvature matches perfectly... The higher the order, the harder it is to tell where one curve ends and the other begins.'}
             </p>
             <p className="text-slate-300 text-sm">
-              🧬 {isZh 
+              {isZh 
                 ? '另一个类比：就像DNA比对。把两条曲线的泰勒展开式一项一项排开比较——每成功匹配一阶导数，就像DNA序列多匹配了一个碱基对。匹配长度越长，两条曲线的"亲缘关系"越近！'
                 : 'Another analogy: like DNA comparison. Line up the Taylor expansions term by term—each matched derivative is like matching another base pair. The longer the match, the closer the "kinship"!'}
             </p>
@@ -121,13 +121,13 @@ export default function Chapter5() {
         {/* Section 5.2 - THE DEFINITION */}
         <section className="bg-gradient-to-r from-red-900/30 to-orange-900/30 rounded-xl p-6 border-2 border-red-700">
           <h2 id="section-5.2" className="text-xl font-semibold text-red-400 mb-4">
-            ⭐ {isZh ? '5.2 接触数的正式定义' : '5.2 Formal Definition of Contact Number'}
+            {isZh ? '5.2 接触数的正式定义' : '5.2 Formal Definition of Contact Number'}
           </h2>
 
           {/* Key insight analogy */}
           <div className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 rounded-lg p-4 border border-blue-700 mb-4">
             <p className="text-blue-400 font-semibold mb-2">
-              🔍 {isZh ? '核心洞察：山坡居民 vs 上帝视角' : 'Core Insight: Hillside Resident vs God\'s View'}
+              {isZh ? '核心洞察：山坡居民 vs 上帝视角' : 'Core Insight: Hillside Resident vs God\'s View'}
             </p>
             <p className="text-slate-300 text-sm">
               {isZh 
@@ -153,7 +153,7 @@ export default function Chapter5() {
                   : 'The geodesic on M starting from p in direction u'}
               </p>
               <p className="text-yellow-400 text-xs mb-1">
-                🏠 {isZh ? '内蕴视角：只看流形本身' : 'Intrinsic view: only looks at the manifold'}
+                {isZh ? '内蕴视角：只看流形本身' : 'Intrinsic view: only looks at the manifold'}
               </p>
               <p className="text-slate-500 text-xs">
                 {isZh ? '例：蚂蚁沿"直线"爬行的路径' : 'Example: path of an ant crawling "straight"'}
@@ -170,7 +170,7 @@ export default function Chapter5() {
                   : 'Intersection of affine subspace E(p,u) with M'}
               </p>
               <p className="text-yellow-400 text-xs mb-1">
-                🌍 {isZh ? '外蕴视角：从外部切割流形' : 'Extrinsic view: cutting the manifold from outside'}
+                {isZh ? '外蕴视角：从外部切割流形' : 'Extrinsic view: cutting the manifold from outside'}
               </p>
               <p className="text-slate-500 text-xs">
                 {isZh ? '例：用平面切一个球，得到一个圆' : 'Example: slicing a sphere with a plane to get a circle'}
@@ -181,7 +181,7 @@ export default function Chapter5() {
           {/* Real example */}
           <div className="bg-slate-900 rounded-lg p-4 mb-4">
             <p className="text-green-400 font-semibold mb-2">
-              🌐 {isZh ? '例子：椭球面（回顾第四章）' : 'Example: Ellipsoid (Recall Chapter 4)'}
+              {isZh ? '例子：椭球面（回顾第四章）' : 'Example: Ellipsoid (Recall Chapter 4)'}
             </p>
             <p className="text-slate-300 text-sm mb-2">
               {isZh 
@@ -201,7 +201,7 @@ export default function Chapter5() {
 
           <div className="bg-slate-900 rounded-lg p-4 mb-4 border-2 border-yellow-600">
             <p className="text-yellow-400 font-bold mb-3 text-lg">
-              📖 Definition 1.1 (Chen-Li, 2004)
+              Definition 1.1 (Chen-Li, 2004)
             </p>
             
             <div className="space-y-4 text-slate-300">
@@ -240,7 +240,7 @@ export default function Chapter5() {
 
           <div className="bg-slate-800 rounded-lg p-3 mb-4 text-sm">
             <p className="text-slate-400">
-              💡 {isZh 
+              {isZh 
                 ? <>注意：这里的子流形 M 是欧氏空间 E<sup>m</sup> 中的<strong className="text-slate-200">嵌入</strong>子流形（即 M 是 E<sup>m</sup> 的子集，没有自交）。法截线的定义需要用仿射子空间"切割" M，这要求 M 没有自交点。由于浸入在局部都是嵌入，接触数在局部意义上也适用于浸入。</>
                 : <>Note: Here M is an <strong className="text-slate-200">embedded</strong> submanifold in E<sup>m</sup> (i.e., M is a subset of E<sup>m</sup> without self-intersections). The normal section definition requires intersecting M with an affine subspace, which needs M to have no self-intersections. Since immersions are locally embeddings, contact number applies locally to immersions as well.</>}
             </p>
@@ -250,7 +250,7 @@ export default function Chapter5() {
         {/* Interactive visualization - after concepts are introduced */}
         <section className="bg-slate-900 rounded-xl p-6">
           <h2 className="text-xl font-semibold text-cyan-400 mb-4">
-            🎮 {isZh ? '交互可视化：接触数' : 'Interactive: Contact Number'}
+            {isZh ? '交互可视化：接触数' : 'Interactive: Contact Number'}
           </h2>
           <ContactNumberVizWithControls />
         </section>
@@ -282,7 +282,7 @@ export default function Chapter5() {
           {/* Why question */}
           <div className="bg-slate-800 rounded-lg p-4 mb-4">
             <p className="text-yellow-400 font-semibold mb-3">
-              🤔 {isZh ? '为什么？让我们逐阶分析：' : 'Why? Let\'s analyze order by order:'}
+              {isZh ? '为什么？让我们逐阶分析：' : 'Why? Let\'s analyze order by order:'}
             </p>
             
             <div className="space-y-3 text-slate-300">
@@ -304,7 +304,7 @@ export default function Chapter5() {
           {/* Detailed Proof */}
           <div className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 rounded-lg p-4 border border-blue-700 mb-4">
             <p className="text-blue-400 font-semibold mb-3">
-              📝 {isZh ? '详细证明' : 'Detailed Proof'}
+              {isZh ? '详细证明' : 'Detailed Proof'}
             </p>
             
             <div className="space-y-4 text-slate-300 text-sm">
@@ -386,7 +386,7 @@ export default function Chapter5() {
           {/* Intuition */}
           <div className="bg-slate-800 rounded-lg p-4 mb-4">
             <p className="text-yellow-400 font-semibold mb-2">
-              💡 {isZh ? '直观理解' : 'Intuitive Understanding'}
+              {isZh ? '直观理解' : 'Intuitive Understanding'}
             </p>
             <p className="text-slate-300 text-sm">
               {isZh 
@@ -397,7 +397,7 @@ export default function Chapter5() {
 
           <div className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 rounded-lg p-4 border border-purple-700">
             <p className="text-purple-400 font-semibold mb-2">
-              🔑 {isZh ? '关键要点' : 'Key Takeaway'}
+              {isZh ? '关键要点' : 'Key Takeaway'}
             </p>
             <p className="text-slate-300 text-sm">
               {isZh 
@@ -416,7 +416,7 @@ export default function Chapter5() {
           {/* Why second fundamental form */}
           <div className="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 rounded-lg p-4 border border-yellow-700 mb-4">
             <p className="text-yellow-400 font-semibold mb-2">
-              🤔 {isZh ? '为什么接触数和第二基本形式有关？' : 'Why is Contact Number Related to Second Fundamental Form?'}
+              {isZh ? '为什么接触数和第二基本形式有关？' : 'Why is Contact Number Related to Second Fundamental Form?'}
             </p>
             <p className="text-slate-300 text-sm">
               {isZh 
@@ -428,7 +428,7 @@ export default function Chapter5() {
           <div className="space-y-4">
             <div className="bg-slate-800 rounded-lg p-4">
               <p className="text-purple-400 font-semibold mb-2">
-                📊 {isZh ? '接触数 ≥ 3 的条件' : 'Condition for Contact Number ≥ 3'}
+                {isZh ? '接触数 ≥ 3 的条件' : 'Condition for Contact Number ≥ 3'}
               </p>
               <p className="text-slate-300 text-sm mb-2">
                 {isZh 
@@ -443,7 +443,7 @@ export default function Chapter5() {
             
             <div className="bg-slate-800 rounded-lg p-4">
               <p className="text-purple-400 font-semibold mb-2">
-                📊 {isZh ? '接触数 ≥ 4 的条件' : 'Condition for Contact Number ≥ 4'}
+                {isZh ? '接触数 ≥ 4 的条件' : 'Condition for Contact Number ≥ 4'}
               </p>
               <p className="text-slate-300 text-sm mb-2">
                 {isZh 
@@ -458,7 +458,7 @@ export default function Chapter5() {
 
             <div className="bg-gradient-to-r from-cyan-900/50 to-purple-900/50 rounded-lg p-4 border border-cyan-700">
               <p className="text-cyan-400 font-semibold mb-2">
-                💡 {isZh ? '核心洞察' : 'Core Insight'}
+                {isZh ? '核心洞察' : 'Core Insight'}
               </p>
               <p className="text-slate-300">
                 {isZh 
@@ -472,7 +472,7 @@ export default function Chapter5() {
         {/* Why study contact number */}
         <section className="bg-gradient-to-r from-green-900/30 to-teal-900/30 rounded-xl p-6 border border-green-700">
           <h2 className="text-xl font-semibold text-green-400 mb-4">
-            🤔 {isZh ? '为什么研究接触数？' : 'Why Study Contact Number?'}
+            {isZh ? '为什么研究接触数？' : 'Why Study Contact Number?'}
           </h2>
           
           <div className="space-y-3 text-slate-300">
@@ -503,7 +503,7 @@ export default function Chapter5() {
         {/* Chapter Summary */}
         <section className="bg-gradient-to-r from-green-900/50 to-cyan-900/50 rounded-xl p-6 border border-green-700">
           <h2 className="text-xl font-semibold text-green-400 mb-4">
-            ✅ {isZh ? '本章小结' : 'Chapter Summary'}
+            {isZh ? '本章小结' : 'Chapter Summary'}
           </h2>
           <ul className="text-slate-300 text-sm space-y-2">
             <li>✓ {isZh ? '接触阶数：两条曲线在接触点处前k阶导数相等' : 'Contact order: two curves have first k derivatives equal at contact point'}</li>
@@ -516,7 +516,7 @@ export default function Chapter5() {
           {/* Thinking Questions */}
           <div className="mt-6 bg-slate-900 rounded-lg p-4">
             <p className="text-yellow-400 font-semibold mb-3">
-              🤔 {isZh ? '思考题' : 'Questions to Think About'}
+              {isZh ? '思考题' : 'Questions to Think About'}
             </p>
             <div className="space-y-3">
               <div>

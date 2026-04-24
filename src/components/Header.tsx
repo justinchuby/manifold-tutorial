@@ -10,17 +10,17 @@ export default function Header() {
   };
 
   return (
-    <header className="h-14 bg-slate-800 text-white flex items-center justify-between px-6 fixed top-0 left-0 right-0 lg:left-64 z-10">
+    <header className="h-14 bg-amber-50/95 text-stone-900 border-b border-amber-200/80 backdrop-blur flex items-center justify-between px-6 fixed top-0 left-0 right-0 lg:left-64 z-10">
       <div className="flex items-center gap-4 ml-10 lg:ml-0">
-        <span className="text-cyan-400 font-semibold">Contact Number</span>
-        <span className="text-slate-400 text-sm hidden lg:inline">|</span>
-        <span className="text-slate-300 text-sm hidden lg:inline">{t('app.subtitle')}</span>
+        <span className="text-teal-800 font-semibold">Contact Number</span>
+        <span className="text-stone-400 text-sm hidden lg:inline">|</span>
+        <span className="text-stone-600 text-sm hidden lg:inline">{t('app.subtitle')}</span>
       </div>
       <div className="flex items-center gap-4">
         <SearchBox />
         <button
           onClick={toggleLanguage}
-          className="px-3 py-1 rounded bg-slate-700 hover:bg-slate-600 text-sm transition-colors"
+          className="px-3 py-1 rounded bg-stone-900 text-amber-50 hover:bg-stone-700 text-sm transition-colors"
         >
           {i18n.language === 'zh' ? 'English' : '中文'}
         </button>

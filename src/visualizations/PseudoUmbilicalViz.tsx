@@ -2,6 +2,7 @@ import { useMemo, useState, useCallback, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Line } from '@react-three/drei';
 import * as THREE from 'three';
+import { VIZ_CLASSES, VIZ_COLORS } from './theme';
 
 // HSL to hex color for gradient wireframes
 function hsl(h: number, s: number, l: number): string {
@@ -113,8 +114,12 @@ function traceNormalSection(
 
 // Custom projection panel: 3 rows × 6 columns of sliders
 const AXIS_LABELS = ['x₁', 'x₂', 'x₃', 'x₄', 'x₅', 'x₆'];
-const ROW_COLORS = ['text-red-400', 'text-green-400', 'text-blue-400'];
-const ROW_ACCENTS = ['accent-red-500', 'accent-green-500', 'accent-blue-500'];
+const ROW_COLORS = ['text-rose-800', 'text-emerald-800', 'text-teal-800'];
+const ROW_ACCENTS = ['accent-rose-700', 'accent-emerald-700', 'accent-teal-700'];
+const RESET_BUTTON_CLASSES = {
+  purple: 'bg-teal-700 hover:bg-teal-800',
+  amber: 'bg-amber-700 hover:bg-amber-800',
+};
 
 function CustomProjectionPanel({
   matrix, onChange, onReset, accentColor = 'purple'
@@ -125,17 +130,17 @@ function CustomProjectionPanel({
   accentColor?: string;
 }) {
   return (
-    <div className="bg-slate-800 rounded-lg p-3 mt-2">
+    <div className={`${VIZ_CLASSES.panel} mt-2`}>
       <div className="flex items-center justify-between mb-2">
-        <span className="text-xs text-slate-300 font-semibold">🎛️ 自定义投影矩阵 (3×6)</span>
+        <span className="text-xs text-stone-700 font-semibold">🎛️ 自定义投影矩阵 (3×6)</span>
         <button
           onClick={onReset}
-          className={`px-2 py-0.5 rounded text-xs bg-${accentColor}-700 hover:bg-${accentColor}-600 text-white`}
+          className={`px-2 py-0.5 rounded text-xs text-white ${RESET_BUTTON_CLASSES[accentColor as keyof typeof RESET_BUTTON_CLASSES] ?? RESET_BUTTON_CLASSES.purple}`}
         >
           重置
         </button>
       </div>
-      <p className="text-slate-500 text-xs mb-2">
+      <p className="text-stone-500 text-xs mb-2">
         每行对应3D输出的一个轴，每列对应6D输入的一个分量。拖动滑块调整权重。
       </p>
       <div className="space-y-2">
@@ -145,7 +150,7 @@ function CustomProjectionPanel({
             <div className="flex-1 grid grid-cols-6 gap-1">
               {AXIS_LABELS.map((ax, col) => (
                 <div key={col} className="flex flex-col items-center">
-                  <span className="text-slate-500 text-[9px]">{ax}</span>
+                  <span className="text-stone-500 text-[9px]">{ax}</span>
                   <input
                     type="range"
                     min={-100}
@@ -302,19 +307,19 @@ function PseudoUmbilicalScene({ proj, highlightV, showNormalSection, paused }: {
       <ambientLight intensity={0.5} />
       <pointLight position={[5, 5, 5]} intensity={0.8} />
       {uLines.map((line, i) => (
-        <Line key={`u${i}`} points={line} color={hsl(0.70 + (i / uLines.length) * 0.30, 0.85, 0.35 + (i / uLines.length) * 0.20)} lineWidth={1} opacity={0.5} transparent />
+        <Line key={`u${i}`} points={line} color={hsl(0.48 + (i / uLines.length) * 0.05, 0.32, 0.34 + (i / uLines.length) * 0.15)} lineWidth={1} opacity={0.5} transparent />
       ))}
       {vLines.map((line, i) => (
-        <Line key={`v${i}`} points={line} color={hsl(0.30 + (i / vLines.length) * 0.50, 0.85, 0.25 + (i / vLines.length) * 0.30)} lineWidth={1.8} opacity={0.4} transparent />
+        <Line key={`v${i}`} points={line} color={hsl(0.08 + (i / vLines.length) * 0.08, 0.42, 0.35 + (i / vLines.length) * 0.16)} lineWidth={1.8} opacity={0.42} transparent />
       ))}
-      <Line points={highlightCurve} color="#22d3ee" lineWidth={3} />
+      <Line points={highlightCurve} color={VIZ_COLORS.geodesic} lineWidth={3} />
       {showNormalSection && normalSection.length > 2 && (
-        <Line points={normalSection} color="#f472b6" lineWidth={2.5} />
+        <Line points={normalSection} color={VIZ_COLORS.normalSection} lineWidth={2.5} />
       )}
       {animPt && (
         <mesh position={animPt}>
           <sphereGeometry args={[0.02, 12, 12]} />
-          <meshStandardMaterial color="#facc15" emissive="#facc15" emissiveIntensity={0.8} />
+          <meshStandardMaterial color={VIZ_COLORS.point} emissive={VIZ_COLORS.point} emissiveIntensity={0.42} />
         </mesh>
       )}
       <OrbitControls enableZoom enablePan={false} />
@@ -351,7 +356,7 @@ export function PseudoUmbilicalViz() {
 
   return (
     <div>
-      <div className="h-72 bg-slate-950 rounded-lg overflow-hidden mb-3">
+      <div className={`h-72 mb-3 ${VIZ_CLASSES.canvas}`}>
         <Canvas camera={{ position: [1.5, 1, 1.2], fov: 50 }}>
           <PseudoUmbilicalScene proj={activeProj} highlightV={highlightV} showNormalSection={showNormalSection} paused={paused} />
         </Canvas>
@@ -361,10 +366,10 @@ export function PseudoUmbilicalViz() {
           <button
             key={i}
             onClick={() => handlePresetClick(i)}
-            className={`px-3 py-1 rounded text-xs transition-colors ${
+            className={`px-3 py-1 rounded-xl border text-xs transition-all ${
               !customMode && i === projIndex
-                ? 'bg-purple-600 text-white'
-                : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                ? 'border-teal-600 bg-teal-700/[0.12] text-teal-900'
+                : 'border-amber-900/20 bg-white/45 text-stone-700 hover:border-teal-700/45'
             }`}
           >
             {p.name_zh}
@@ -372,10 +377,10 @@ export function PseudoUmbilicalViz() {
         ))}
         <button
           onClick={() => { setCustomMode(true); setCustomMatrix(PROJECTIONS[projIndex].matrix.map(r => [...r])); }}
-          className={`px-3 py-1 rounded text-xs transition-colors ${
+          className={`px-3 py-1 rounded-xl border text-xs transition-all ${
             customMode
-              ? 'bg-yellow-600 text-white'
-              : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+              ? 'border-amber-700 bg-amber-700/[0.14] text-amber-900'
+              : 'border-amber-900/20 bg-white/45 text-stone-700 hover:border-amber-700/45'
           }`}
         >
           🎛️ 自定义
@@ -389,10 +394,10 @@ export function PseudoUmbilicalViz() {
           accentColor="purple"
         />
       ) : (
-        <p className="text-slate-500 text-xs mb-2 italic">{PROJECTIONS[projIndex].desc_zh}</p>
+        <p className="text-stone-500 text-xs mb-2 italic">{PROJECTIONS[projIndex].desc_zh}</p>
       )}
-      <div className="flex items-center gap-3 text-xs text-slate-400 mt-2">
-        <span className="text-cyan-400 font-mono whitespace-nowrap">
+      <div className="flex items-center gap-3 text-xs text-stone-600 mt-2">
+        <span className="text-teal-800 font-mono whitespace-nowrap">
           v₀ = {(highlightV * 100).toFixed(0)}% · T<sub>v</sub>
         </span>
         <input
@@ -401,18 +406,18 @@ export function PseudoUmbilicalViz() {
           max={100}
           value={Math.round(highlightV * 100)}
           onChange={e => setHighlightV(Number(e.target.value) / 100)}
-          className="flex-1 accent-cyan-500"
+          className="flex-1 accent-teal-700"
         />
         <button
           onClick={() => setHighlightV(0)}
-          className="px-2 py-0.5 rounded bg-slate-700 hover:bg-slate-600 text-slate-300"
+          className="px-2 py-0.5 rounded bg-white/55 hover:bg-white/80 text-stone-700 border border-amber-900/20"
         >
           v=0
         </button>
         <button
           onClick={() => setShowNormalSection(v => !v)}
           className={`px-2 py-0.5 rounded text-xs transition-colors ${
-            showNormalSection ? 'bg-pink-600 text-white' : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+            showNormalSection ? 'bg-rose-700 text-white' : 'bg-white/55 text-stone-700 border border-amber-900/20 hover:bg-white/80'
           }`}
         >
           法截线
@@ -420,7 +425,7 @@ export function PseudoUmbilicalViz() {
         <button
           onClick={() => setPaused(v => !v)}
           className={`px-2 py-0.5 rounded text-xs transition-colors ${
-            paused ? 'bg-yellow-600 text-white' : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+            paused ? 'bg-amber-700 text-white' : 'bg-white/55 text-stone-700 border border-amber-900/20 hover:bg-white/80'
           }`}
         >
           {paused ? '▶' : '⏸'}
@@ -609,21 +614,21 @@ function NonSphericalScene({ proj, highlightU, showNormalSection, paused }: { pr
       <ambientLight intensity={0.5} />
       <pointLight position={[5, 5, 5]} intensity={0.8} />
       {uLines.map((line, i) => (
-        <Line key={`u${i}`} points={line} color={hsl(0.00 + (i / uLines.length) * 0.20, 0.85, 0.35 + (i / uLines.length) * 0.20)} lineWidth={1} opacity={0.5} transparent />
+        <Line key={`u${i}`} points={line} color={hsl(0.02 + (i / uLines.length) * 0.08, 0.45, 0.36 + (i / uLines.length) * 0.15)} lineWidth={1} opacity={0.5} transparent />
       ))}
       {vLines.map((line, i) => (
-        <Line key={`v${i}`} points={line} color={hsl(0.20 + (i / vLines.length) * 0.50, 0.85, 0.25 + (i / vLines.length) * 0.30)} lineWidth={1.8} opacity={0.4} transparent />
+        <Line key={`v${i}`} points={line} color={hsl(0.46 + (i / vLines.length) * 0.06, 0.34, 0.32 + (i / vLines.length) * 0.18)} lineWidth={1.8} opacity={0.42} transparent />
       ))}
       {highlightCurve.length > 2 && (
-        <Line points={highlightCurve} color="#4ade80" lineWidth={3} />
+        <Line points={highlightCurve} color={VIZ_COLORS.tangent} lineWidth={3} />
       )}
       {showNormalSection && normalSection.length > 2 && (
-        <Line points={normalSection} color="#f472b6" lineWidth={2.5} />
+        <Line points={normalSection} color={VIZ_COLORS.normalSection} lineWidth={2.5} />
       )}
       {animPt && (
         <mesh position={animPt}>
           <sphereGeometry args={[0.015, 12, 12]} />
-          <meshStandardMaterial color="#facc15" emissive="#facc15" emissiveIntensity={0.8} />
+          <meshStandardMaterial color={VIZ_COLORS.point} emissive={VIZ_COLORS.point} emissiveIntensity={0.42} />
         </mesh>
       )}
       <OrbitControls enableZoom enablePan={false} />
@@ -660,7 +665,7 @@ export function NonSphericalPUViz() {
 
   return (
     <div>
-      <div className="h-72 bg-slate-950 rounded-lg overflow-hidden mb-3">
+      <div className={`h-72 mb-3 ${VIZ_CLASSES.canvas}`}>
         <Canvas camera={{ position: [2, 1.5, 1.5], fov: 50 }}>
           <NonSphericalScene proj={activeProj} highlightU={highlightU} showNormalSection={showNormalSection} paused={paused} />
         </Canvas>
@@ -670,10 +675,10 @@ export function NonSphericalPUViz() {
           <button
             key={i}
             onClick={() => handlePresetClick(i)}
-            className={`px-3 py-1 rounded text-xs transition-colors ${
+            className={`px-3 py-1 rounded-xl border text-xs transition-all ${
               !customMode && i === projIndex
-                ? 'bg-amber-600 text-white'
-                : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                ? 'border-amber-700 bg-amber-700/[0.14] text-amber-900'
+                : 'border-amber-900/20 bg-white/45 text-stone-700 hover:border-amber-700/45'
             }`}
           >
             {p.name_zh}
@@ -681,10 +686,10 @@ export function NonSphericalPUViz() {
         ))}
         <button
           onClick={() => { setCustomMode(true); setCustomMatrix(NS_PROJECTIONS[projIndex].matrix.map(r => [...r])); }}
-          className={`px-3 py-1 rounded text-xs transition-colors ${
+          className={`px-3 py-1 rounded-xl border text-xs transition-all ${
             customMode
-              ? 'bg-yellow-600 text-white'
-              : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+              ? 'border-amber-700 bg-amber-700/[0.14] text-amber-900'
+              : 'border-amber-900/20 bg-white/45 text-stone-700 hover:border-amber-700/45'
           }`}
         >
           🎛️ 自定义
@@ -698,10 +703,10 @@ export function NonSphericalPUViz() {
           accentColor="amber"
         />
       ) : (
-        <p className="text-slate-500 text-xs mb-2 italic">{NS_PROJECTIONS[projIndex].desc_zh}</p>
+        <p className="text-stone-500 text-xs mb-2 italic">{NS_PROJECTIONS[projIndex].desc_zh}</p>
       )}
-      <div className="flex items-center gap-3 text-xs text-slate-400 mt-2">
-        <span className="text-green-400 font-mono whitespace-nowrap">
+      <div className="flex items-center gap-3 text-xs text-stone-600 mt-2">
+        <span className="text-emerald-800 font-mono whitespace-nowrap">
           u = {highlightU === 0 ? '0' : (highlightU > 0 ? '+' : '') + (highlightU * 0.92).toFixed(2)} · u<sub>max</sub>
         </span>
         <input
@@ -710,18 +715,18 @@ export function NonSphericalPUViz() {
           max={100}
           value={Math.round(highlightU * 100)}
           onChange={e => setHighlightU(Number(e.target.value) / 100)}
-          className="flex-1 accent-green-500"
+          className="flex-1 accent-emerald-700"
         />
         <button
           onClick={() => setHighlightU(0)}
-          className="px-2 py-0.5 rounded bg-slate-700 hover:bg-slate-600 text-slate-300"
+          className="px-2 py-0.5 rounded bg-white/55 hover:bg-white/80 text-stone-700 border border-amber-900/20"
         >
           赤道
         </button>
         <button
           onClick={() => setShowNormalSection(v => !v)}
           className={`px-2 py-0.5 rounded text-xs transition-colors ${
-            showNormalSection ? 'bg-pink-600 text-white' : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+            showNormalSection ? 'bg-rose-700 text-white' : 'bg-white/55 text-stone-700 border border-amber-900/20 hover:bg-white/80'
           }`}
         >
           法截线
@@ -729,7 +734,7 @@ export function NonSphericalPUViz() {
         <button
           onClick={() => setPaused(v => !v)}
           className={`px-2 py-0.5 rounded text-xs transition-colors ${
-            paused ? 'bg-yellow-600 text-white' : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+            paused ? 'bg-amber-700 text-white' : 'bg-white/55 text-stone-700 border border-amber-900/20 hover:bg-white/80'
           }`}
         >
           {paused ? '▶' : '⏸'}

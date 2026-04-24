@@ -4,21 +4,221 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color-scheme: light dark;
+  color-scheme: light;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --paper-cyan: 31 111 120;
+  --paper-rose: 153 74 86;
+  --paper-amber: 168 112 45;
+  --paper-emerald: 70 124 93;
+  --paper-line: 190 157 111;
+  --ink: 58 45 34;
+  --muted-ink: 118 96 72;
+  --paper: 255 252 245;
+  --paper-soft: 246 234 211;
+  --paper-wash: 236 218 190;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background:
+    radial-gradient(circle at 18% 8%, rgba(214, 158, 80, 0.18), transparent 28rem),
+    radial-gradient(circle at 86% 14%, rgba(31, 111, 120, 0.11), transparent 30rem),
+    linear-gradient(180deg, #fffaf1 0%, #f2e2c4 52%, #fffdf7 100%);
 }
 
 /* KaTeX styles */
 .katex-display {
   overflow-x: auto;
   overflow-y: hidden;
+}
+
+@layer components {
+  .article-shell {
+    min-height: 100vh;
+    color: rgb(var(--ink));
+    background:
+      linear-gradient(90deg, rgba(120, 83, 39, 0.028) 1px, transparent 1px),
+      linear-gradient(rgba(120, 83, 39, 0.024) 1px, transparent 1px),
+      radial-gradient(circle at 22% 8%, rgba(214, 158, 80, 0.14), transparent 28rem),
+      radial-gradient(circle at 84% 18%, rgba(31, 111, 120, 0.11), transparent 30rem),
+      linear-gradient(180deg, #fffaf1, #f2e2c4 46%, #fffdf7);
+    background-size: 36px 36px, 36px 36px, auto, auto, auto;
+  }
+
+  .article-shell main {
+    color: rgb(var(--ink));
+  }
+
+  .article-shell main :is(.text-white, .text-slate-100, .text-slate-200) {
+    color: rgb(48, 38, 29) !important;
+  }
+
+  .article-shell main :is(.text-slate-300, .text-slate-400) {
+    color: rgb(var(--muted-ink)) !important;
+  }
+
+  .article-shell main :is(.text-slate-500, .text-slate-600) {
+    color: rgb(139, 112, 80) !important;
+  }
+
+  .article-shell main .text-cyan-300,
+  .article-shell main .text-cyan-400,
+  .article-shell main .text-blue-400 {
+    color: rgb(var(--paper-cyan)) !important;
+  }
+
+  .article-shell main .text-purple-400,
+  .article-shell main .text-pink-400 {
+    color: rgb(var(--paper-rose)) !important;
+  }
+
+  .article-shell main .text-yellow-400,
+  .article-shell main .text-orange-400 {
+    color: rgb(var(--paper-amber)) !important;
+  }
+
+  .article-shell main .text-green-400,
+  .article-shell main .text-emerald-400 {
+    color: rgb(var(--paper-emerald)) !important;
+  }
+
+  .article-shell main .bg-cyan-600 {
+    color: #fffaf1 !important;
+    background-color: rgb(var(--paper-cyan)) !important;
+    background-image: linear-gradient(135deg, rgb(var(--paper-cyan)), rgb(16, 93, 93)) !important;
+    box-shadow: 0 14px 30px rgba(31, 111, 120, 0.18);
+  }
+
+  .article-shell main .hover\:bg-cyan-500:hover {
+    color: #fffaf1 !important;
+    background-color: rgb(16, 93, 93) !important;
+    background-image: linear-gradient(135deg, rgb(20, 101, 95), rgb(131, 86, 36)) !important;
+  }
+
+  .article-shell main .bg-slate-900,
+  .article-shell main .bg-slate-800,
+  .article-shell main .bg-slate-700,
+  .article-shell main .bg-slate-950 {
+    background-color: rgba(var(--paper), 0.78) !important;
+  }
+
+  .article-shell main .bg-slate-900\/80,
+  .article-shell main .bg-slate-900\/90,
+  .article-shell main .bg-slate-950\/85,
+  .article-shell main .bg-slate-950\/90 {
+    background-color: rgba(255, 250, 241, 0.92) !important;
+  }
+
+  .article-shell main .bg-gradient-to-r {
+    background-image:
+      linear-gradient(135deg, rgba(255, 250, 241, 0.88), rgba(248, 238, 220, 0.72)),
+      radial-gradient(circle at top right, rgba(var(--paper-amber), 0.09), transparent 18rem) !important;
+  }
+
+  main .max-w-4xl > header {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(var(--paper-line), 0.32);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    background:
+      linear-gradient(135deg, rgba(255, 253, 248, 0.96), rgba(246, 234, 211, 0.82)),
+      radial-gradient(circle at top right, rgba(var(--paper-cyan), 0.09), transparent 18rem);
+    box-shadow: 0 24px 80px rgba(120, 83, 39, 0.11);
+  }
+
+  main .max-w-4xl > header::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(148, 163, 184, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 163, 184, 0.035) 1px, transparent 1px);
+    background-size: 28px 28px;
+    mask-image: linear-gradient(90deg, transparent, black 18%, black 82%, transparent);
+  }
+
+  main .max-w-4xl > .space-y-8 > section,
+  main .max-w-4xl > section {
+    position: relative;
+    overflow: hidden;
+    border-color: rgba(var(--paper-line), 0.24) !important;
+    background-image:
+      linear-gradient(135deg, rgba(255, 252, 245, 0.92), rgba(246, 234, 211, 0.78)),
+      radial-gradient(circle at top right, rgba(var(--paper-cyan), 0.065), transparent 22rem) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.85),
+      0 18px 48px rgba(120, 83, 39, 0.1);
+    scroll-margin-top: 5rem;
+  }
+
+  main .max-w-4xl > .space-y-8 > section::before,
+  main .max-w-4xl > section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 1.5rem;
+    right: 1.5rem;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(var(--paper-line), 0.62), transparent);
+  }
+
+  main section h2 {
+    letter-spacing: -0.015em;
+  }
+
+  main section h2[id]::after {
+    content: "";
+    display: block;
+    width: 3rem;
+    height: 2px;
+    margin-top: 0.65rem;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgb(var(--paper-cyan)), rgba(var(--paper-rose), 0.7));
+  }
+
+  main section .bg-slate-800.rounded-lg,
+  main section .bg-slate-900.rounded-lg,
+  main section .bg-gradient-to-r.rounded-lg {
+    border: 1px solid rgba(var(--paper-line), 0.2);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.75),
+      0 12px 30px rgba(120, 83, 39, 0.065);
+    backdrop-filter: blur(10px);
+  }
+
+  main .katex-display {
+    border: 1px solid rgba(var(--paper-line), 0.2);
+    border-radius: 0.75rem;
+    padding: 0.85rem 1rem;
+    color: rgb(var(--ink));
+    background:
+      linear-gradient(135deg, rgba(255, 253, 248, 0.94), rgba(246, 234, 211, 0.74));
+  }
+
+  main canvas {
+    background:
+      radial-gradient(circle at 50% 35%, rgba(var(--paper-cyan), 0.1), transparent 16rem),
+      linear-gradient(180deg, #fff9eb, #ead6b4);
+  }
+
+  main .bg-slate-900.rounded-xl.overflow-hidden,
+  main .bg-slate-900.rounded-lg.overflow-hidden {
+    border: 1px solid rgba(var(--paper-line), 0.22);
+    box-shadow: 0 20px 55px rgba(120, 83, 39, 0.12);
+  }
+
+  main details summary {
+    list-style: none;
+  }
+
+  main details summary::-webkit-details-marker {
+    display: none;
+  }
 }

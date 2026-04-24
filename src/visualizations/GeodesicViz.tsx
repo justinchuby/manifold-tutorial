@@ -2,9 +2,17 @@ import { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Line, Sphere } from '@react-three/drei';
 import * as THREE from 'three';
+import { VIZ_CLASSES, VIZ_COLORS } from './theme';
+
+const COLORS = {
+  geodesic: VIZ_COLORS.geodesic,
+  comparison: VIZ_COLORS.comparison,
+  point: VIZ_COLORS.point,
+  surface: VIZ_COLORS.surface,
+};
 
 // Geodesic (great circle) on a sphere
-function GeodesicOnSphere({ color = '#00ffff', phase = 0, tilt = 0 }: { color?: string; phase?: number; tilt?: number }) {
+function GeodesicOnSphere({ color = COLORS.geodesic, phase = 0, tilt = 0, opacity = 1 }: { color?: string; phase?: number; tilt?: number; opacity?: number }) {
   const points = useMemo(() => {
     const pts: THREE.Vector3[] = [];
     for (let i = 0; i <= 64; i++) {
@@ -24,11 +32,11 @@ function GeodesicOnSphere({ color = '#00ffff', phase = 0, tilt = 0 }: { color?: 
     return pts;
   }, [phase, tilt]);
 
-  return <Line points={points} color={color} lineWidth={3} />;
+  return <Line points={points} color={color} lineWidth={3} transparent opacity={opacity} />;
 }
 
 // Non-geodesic (latitude circle)
-function LatitudeCircle({ lat = 45, color = '#ff6600' }: { lat?: number; color?: string }) {
+function LatitudeCircle({ lat = 45, color = COLORS.comparison }: { lat?: number; color?: string }) {
   const points = useMemo(() => {
     const pts: THREE.Vector3[] = [];
     const phi = (lat * Math.PI) / 180;
@@ -45,7 +53,7 @@ function LatitudeCircle({ lat = 45, color = '#ff6600' }: { lat?: number; color?:
 }
 
 // Animated point traveling along geodesic
-function TravelingPoint({ tilt = 0, color = '#ffff00' }: { tilt?: number; color?: string }) {
+function TravelingPoint({ tilt = 0, color = COLORS.point }: { tilt?: number; color?: string }) {
   const ref = useRef<THREE.Mesh>(null);
   
   useFrame(({ clock }) => {
@@ -76,30 +84,34 @@ function GeodesicScene() {
       {/* Transparent sphere */}
       <Sphere args={[1, 32, 32]}>
         <meshStandardMaterial 
-          color="#1a3a5c" 
+          color={COLORS.surface} 
+          emissive={VIZ_COLORS.surfaceDeep}
+          emissiveIntensity={0.06}
           transparent 
-          opacity={0.3} 
+          opacity={0.42} 
           wireframe={false}
+          roughness={0.74}
+          metalness={0.02}
           side={THREE.DoubleSide}
         />
       </Sphere>
       
       {/* Wireframe */}
       <Sphere args={[1.001, 16, 16]}>
-        <meshBasicMaterial color="#334455" wireframe />
+        <meshBasicMaterial color={VIZ_COLORS.surfaceWire} wireframe transparent opacity={0.62} />
       </Sphere>
       
       {/* Geodesics (great circles) */}
-      <GeodesicOnSphere color="#00ffff" phase={0} tilt={0} />
-      <GeodesicOnSphere color="#00ff88" phase={Math.PI / 3} tilt={Math.PI / 4} />
-      <GeodesicOnSphere color="#88ff00" phase={Math.PI / 2} tilt={Math.PI / 2} />
+      <GeodesicOnSphere phase={0} tilt={0} opacity={1} />
+      <GeodesicOnSphere phase={Math.PI / 3} tilt={Math.PI / 4} opacity={0.72} />
+      <GeodesicOnSphere phase={Math.PI / 2} tilt={Math.PI / 2} opacity={0.48} />
       
       {/* Non-geodesic latitude circles */}
-      <LatitudeCircle lat={45} color="#ff6600" />
-      <LatitudeCircle lat={-30} color="#ff3366" />
+      <LatitudeCircle lat={45} />
+      <LatitudeCircle lat={-30} color={VIZ_COLORS.normalSection} />
       
       {/* Traveling point */}
-      <TravelingPoint tilt={Math.PI / 4} color="#ffff00" />
+      <TravelingPoint tilt={Math.PI / 4} color={VIZ_COLORS.point} />
       
       <OrbitControls enableZoom={true} enablePan={false} />
     </>
@@ -108,7 +120,7 @@ function GeodesicScene() {
 
 export default function GeodesicViz() {
   return (
-    <div className="w-full h-80 bg-slate-900 rounded-xl overflow-hidden">
+    <div className={`w-full h-80 ${VIZ_CLASSES.canvas}`}>
       <Canvas camera={{ position: [2.5, 2, 2.5], fov: 45 }}>
         <GeodesicScene />
       </Canvas>
@@ -122,16 +134,16 @@ export function GeodesicVizWithLabels() {
       <GeodesicViz />
       <div className="flex flex-wrap gap-4 text-sm">
         <div className="flex items-center gap-2">
-          <div className="w-4 h-1 bg-cyan-400 rounded"></div>
-          <span className="text-slate-300">大圆/测地线 (Geodesics)</span>
+          <div className="w-4 h-1 rounded bg-[#1f6f78]"></div>
+          <span className="text-stone-700">大圆/测地线 (Geodesics)</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-1 bg-orange-500 rounded border-dashed"></div>
-          <span className="text-slate-300">纬线圈 (Latitude - not geodesic)</span>
+          <div className="w-4 h-1 rounded bg-[#9b6a3a] border-dashed"></div>
+          <span className="text-stone-700">纬线圈 (Latitude - not geodesic)</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
-          <span className="text-slate-300">沿测地线移动的点</span>
+          <div className="w-3 h-3 rounded-full bg-[#d7b84f]"></div>
+          <span className="text-stone-700">沿测地线移动的点</span>
         </div>
       </div>
     </div>

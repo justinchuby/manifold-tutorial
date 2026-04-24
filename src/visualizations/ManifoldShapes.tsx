@@ -4,6 +4,16 @@ import { Sphere, Torus } from '@react-three/drei';
 import * as THREE from 'three';
 import type { Mesh } from 'three';
 
+const MANIFOLD_COLORS = {
+  sphere: '#2f7f88',
+  torus: '#8b6f47',
+  klein: '#b8793a',
+  figure8: '#a45f6d',
+  mobius: '#5f8c72',
+  plane: '#2f7f88',
+  normal: '#b8793a',
+};
+
 export function RotatingSphere({ position = [0, 0, 0] as [number, number, number] }) {
   const ref = useRef<Mesh>(null);
   
@@ -15,7 +25,7 @@ export function RotatingSphere({ position = [0, 0, 0] as [number, number, number
 
   return (
     <Sphere ref={ref} args={[1, 64, 64]} position={position}>
-      <meshStandardMaterial color="#06b6d4" wireframe />
+      <meshStandardMaterial color={MANIFOLD_COLORS.sphere} wireframe />
     </Sphere>
   );
 }
@@ -32,7 +42,7 @@ export function RotatingTorus({ position = [0, 0, 0] as [number, number, number]
 
   return (
     <Torus ref={ref} args={[1, 0.4, 32, 64]} position={position}>
-      <meshStandardMaterial color="#8b5cf6" wireframe />
+      <meshStandardMaterial color={MANIFOLD_COLORS.torus} wireframe />
     </Torus>
   );
 }
@@ -107,7 +117,7 @@ export function RotatingKleinBottle({ position = [0, 0, 0] as [number, number, n
 
   return (
     <mesh ref={ref} geometry={geometry} position={position}>
-      <meshStandardMaterial color="#f59e0b" wireframe side={THREE.DoubleSide} />
+      <meshStandardMaterial color={MANIFOLD_COLORS.klein} wireframe side={THREE.DoubleSide} />
     </mesh>
   );
 }
@@ -176,7 +186,7 @@ export function KleinBottleFigure8({ position = [0, 0, 0] as [number, number, nu
 
   return (
     <mesh ref={ref} geometry={geometry} position={position}>
-      <meshStandardMaterial color="#ec4899" wireframe side={THREE.DoubleSide} />
+      <meshStandardMaterial color={MANIFOLD_COLORS.figure8} wireframe side={THREE.DoubleSide} />
     </mesh>
   );
 }
@@ -239,7 +249,7 @@ export function MobiusStrip({ position = [0, 0, 0] as [number, number, number] }
 
   return (
     <mesh ref={ref} geometry={geometry} position={position}>
-      <meshStandardMaterial color="#10b981" wireframe side={THREE.DoubleSide} />
+      <meshStandardMaterial color={MANIFOLD_COLORS.mobius} wireframe side={THREE.DoubleSide} />
     </mesh>
   );
 }
@@ -254,14 +264,14 @@ export function TangentPlane({
       {/* Tangent plane */}
       <mesh rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[1.5, 1.5]} />
-        <meshStandardMaterial color="#06b6d4" opacity={0.3} transparent side={2} />
+        <meshStandardMaterial color={MANIFOLD_COLORS.plane} opacity={0.3} transparent side={2} />
       </mesh>
       {/* Normal vector */}
       <arrowHelper args={[
-        { x: normal[0], y: normal[1], z: normal[2] } as any,
-        { x: 0, y: 0, z: 0 } as any,
+        new THREE.Vector3(normal[0], normal[1], normal[2]),
+        new THREE.Vector3(0, 0, 0),
         0.8,
-        0xff6b6b
+        0xb8793a
       ]} />
     </group>
   );

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
@@ -172,26 +172,22 @@ export default function SearchBox() {
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
-  const [results, setResults] = useState<typeof searchIndex.zh>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const isZh = i18n.language === 'zh';
   const index = isZh ? searchIndex.zh : searchIndex.en;
 
-  useEffect(() => {
+  const results = useMemo(() => {
     if (query.trim().length < 1) {
-      setResults([]);
-      return;
+      return [];
     }
     
     const q = query.toLowerCase();
-    const filtered = index.filter(item => 
+    return index.filter(item => 
       item.term.toLowerCase().includes(q) || 
       item.description.toLowerCase().includes(q)
     ).slice(0, 10);
-    
-    setResults(filtered);
   }, [query, index]);
 
   useEffect(() => {
@@ -220,8 +216,8 @@ export default function SearchBox() {
 
   return (
     <div ref={containerRef} className="relative">
-      <div className="flex items-center bg-slate-700 rounded-lg px-3 py-1.5">
-        <svg className="w-4 h-4 text-slate-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="flex items-center bg-white/70 border border-amber-200 rounded-lg px-3 py-1.5 shadow-sm">
+        <svg className="w-4 h-4 text-stone-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
         <input
@@ -231,33 +227,33 @@ export default function SearchBox() {
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setIsOpen(true)}
           placeholder={isZh ? '搜索概念...' : 'Search concepts...'}
-          className="bg-transparent border-none outline-none text-white text-sm w-40 placeholder-slate-400"
+          className="bg-transparent border-none outline-none text-stone-800 text-sm w-40 placeholder-stone-400"
         />
       </div>
       
       {isOpen && results.length > 0 && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-slate-800 border border-slate-600 rounded-lg shadow-xl overflow-hidden z-50 min-w-[300px]">
+        <div className="absolute top-full left-0 right-0 mt-2 bg-amber-50 border border-amber-200 rounded-lg shadow-xl overflow-hidden z-50 min-w-[300px]">
           {results.map((result, idx) => (
             <button
               key={idx}
               onClick={() => handleSelect(result.chapter, result.section)}
-              className="w-full px-4 py-3 text-left hover:bg-slate-700 border-b border-slate-700 last:border-b-0 transition-colors"
+              className="w-full px-4 py-3 text-left hover:bg-amber-100 border-b border-amber-200 last:border-b-0 transition-colors"
             >
               <div className="flex items-center justify-between">
-                <span className="text-cyan-400 font-medium">{result.term}</span>
-                <span className="text-slate-500 text-xs">
+                <span className="text-teal-800 font-medium">{result.term}</span>
+                <span className="text-stone-500 text-xs">
                   {isZh ? '第' : 'Ch.'}{result.chapter} §{result.section}
                 </span>
               </div>
-              <p className="text-slate-400 text-sm mt-1 truncate">{result.description}</p>
+              <p className="text-stone-600 text-sm mt-1 truncate">{result.description}</p>
             </button>
           ))}
         </div>
       )}
       
       {isOpen && query.trim().length > 0 && results.length === 0 && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-slate-800 border border-slate-600 rounded-lg shadow-xl p-4 z-50">
-          <p className="text-slate-400 text-sm text-center">
+        <div className="absolute top-full left-0 right-0 mt-2 bg-amber-50 border border-amber-200 rounded-lg shadow-xl p-4 z-50">
+          <p className="text-stone-600 text-sm text-center">
             {isZh ? '未找到相关概念' : 'No concepts found'}
           </p>
         </div>

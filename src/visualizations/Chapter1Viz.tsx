@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ThreeCanvas } from '../components';
 import { RotatingSphere, RotatingTorus, RotatingKleinBottle, KleinBottleFigure8, MobiusStrip } from './ManifoldShapes';
+import { VIZ_CLASSES } from './theme';
 
 type ManifoldType = 'sphere' | 'torus' | 'klein' | 'klein8' | 'mobius';
 
@@ -61,9 +62,9 @@ export default function Chapter1Viz() {
   const currentManifold = manifolds.find(m => m.id === selected)!;
 
   return (
-    <div className="bg-slate-900 rounded-xl p-6">
-      <h3 className="text-lg font-semibold text-cyan-400 mb-4">
-        🎮 {isZh ? '交互式流形展示' : 'Interactive Manifold Display'}
+    <div className={VIZ_CLASSES.panel}>
+      <h3 className="text-lg font-semibold text-teal-800 mb-4">
+        {isZh ? '交互式流形展示' : 'Interactive Manifold Display'}
       </h3>
       
       <div className="flex flex-wrap gap-2 mb-4">
@@ -71,10 +72,10 @@ export default function Chapter1Viz() {
           <button
             key={m.id}
             onClick={() => setSelected(m.id)}
-            className={`px-4 py-2 rounded-lg text-sm transition-colors ${
+            className={`rounded-xl border-2 px-4 py-2 text-sm transition-all ${
               selected === m.id
-                ? 'bg-cyan-600 text-white'
-                : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                ? VIZ_CLASSES.buttonActive
+                : VIZ_CLASSES.buttonIdle
             }`}
           >
             {isZh ? m.label : m.labelEn}
@@ -82,14 +83,14 @@ export default function Chapter1Viz() {
         ))}
       </div>
 
-      <ThreeCanvas className="w-full h-80 rounded-lg bg-slate-950">
+      <ThreeCanvas className={`w-full h-80 ${VIZ_CLASSES.canvas}`}>
         {renderManifold()}
       </ThreeCanvas>
 
-      <p className="text-center text-slate-400 mt-4 text-sm">
+      <p className="text-center text-stone-700 mt-4 text-sm">
         {isZh ? currentManifold.desc : currentManifold.descEn}
         <br />
-        <span className="text-slate-500">
+        <span className="text-stone-500">
           {isZh ? '拖拽旋转 · 滚轮缩放' : 'Drag to rotate · Scroll to zoom'}
         </span>
       </p>

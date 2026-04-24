@@ -2,6 +2,15 @@ import { useMemo, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Line, Sphere } from '@react-three/drei';
 import * as THREE from 'three';
+import { VIZ_CLASSES, VIZ_COLORS } from './theme';
+
+const COLORS = {
+  isotropic: VIZ_COLORS.geodesic,
+  comparison: VIZ_COLORS.comparison,
+  tangent: VIZ_COLORS.tangent,
+  point: VIZ_COLORS.point,
+  surface: VIZ_COLORS.surface,
+};
 
 // Isotropic visualization - h(u,u) has same length in all directions
 function IsotropicScene() {
@@ -43,16 +52,25 @@ function IsotropicScene() {
       
       {/* Sphere (isotropic example) */}
       <Sphere args={[1, 32, 32]}>
-        <meshStandardMaterial color="#1a5a3c" transparent opacity={0.5} />
+        <meshStandardMaterial
+          color={COLORS.surface}
+          emissive={VIZ_COLORS.surfaceDeep}
+          emissiveIntensity={0.06}
+          transparent
+          opacity={0.42}
+          roughness={0.74}
+          metalness={0.02}
+          side={THREE.DoubleSide}
+        />
       </Sphere>
       <Sphere args={[1.001, 16, 16]}>
-        <meshBasicMaterial color="#2a7a5c" wireframe />
+        <meshBasicMaterial color={VIZ_COLORS.surfaceWire} wireframe transparent opacity={0.62} />
       </Sphere>
       
       {/* Point at top */}
       <mesh position={[0, 0, 1]}>
         <sphereGeometry args={[0.06, 16, 16]} />
-        <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={0.5} />
+        <meshStandardMaterial color={COLORS.point} emissive={COLORS.point} emissiveIntensity={0.65} />
       </mesh>
       
       {/* h(u,u) arrows - all same length (isotropic) */}
@@ -60,7 +78,7 @@ function IsotropicScene() {
         <Line 
           key={idx} 
           points={[arrow.start, arrow.end]} 
-          color="#00ffff" 
+          color={COLORS.isotropic} 
           lineWidth={3}
         />
       ))}
@@ -72,7 +90,7 @@ function IsotropicScene() {
             new THREE.Vector3(0, 0, 1),
             new THREE.Vector3(0.5, 0, 1)
           ]} 
-          color="#ffff00" 
+          color={COLORS.tangent} 
           lineWidth={4}
         />
       </group>
@@ -85,7 +103,7 @@ function IsotropicScene() {
             const a = (i / 32) * Math.PI * 2;
             pts.push(new THREE.Vector3(0.15 * Math.cos(a), 0.15 * Math.sin(a), 0));
           }
-          return <Line points={pts} color="#00ff00" lineWidth={2} />;
+          return <Line points={pts} color={COLORS.isotropic} lineWidth={2} />;
         })()}
       </group>
       
@@ -152,13 +170,13 @@ function NonIsotropicScene() {
       
       {/* Ellipsoid wireframe */}
       {ellipsoidPoints.map((row, i) => (
-        <Line key={`row-${i}`} points={row} color="#5a3a1c" lineWidth={1} />
+        <Line key={`row-${i}`} points={row} color={VIZ_COLORS.comparison} lineWidth={1} transparent opacity={0.58} />
       ))}
       
       {/* Point at top */}
       <mesh position={[0, 0, 0.8]}>
         <sphereGeometry args={[0.05, 16, 16]} />
-        <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={0.5} />
+        <meshStandardMaterial color={COLORS.point} emissive={COLORS.point} emissiveIntensity={0.65} />
       </mesh>
       
       {/* h(u,u) arrows - different lengths (non-isotropic) */}
@@ -166,7 +184,7 @@ function NonIsotropicScene() {
         <Line 
           key={idx} 
           points={[arrow.start, arrow.end]} 
-          color="#ff6600" 
+          color={COLORS.comparison} 
           lineWidth={3}
         />
       ))}
@@ -179,7 +197,7 @@ function NonIsotropicScene() {
             const a = (i / 32) * Math.PI * 2;
             pts.push(new THREE.Vector3(0.2 * Math.cos(a), 0.1 * Math.sin(a), 0));
           }
-          return <Line points={pts} color="#ff4444" lineWidth={2} />;
+          return <Line points={pts} color={COLORS.comparison} lineWidth={2} />;
         })()}
       </group>
       
@@ -190,7 +208,7 @@ function NonIsotropicScene() {
 
 export function IsotropicViz() {
   return (
-    <div className="w-full h-64 bg-slate-900 rounded-xl overflow-hidden">
+    <div className={`w-full h-64 ${VIZ_CLASSES.canvas}`}>
       <Canvas camera={{ position: [2, 2, 2.5], fov: 45 }}>
         <IsotropicScene />
       </Canvas>
@@ -200,7 +218,7 @@ export function IsotropicViz() {
 
 export function NonIsotropicViz() {
   return (
-    <div className="w-full h-64 bg-slate-900 rounded-xl overflow-hidden">
+    <div className={`w-full h-64 ${VIZ_CLASSES.canvas}`}>
       <Canvas camera={{ position: [2, 2, 2], fov: 45 }}>
         <NonIsotropicScene />
       </Canvas>
@@ -213,27 +231,27 @@ export function IsotropyComparisonViz() {
     <div className="space-y-4">
       <div className="grid md:grid-cols-2 gap-4">
         <div>
-          <p className="text-green-400 font-semibold text-center mb-2">
-            ✅ 各向同性 (Isotropic) - c# ≥ 3
+          <p className="text-teal-800 font-semibold text-center mb-2">
+            各向同性 (Isotropic) - c# ≥ 3
           </p>
           <IsotropicViz />
-          <p className="text-slate-400 text-xs text-center mt-2">
-            球面：|h(u,u)| 在所有方向相同（绿色圆）
+          <p className="text-stone-600 text-xs text-center mt-2">
+            球面：|h(u,u)| 在所有方向相同
           </p>
         </div>
         <div>
-          <p className="text-orange-400 font-semibold text-center mb-2">
-            ❌ 非各向同性 (Non-isotropic) - c# = 2
+          <p className="text-amber-800 font-semibold text-center mb-2">
+            非各向同性 (Non-isotropic) - c# = 2
           </p>
           <NonIsotropicViz />
-          <p className="text-slate-400 text-xs text-center mt-2">
-            椭球：|h(u,u)| 随方向变化（红色椭圆）
+          <p className="text-stone-600 text-xs text-center mt-2">
+            椭球：|h(u,u)| 随方向变化
           </p>
         </div>
       </div>
-      <div className="bg-slate-800 rounded-lg p-4 text-sm">
-        <p className="text-cyan-400 font-semibold mb-2">🎯 核心定理</p>
-        <p className="text-slate-300">
+      <div className={`${VIZ_CLASSES.panel} text-sm`}>
+        <p className="text-teal-800 font-semibold mb-2">核心定理</p>
+        <p className="text-stone-700">
           c#(M) ≥ 3 ⟺ M 是各向同性的 ⟺ |h(u,u)| 与方向 u 无关
         </p>
       </div>
