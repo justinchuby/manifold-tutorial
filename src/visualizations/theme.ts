@@ -1,7 +1,7 @@
 export const VIZ_COLORS = {
-  surface: '#54787a',
-  surfaceDeep: '#2f6268',
-  surfaceWire: '#274452',
+  surface: '#c8d4c5',
+  surfaceDeep: '#9eb7ae',
+  surfaceWire: '#3e7478',
   geodesic: '#1f6f78',
   normalSection: '#c75f52',
   tangent: '#0f8f71',

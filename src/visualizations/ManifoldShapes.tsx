@@ -3,20 +3,21 @@ import { useFrame } from '@react-three/fiber';
 import { Sphere, Torus } from '@react-three/drei';
 import * as THREE from 'three';
 import type { Mesh } from 'three';
+import { VIZ_COLORS } from './theme';
 
 const MANIFOLD_COLORS = {
-  sphere: '#2f7f88',
-  torus: '#8b6f47',
-  klein: '#b8793a',
-  figure8: '#a45f6d',
-  mobius: '#5f8c72',
-  plane: '#2f7f88',
-  normal: '#b8793a',
+  sphere: VIZ_COLORS.geodesic,
+  torus: VIZ_COLORS.comparison,
+  klein: VIZ_COLORS.normal,
+  figure8: VIZ_COLORS.accentRose,
+  mobius: VIZ_COLORS.tangent,
+  plane: VIZ_COLORS.geodesic,
+  normal: VIZ_COLORS.normal,
 };
 
 export function RotatingSphere({ position = [0, 0, 0] as [number, number, number] }) {
   const ref = useRef<Mesh>(null);
-  
+
   useFrame((_, delta) => {
     if (ref.current) {
       ref.current.rotation.y += delta * 0.3;
@@ -32,7 +33,7 @@ export function RotatingSphere({ position = [0, 0, 0] as [number, number, number
 
 export function RotatingTorus({ position = [0, 0, 0] as [number, number, number] }) {
   const ref = useRef<Mesh>(null);
-  
+
   useFrame((_, delta) => {
     if (ref.current) {
       ref.current.rotation.x += delta * 0.2;
@@ -49,7 +50,7 @@ export function RotatingTorus({ position = [0, 0, 0] as [number, number, number]
 
 export function RotatingKleinBottle({ position = [0, 0, 0] as [number, number, number] }) {
   const ref = useRef<Mesh>(null);
-  
+
   useFrame((_, delta) => {
     if (ref.current) {
       ref.current.rotation.x += delta * 0.15;
@@ -63,20 +64,20 @@ export function RotatingKleinBottle({ position = [0, 0, 0] as [number, number, n
     const vSegments = 40;
     const vertices: number[] = [];
     const indices: number[] = [];
-    
+
     // Klein bottle "bottle" shape parametrization
     // This creates the recognizable shape with a tube going back into itself
     for (let i = 0; i <= uSegments; i++) {
       const u = (i / uSegments) * Math.PI * 2;
       for (let j = 0; j <= vSegments; j++) {
         const v = (j / vSegments) * Math.PI * 2;
-        
+
         let x, y, z;
         const cosU = Math.cos(u);
         const sinU = Math.sin(u);
         const cosV = Math.cos(v);
         const sinV = Math.sin(v);
-        
+
         // Different formulas for different parts of the bottle
         if (u < Math.PI) {
           // Bottom part (0 to π)
@@ -89,12 +90,12 @@ export function RotatingKleinBottle({ position = [0, 0, 0] as [number, number, n
           y = 16 * sinU;
           z = 4 * (1 - cosU / 2) * sinV;
         }
-        
+
         // Scale down to fit nicely
         vertices.push(x * 0.05, y * 0.05, z * 0.05);
       }
     }
-    
+
     // Create indices for triangles
     for (let i = 0; i < uSegments; i++) {
       for (let j = 0; j < vSegments; j++) {
@@ -102,12 +103,12 @@ export function RotatingKleinBottle({ position = [0, 0, 0] as [number, number, n
         const b = a + 1;
         const c = (i + 1) * (vSegments + 1) + j;
         const d = c + 1;
-        
+
         indices.push(a, b, c);
         indices.push(b, d, c);
       }
     }
-    
+
     const geom = new THREE.BufferGeometry();
     geom.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
     geom.setIndex(indices);
@@ -125,7 +126,7 @@ export function RotatingKleinBottle({ position = [0, 0, 0] as [number, number, n
 // Figure-8 Klein bottle immersion (alternative representation)
 export function KleinBottleFigure8({ position = [0, 0, 0] as [number, number, number] }) {
   const ref = useRef<Mesh>(null);
-  
+
   useFrame((_, delta) => {
     if (ref.current) {
       ref.current.rotation.x += delta * 0.15;
@@ -139,31 +140,31 @@ export function KleinBottleFigure8({ position = [0, 0, 0] as [number, number, nu
     const vSegments = 40;
     const vertices: number[] = [];
     const indices: number[] = [];
-    
+
     // Figure-8 Klein bottle parametrization
     const a = 2; // scale factor
-    
+
     for (let i = 0; i <= uSegments; i++) {
       const u = (i / uSegments) * Math.PI * 2;
       for (let j = 0; j <= vSegments; j++) {
         const v = (j / vSegments) * Math.PI * 2;
-        
+
         const cosU = Math.cos(u);
         const sinU = Math.sin(u);
         const sin2U = Math.sin(2 * u);
         const cosHalfV = Math.cos(v / 2);
         const sinHalfV = Math.sin(v / 2);
-        
+
         // Figure-8 immersion equations
         const r = 1 + 0.5 * cosHalfV * sinU - 0.5 * sinHalfV * sin2U;
         const x = r * cosU;
         const y = r * sinU;
         const z = 0.5 * sinHalfV * sinU + 0.5 * cosHalfV * sin2U;
-        
+
         vertices.push(x * a * 0.5, y * a * 0.5, z * a * 0.5);
       }
     }
-    
+
     // Create indices for triangles
     for (let i = 0; i < uSegments; i++) {
       for (let j = 0; j < vSegments; j++) {
@@ -171,12 +172,12 @@ export function KleinBottleFigure8({ position = [0, 0, 0] as [number, number, nu
         const b = a + 1;
         const c = (i + 1) * (vSegments + 1) + j;
         const d = c + 1;
-        
+
         indices.push(a, b, c);
         indices.push(b, d, c);
       }
     }
-    
+
     const geom = new THREE.BufferGeometry();
     geom.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
     geom.setIndex(indices);
@@ -193,7 +194,7 @@ export function KleinBottleFigure8({ position = [0, 0, 0] as [number, number, nu
 
 export function MobiusStrip({ position = [0, 0, 0] as [number, number, number] }) {
   const ref = useRef<Mesh>(null);
-  
+
   useFrame((_, delta) => {
     if (ref.current) {
       ref.current.rotation.y += delta * 0.3;
@@ -206,15 +207,15 @@ export function MobiusStrip({ position = [0, 0, 0] as [number, number, number] }
     const widthSegments = 16;
     const vertices: number[] = [];
     const indices: number[] = [];
-    
+
     const R = 1; // Major radius
     const w = 0.4; // Half-width of strip
-    
+
     for (let i = 0; i <= segments; i++) {
       const u = (i / segments) * Math.PI * 2; // 0 to 2π
       for (let j = 0; j <= widthSegments; j++) {
         const s = (j / widthSegments) * 2 - 1; // -1 to 1 (across width)
-        
+
         // Möbius strip parametric equations
         // x = (R + s * cos(u/2)) * cos(u)
         // y = (R + s * cos(u/2)) * sin(u)
@@ -222,11 +223,11 @@ export function MobiusStrip({ position = [0, 0, 0] as [number, number, number] }
         const x = (R + s * w * Math.cos(u / 2)) * Math.cos(u);
         const y = (R + s * w * Math.cos(u / 2)) * Math.sin(u);
         const z = s * w * Math.sin(u / 2);
-        
+
         vertices.push(x, y, z);
       }
     }
-    
+
     // Create indices for triangles
     for (let i = 0; i < segments; i++) {
       for (let j = 0; j < widthSegments; j++) {
@@ -234,12 +235,12 @@ export function MobiusStrip({ position = [0, 0, 0] as [number, number, number] }
         const b = a + 1;
         const c = (i + 1) * (widthSegments + 1) + j;
         const d = c + 1;
-        
+
         indices.push(a, b, c);
         indices.push(b, d, c);
       }
     }
-    
+
     const geom = new THREE.BufferGeometry();
     geom.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
     geom.setIndex(indices);
@@ -255,7 +256,7 @@ export function MobiusStrip({ position = [0, 0, 0] as [number, number, number] }
 }
 
 // Tangent space visualization
-export function TangentPlane({ 
+export function TangentPlane({
   position = [0, 0, 0] as [number, number, number],
   normal = [0, 1, 0] as [number, number, number]
 }) {
@@ -271,7 +272,7 @@ export function TangentPlane({
         new THREE.Vector3(normal[0], normal[1], normal[2]),
         new THREE.Vector3(0, 0, 0),
         0.8,
-        0xb8793a
+        MANIFOLD_COLORS.normal
       ]} />
     </group>
   );

@@ -27,7 +27,7 @@ export default function Sidebar() {
         aria-label="Toggle menu"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          {open 
+          {open
             ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
           }
@@ -36,7 +36,7 @@ export default function Sidebar() {
 
       {/* Overlay - mobile only */}
       {open && (
-        <div 
+        <div
           className="lg:hidden fixed inset-0 bg-black/50 z-30"
           onClick={() => setOpen(false)}
         />
@@ -50,15 +50,14 @@ export default function Sidebar() {
         lg:translate-x-0
       `}>
         <NavLink to="/" className="block mb-6" onClick={handleNavClick}>
-          <h1 className="text-lg font-bold text-teal-100">{t('app.title')}</h1>
+          <div className="text-lg font-bold text-teal-100">{t('app.title')}</div>
           <p className="text-xs text-amber-200/70">{t('app.subtitle')}</p>
         </NavLink>
 
         <nav>
           {chapters.map(({ part, chapters: chaps }) => (
             <div key={part} className="mb-4">
-              <h2 className="text-sm font-semibold text-amber-200/70 mb-2">
-                {t(`nav.${partNames[part - 1]}`)}
+              <h2 className="text-sm font-semibold text-amber-200/70 mb-2">{t(`nav.${partNames[part - 1]}`)}
               </h2>
               <ul className="space-y-1">
                 {chaps.map((ch) => (
@@ -73,8 +72,7 @@ export default function Sidebar() {
                             : 'text-amber-100/85 hover:bg-white/10'
                         }`
                       }
-                    >
-                      {t('nav.chapter', { num: ch })}: {t(`chapters.ch${ch}.title`)}
+                    >{t('nav.chapter', { num: ch })}: {t(`chapters.ch${ch}.title`)}
                     </NavLink>
                   </li>
                 ))}

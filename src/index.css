@@ -87,6 +87,18 @@ body {
     color: rgb(var(--paper-emerald)) !important;
   }
 
+  .article-shell main :is(.text-teal-400, .text-teal-500, .text-emerald-500, .text-green-500) {
+    color: rgb(var(--paper-emerald)) !important;
+  }
+
+  .article-shell main :is(.text-indigo-400, .text-violet-400, .text-fuchsia-400, .text-rose-400, .text-red-400) {
+    color: rgb(var(--paper-rose)) !important;
+  }
+
+  .article-shell main :is(.text-amber-400, .text-amber-500, .text-orange-500, .text-yellow-500) {
+    color: rgb(var(--paper-amber)) !important;
+  }
+
   .article-shell main .bg-cyan-600 {
     color: #fffaf1 !important;
     background-color: rgb(var(--paper-cyan)) !important;
@@ -98,6 +110,66 @@ body {
     color: #fffaf1 !important;
     background-color: rgb(16, 93, 93) !important;
     background-image: linear-gradient(135deg, rgb(20, 101, 95), rgb(131, 86, 36)) !important;
+  }
+
+  .article-shell main :is(.bg-purple-600, .bg-indigo-600, .bg-violet-600, .bg-fuchsia-600, .bg-pink-600) {
+    color: #fffaf1 !important;
+    background-color: rgb(var(--paper-rose)) !important;
+    background-image: linear-gradient(135deg, rgb(135, 78, 72), rgb(92, 62, 46)) !important;
+    box-shadow: 0 12px 26px rgba(120, 83, 39, 0.16);
+  }
+
+  .article-shell main :is(.bg-blue-600, .bg-teal-600, .bg-emerald-600, .bg-green-600) {
+    color: #fffaf1 !important;
+    background-color: rgb(var(--paper-cyan)) !important;
+    background-image: linear-gradient(135deg, rgb(var(--paper-cyan)), rgb(56, 94, 79)) !important;
+    box-shadow: 0 12px 26px rgba(31, 111, 120, 0.15);
+  }
+
+  .article-shell main :is(.bg-red-600, .bg-orange-600, .bg-yellow-600, .bg-amber-600) {
+    color: #fffaf1 !important;
+    background-color: rgb(var(--paper-amber)) !important;
+    background-image: linear-gradient(135deg, rgb(var(--paper-amber)), rgb(128, 82, 42)) !important;
+    box-shadow: 0 12px 26px rgba(168, 112, 45, 0.16);
+  }
+
+  .article-shell main [class*="border-purple-"],
+  .article-shell main [class*="border-indigo-"],
+  .article-shell main [class*="border-blue-"],
+  .article-shell main [class*="border-cyan-"],
+  .article-shell main [class*="border-green-"],
+  .article-shell main [class*="border-red-"],
+  .article-shell main [class*="border-pink-"],
+  .article-shell main [class*="border-yellow-"] {
+    border-color: rgba(var(--paper-line), 0.34) !important;
+  }
+
+  main .max-w-4xl > header span[class*="bg-"] {
+    border: 1px solid rgba(var(--paper-line), 0.4);
+    border-radius: 999px !important;
+    padding: 0.35rem 0.65rem !important;
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    font-size: 0.72rem !important;
+    letter-spacing: 0.08em;
+  }
+
+  .article-shell main .chapter-anchor {
+    display: inline-grid;
+    width: 2.35rem;
+    height: 2.35rem;
+    place-items: center;
+    flex: 0 0 auto;
+    border-radius: 999px;
+    border: 1px solid rgba(120, 83, 39, 0.16);
+    background:
+      radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.82), transparent 42%),
+      rgba(255, 250, 241, 0.78);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.75),
+      0 10px 22px rgba(120, 83, 39, 0.1);
+    font-size: 1.15rem;
+    line-height: 1;
+    filter: saturate(0.88);
   }
 
   .article-shell main .bg-slate-900,

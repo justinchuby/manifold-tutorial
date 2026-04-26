@@ -37,7 +37,7 @@ export default function Layout() {
       <footer className="lg:ml-64 py-6 px-8 border-t border-amber-200/80 bg-amber-50/80">
         <div className="text-center text-slate-500 text-sm">
           <p className="mb-1">
-            🤖 本教程内容由 AI 辅助总结生成 | This tutorial content was AI-assisted and generated
+             本教程内容由 AI 辅助总结生成 | This tutorial content was AI-assisted and generated
           </p>
           <p className="text-slate-600 text-xs mb-2">
             Model: Claude Opus 4.5 / 4.6 (Anthropic) + Codex (OpenAI) · 基于李世杰教授论文整理

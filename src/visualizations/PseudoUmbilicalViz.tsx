@@ -132,7 +132,7 @@ function CustomProjectionPanel({
   return (
     <div className={`${VIZ_CLASSES.panel} mt-2`}>
       <div className="flex items-center justify-between mb-2">
-        <span className="text-xs text-stone-700 font-semibold">🎛️ 自定义投影矩阵 (3×6)</span>
+        <span className="text-xs text-stone-700 font-semibold"> 自定义投影矩阵 (3×6)</span>
         <button
           onClick={onReset}
           className={`px-2 py-0.5 rounded text-xs text-white ${RESET_BUTTON_CLASSES[accentColor as keyof typeof RESET_BUTTON_CLASSES] ?? RESET_BUTTON_CLASSES.purple}`}
@@ -275,7 +275,7 @@ function PseudoUmbilicalScene({ proj, highlightV, showNormalSection, paused }: {
       vL.push(line);
     }
     return { uLines: uL, vLines: vL };
-  }, [proj]);
+  }, [proj, uPeriod, vPeriod]);
 
   // Highlighted curve at constant v (u-parameter curve = geodesic)
   const v0 = highlightV * vPeriod;
@@ -286,21 +286,22 @@ function PseudoUmbilicalScene({ proj, highlightV, showNormalSection, paused }: {
       pts.push(project6Dto3D(torusE6(u, v0, a), proj));
     }
     return pts;
-  }, [proj, v0]);
+  }, [proj, uPeriod, v0]);
 
   const animT = (Math.sin(time * 0.4) + 1) / 2;
   const animIdx = Math.floor(animT * 199);
   const animPt = highlightCurve[animIdx];
+  const normalSectionFrame = Math.round(animT * 50);
+  const normalSectionT = normalSectionFrame / 50;
 
   // True normal section: intersection of surface with plane through T and N at animated point
   const normalSection = useMemo(() => {
     if (!showNormalSection) return [];
-    const u0 = animT * uPeriod;
+    const u0 = normalSectionT * uPeriod;
     return traceNormalSection(
       (u, v) => torusE6(u, v, a), u0, v0, proj, 'u', 100, 0.025
     );
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [proj, showNormalSection, Math.round(animT * 50), v0]);
+  }, [normalSectionT, proj, showNormalSection, uPeriod, v0]);
 
   return (
     <>
@@ -383,7 +384,7 @@ export function PseudoUmbilicalViz() {
               : 'border-amber-900/20 bg-white/45 text-stone-700 hover:border-amber-700/45'
           }`}
         >
-          🎛️ 自定义
+           自定义
         </button>
       </div>
       {customMode ? (
@@ -579,7 +580,7 @@ function NonSphericalScene({ proj, highlightU, showNormalSection, paused }: { pr
       if (line.length > 2) vL.push(line);
     }
     return { uLines: uL, vLines: vL };
-  }, [proj]);
+  }, [proj, uMax, vMax]);
 
   // Highlighted u-curve (geodesic direction)
   const highlightCurve = useMemo(() => {
@@ -591,23 +592,24 @@ function NonSphericalScene({ proj, highlightU, showNormalSection, paused }: { pr
       if (p6.every(x => isFinite(x))) pts.push(project6Dto3D(p6, proj));
     }
     return pts;
-  }, [proj, highlightU]);
+  }, [highlightU, proj, uMax, vMax]);
 
   // Normal section: true normal section through the animated point
   const animT = (Math.sin(time * 0.3) + 1) / 2;
   const animIdx = Math.floor(animT * (highlightCurve.length - 1));
   const animPt = highlightCurve[animIdx];
+  const normalSectionFrame = Math.round(animT * 50);
+  const normalSectionT = normalSectionFrame / 50;
 
   // True normal section: intersection of surface with plane through T and N at animated point
   const normalSection = useMemo(() => {
     if (!showNormalSection) return [];
     const uVal = highlightU * uMax;
-    const vVal = animT * vMax;
+    const vVal = normalSectionT * vMax;
     return traceNormalSection(
       (u, v) => nonSphericalPU(u, v, a, c), uVal, vVal, proj, 'v', 80, 0.04
     );
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [proj, showNormalSection, Math.round(animT * 50), highlightU]);
+  }, [highlightU, normalSectionT, proj, showNormalSection, uMax, vMax]);
 
   return (
     <>
@@ -692,7 +694,7 @@ export function NonSphericalPUViz() {
               : 'border-amber-900/20 bg-white/45 text-stone-700 hover:border-amber-700/45'
           }`}
         >
-          🎛️ 自定义
+           自定义
         </button>
       </div>
       {customMode ? (

@@ -48,12 +48,12 @@ function revealFromVectorPoint(points: THREE.Vector3[], anchor: THREE.Vector3, p
 }
 
 // The cutting plane visualization - plane containing tangent u and normal space
-function CuttingPlane({ 
-  tangent, 
-  surfaceNormal, 
+function CuttingPlane({
+  tangent,
+  surfaceNormal,
   show,
   opacity = 0.32,
-}: { 
+}: {
   tangent: THREE.Vector3;
   surfaceNormal: THREE.Vector3;
   show: boolean;
@@ -63,11 +63,11 @@ function CuttingPlane({
   // For a surface in E³, normal space is 1D (just the surface normal)
   // So E(p,u) is spanned by u and the surface normal n
   // For a unit sphere, this plane passes through the origin
-  
+
   const geometry = useMemo(() => {
     const u = tangent.clone().normalize();
     const n = surfaceNormal.clone().normalize();
-    
+
     // Create a quad in the plane spanned by u and n, centered at origin
     const size = 1.5;
     const center = new THREE.Vector3(0, 0, 0);
@@ -78,14 +78,14 @@ function CuttingPlane({
       ...center.clone().add(u.clone().multiplyScalar(-size)).add(n.clone().multiplyScalar(-size)).toArray(),
       ...center.clone().add(u.clone().multiplyScalar(size)).add(n.clone().multiplyScalar(-size)).toArray(),
     ]);
-    
+
     const indices = new Uint16Array([0, 1, 2, 0, 2, 3]);
-    
+
     const geom = new THREE.BufferGeometry();
     geom.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     geom.setIndex(new THREE.BufferAttribute(indices, 1));
     geom.computeVertexNormals();
-    
+
     return geom;
   }, [tangent, surfaceNormal]);
 
@@ -93,12 +93,12 @@ function CuttingPlane({
 
   return (
     <mesh geometry={geometry}>
-      <meshStandardMaterial 
-        color={COLORS.cuttingPlane} 
-        emissive="#b96d5c"
+      <meshStandardMaterial
+        color={COLORS.cuttingPlane}
+        emissive={COLORS.normalSection}
         emissiveIntensity={0.04}
-        transparent 
-        opacity={opacity} 
+        transparent
+        opacity={opacity}
         side={THREE.DoubleSide}
       />
     </mesh>
@@ -106,13 +106,13 @@ function CuttingPlane({
 }
 
 // The intersection curve (normal section)
-function NormalSectionCurve({ 
+function NormalSectionCurve({
   point,
-  tangent, 
+  tangent,
   surfaceNormal,
   color = COLORS.normalSection,
   progress = 1,
-}: { 
+}: {
   point: THREE.Vector3;
   tangent: THREE.Vector3;
   surfaceNormal: THREE.Vector3;
@@ -125,12 +125,12 @@ function NormalSectionCurve({
     // E(p,u) is spanned by tangent direction u and surface normal n
     // For a unit sphere centered at origin, this plane passes through origin
     // So the intersection is a great circle
-    
+
     // The great circle lies in the plane spanned by u and n
     // We can parameterize it as: cos(θ)*u + sin(θ)*n
     const u = tangent.clone().normalize();
     const n = surfaceNormal.clone().normalize();
-    
+
     for (let i = 0; i <= 64; i++) {
       const theta = (i / 64) * Math.PI * 2;
       const p = u.clone().multiplyScalar(Math.cos(theta))
@@ -148,20 +148,20 @@ function NormalSectionCurve({
 }
 
 // Tangent vector visualization
-function TangentVector({ position, direction, color = COLORS.tangent, length = 0.5, progress = 1 }: { 
-  position: THREE.Vector3; 
-  direction: THREE.Vector3; 
+function TangentVector({ position, direction, color = COLORS.tangent, length = 0.5, progress = 1 }: {
+  position: THREE.Vector3;
+  direction: THREE.Vector3;
   color?: string;
   length?: number;
   progress?: number;
 }) {
   const end = position.clone().add(direction.clone().normalize().multiplyScalar(length * progress));
-  
+
   return (
     <>
-      <Line 
-        points={[position, end]} 
-        color={color} 
+      <Line
+        points={[position, end]}
+        color={color}
         lineWidth={4}
         transparent
         opacity={progress}
@@ -179,12 +179,12 @@ function TangentVector({ position, direction, color = COLORS.tangent, length = 0
 function NormalVector({ position, color = COLORS.normal, progress = 1 }: { position: THREE.Vector3; color?: string; progress?: number }) {
   const normal = position.clone().normalize();
   const end = position.clone().add(normal.multiplyScalar(0.4 * progress));
-  
+
   return (
     <>
-      <Line 
-        points={[position, end]} 
-        color={color} 
+      <Line
+        points={[position, end]}
+        color={color}
         lineWidth={3}
         transparent
         opacity={progress}
@@ -200,7 +200,7 @@ function NormalVector({ position, color = COLORS.normal, progress = 1 }: { posit
 function NormalSectionScene() {
   const [showPlane] = useState(true);
   const [time, setTime] = useState(0);
-  
+
   useFrame(({ clock }) => {
     setTime(clock.getElapsedTime());
   });
@@ -226,14 +226,14 @@ function NormalSectionScene() {
     Math.sin(phi) * Math.sin(theta),
     Math.cos(phi)
   );
-  
+
   // Tangent direction (along longitude)
   const tangent = new THREE.Vector3(
     -Math.sin(theta),
     Math.cos(theta),
     0
   ).normalize();
-  
+
   // Normal is just the position for a unit sphere
   const normal = point.clone().normalize();
 
@@ -242,46 +242,46 @@ function NormalSectionScene() {
       <ambientLight intensity={0.4} />
       <hemisphereLight args={['#fff3d8', '#b9d7d2', 0.9]} />
       <pointLight position={[10, 10, 10]} intensity={0.65} />
-      
+
       {/* Sphere */}
       <Sphere args={[1, 32, 32]}>
-        <meshStandardMaterial 
-          color={COLORS.surface} 
-          emissive="#294f52"
+        <meshStandardMaterial
+          color={COLORS.surface}
+          emissive={VIZ_COLORS.surfaceDeep}
           emissiveIntensity={0.06}
-          transparent 
+          transparent
           opacity={0.42}
           roughness={0.74}
           metalness={0.02}
           side={THREE.DoubleSide}
         />
       </Sphere>
-      
+
       {/* Wireframe */}
       <Sphere args={[1.001, 16, 16]}>
         <meshBasicMaterial color={COLORS.surfaceWire} wireframe transparent opacity={0.62} />
       </Sphere>
-      
+
       {/* The cutting plane E(p,u) - contains tangent u and surface normal */}
-      <CuttingPlane 
-        tangent={tangent} 
-        surfaceNormal={normal} 
-        show={showPlane} 
+      <CuttingPlane
+        tangent={tangent}
+        surfaceNormal={normal}
+        show={showPlane}
         opacity={0.05 + 0.15 * planeReveal}
       />
-      
+
       {/* Normal section curve */}
       <NormalSectionCurve point={point} tangent={tangent} surfaceNormal={normal} progress={curveReveal} />
-      
+
       {/* Point on surface */}
       <mesh position={point} scale={0.7 + 0.3 * pointReveal}>
         <sphereGeometry args={[0.05, 16, 16]} />
         <meshStandardMaterial color={COLORS.point} emissive={COLORS.point} emissiveIntensity={0.7} />
       </mesh>
-      
+
       {/* Tangent vector */}
       {vectorReveal > 0.02 && <TangentVector position={point} direction={tangent} progress={vectorReveal} />}
-      
+
       {/* Normal vector */}
       {vectorReveal > 0.02 && <NormalVector position={point} progress={vectorReveal} />}
 
@@ -290,7 +290,7 @@ function NormalSectionScene() {
           {currentStep}
         </div>
       </Html>
-      
+
       <OrbitControls enableZoom={true} enablePan={false} />
     </>
   );
