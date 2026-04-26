@@ -28,19 +28,19 @@ export default function Layout() {
   }, [location.pathname, location.hash]);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white flex flex-col">
+    <div className="article-shell min-h-screen text-stone-900 flex flex-col">
       <Sidebar />
       <Header />
       <main ref={mainRef} className="lg:ml-64 mt-14 p-4 lg:p-8 flex-grow">
         <Outlet />
       </main>
-      <footer className="lg:ml-64 py-6 px-8 border-t border-slate-800 bg-slate-900/50">
+      <footer className="lg:ml-64 py-6 px-8 border-t border-amber-200/80 bg-amber-50/80">
         <div className="text-center text-slate-500 text-sm">
           <p className="mb-1">
-            🤖 本教程内容由 AI 辅助总结生成 | This tutorial content was AI-assisted and generated
+             本教程内容由 AI 辅助总结生成 | This tutorial content was AI-assisted and generated
           </p>
           <p className="text-slate-600 text-xs mb-2">
-            Model: Claude Opus 4.5 / 4.6 (Anthropic) · 基于李世杰教授论文整理
+            Model: Claude Opus 4.5 / 4.6 (Anthropic) + Codex (OpenAI) · 基于李世杰教授论文整理
           </p>
           <a
             href="https://github.com/justinchuby/manifold-tutorial"

@@ -2,13 +2,23 @@ import { useMemo, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Line } from '@react-three/drei';
 import * as THREE from 'three';
+import { VIZ_CLASSES, VIZ_COLORS } from './theme';
+
+const COLORS = {
+  curve: VIZ_COLORS.geodesic,
+  comparison: VIZ_COLORS.comparison,
+  tangent: VIZ_COLORS.normalSection,
+  normal: VIZ_COLORS.tangent,
+  binormal: VIZ_COLORS.accentBlue,
+  point: VIZ_COLORS.point,
+};
 
 // Helix curve with torsion
 function HelixCurve({ 
   radius = 0.5, 
   pitch = 0.3, 
   turns = 3,
-  color = '#00ffff'
+  color = COLORS.curve
 }: { 
   radius?: number; 
   pitch?: number; 
@@ -33,7 +43,7 @@ function HelixCurve({
 }
 
 // Plane curve (no torsion)
-function PlaneCurve({ color = '#ff6600' }: { color?: string }) {
+function PlaneCurve({ color = COLORS.comparison }: { color?: string }) {
   const points = useMemo(() => {
     const pts: THREE.Vector3[] = [];
     for (let i = 0; i <= 100; i++) {
@@ -66,19 +76,19 @@ function FrenetFrame({
       {/* Tangent (red) */}
       <Line 
         points={[position, position.clone().add(tangent.clone().multiplyScalar(len))]} 
-        color="#ff0000" 
+        color={COLORS.tangent} 
         lineWidth={3} 
       />
       {/* Normal (green) */}
       <Line 
         points={[position, position.clone().add(normal.clone().multiplyScalar(len))]} 
-        color="#00ff00" 
+        color={COLORS.normal} 
         lineWidth={3} 
       />
       {/* Binormal (blue) */}
       <Line 
         points={[position, position.clone().add(binormal.clone().multiplyScalar(len))]} 
-        color="#0066ff" 
+        color={COLORS.binormal} 
         lineWidth={3} 
       />
     </>
@@ -130,7 +140,7 @@ function TorsionScene() {
       {/* Moving point */}
       <mesh position={position}>
         <sphereGeometry args={[0.06, 16, 16]} />
-        <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={0.5} />
+        <meshStandardMaterial color={COLORS.point} emissive={COLORS.point} emissiveIntensity={0.65} />
       </mesh>
       
       {/* Frenet frame */}
@@ -152,7 +162,7 @@ function TorsionScene() {
             position.clone().add(tangent.clone().multiplyScalar(size)).add(normal.clone().multiplyScalar(-size)),
             position.clone().add(tangent.clone().multiplyScalar(size)).add(normal.clone().multiplyScalar(size)),
           ];
-          return <Line points={pts} color="#ffff00" lineWidth={1} />;
+          return <Line points={pts} color={VIZ_COLORS.point} lineWidth={1} />;
         })()}
       </group>
       
@@ -193,13 +203,13 @@ function PlanarCurveScene() {
           new THREE.Vector3(-4, 1, 0),
           new THREE.Vector3(-4, -1, 0),
         ];
-        return <Line points={pts} color="#333366" lineWidth={1} />;
+        return <Line points={pts} color={VIZ_COLORS.plane} lineWidth={1} />;
       })()}
       
       {/* Moving point */}
       <mesh position={position}>
         <sphereGeometry args={[0.06, 16, 16]} />
-        <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={0.5} />
+        <meshStandardMaterial color={COLORS.point} emissive={COLORS.point} emissiveIntensity={0.65} />
       </mesh>
       
       {/* Frenet frame */}
@@ -217,7 +227,7 @@ function PlanarCurveScene() {
 
 export function TorsionViz() {
   return (
-    <div className="w-full h-64 bg-slate-900 rounded-xl overflow-hidden">
+    <div className={`w-full h-64 ${VIZ_CLASSES.canvas}`}>
       <Canvas camera={{ position: [3, 2, 3], fov: 45 }}>
         <TorsionScene />
       </Canvas>
@@ -227,7 +237,7 @@ export function TorsionViz() {
 
 export function PlanarCurveViz() {
   return (
-    <div className="w-full h-64 bg-slate-900 rounded-xl overflow-hidden">
+    <div className={`w-full h-64 ${VIZ_CLASSES.canvas}`}>
       <Canvas camera={{ position: [0, 3, 5], fov: 45 }}>
         <PlanarCurveScene />
       </Canvas>
@@ -240,36 +250,36 @@ export function TorsionComparisonViz() {
     <div className="space-y-4">
       <div className="grid md:grid-cols-2 gap-4">
         <div>
-          <p className="text-cyan-400 font-semibold text-center mb-2">
-            🌀 螺旋线 (τ ≠ 0)
+          <p className="text-teal-800 font-semibold text-center mb-2">
+            螺旋线 (τ ≠ 0)
           </p>
           <TorsionViz />
-          <p className="text-slate-400 text-xs text-center mt-2">
+          <p className="text-stone-600 text-xs text-center mt-2">
             Frenet标架不断"翻滚"，挠率τ恒定
           </p>
         </div>
         <div>
-          <p className="text-orange-400 font-semibold text-center mb-2">
-            📐 平面曲线 (τ = 0)
+          <p className="text-amber-800 font-semibold text-center mb-2">
+            平面曲线 (τ = 0)
           </p>
           <PlanarCurveViz />
-          <p className="text-slate-400 text-xs text-center mt-2">
-            副法向量B（蓝）保持不变，τ = 0
+          <p className="text-stone-600 text-xs text-center mt-2">
+            副法向量B保持不变，τ = 0
           </p>
         </div>
       </div>
       <div className="flex flex-wrap gap-4 text-sm justify-center">
         <div className="flex items-center gap-2">
-          <div className="w-4 h-1 bg-red-500 rounded"></div>
-          <span className="text-slate-300">T 切向量</span>
+          <div className="w-4 h-1 rounded bg-[#c75f52]"></div>
+          <span className="text-stone-700">T 切向量</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-1 bg-green-500 rounded"></div>
-          <span className="text-slate-300">N 主法向量</span>
+          <div className="w-4 h-1 rounded bg-[#0f8f71]"></div>
+          <span className="text-stone-700">N 主法向量</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-1 bg-blue-500 rounded"></div>
-          <span className="text-slate-300">B 副法向量</span>
+          <div className="w-4 h-1 rounded bg-[#456f86]"></div>
+          <span className="text-stone-700">B 副法向量</span>
         </div>
       </div>
     </div>

@@ -2,30 +2,88 @@ import { useMemo, useState, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Line, Html } from '@react-three/drei';
 import * as THREE from 'three';
+import { VIZ_CLASSES, VIZ_COLORS } from './theme';
 
 type DirectionMode = 'axial' | 'circumferential' | 'diagonal';
+
+type Point3 = [number, number, number];
+
+const STORY_LOOP_SECONDS = 8;
+const COLORS = {
+  geodesic: VIZ_COLORS.geodesic,
+  normalSection: VIZ_COLORS.normalSection,
+  tangent: VIZ_COLORS.tangent,
+  normal: VIZ_COLORS.normal,
+  point: VIZ_COLORS.point,
+  surface: VIZ_COLORS.surface,
+  conclusion: VIZ_COLORS.point,
+};
+
+function clamp01(value: number) {
+  return Math.min(1, Math.max(0, value));
+}
+
+function smoothstep(value: number) {
+  const t = clamp01(value);
+  return t * t * (3 - 2 * t);
+}
+
+function stageProgress(time: number, start: number, duration: number) {
+  return smoothstep((time - start) / duration);
+}
+
+function distanceSq(a: Point3, b: Point3) {
+  return (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2 + (a[2] - b[2]) ** 2;
+}
+
+function revealFromPoint(points: Point3[], anchor: Point3, progress: number): Point3[] {
+  if (points.length < 2) return points;
+
+  let center = 0;
+  let bestDistance = Infinity;
+  points.forEach((point, index) => {
+    const d = distanceSq(point, anchor);
+    if (d < bestDistance) {
+      bestDistance = d;
+      center = index;
+    }
+  });
+
+  const maxSpan = Math.max(center, points.length - 1 - center);
+  const span = Math.max(1, Math.ceil(maxSpan * clamp01(progress)));
+  return points.slice(Math.max(0, center - span), Math.min(points.length, center + span + 1));
+}
 
 // Cylinder surface mesh
 function CylinderSurface({ radius = 1, height = 3 }: { radius?: number; height?: number }) {
   const geo = useMemo(() => {
     return new THREE.CylinderGeometry(radius, radius, height, 48, 1, true);
   }, [radius, height]);
-  
+
   return (
     <group>
       <mesh geometry={geo}>
-        <meshStandardMaterial color="#1a3a5c" transparent opacity={0.25} side={THREE.DoubleSide} />
+        <meshStandardMaterial
+          color={COLORS.surface}
+          emissive={VIZ_COLORS.surfaceDeep}
+          emissiveIntensity={0.06}
+          transparent
+          opacity={0.42}
+          roughness={0.74}
+          metalness={0.02}
+          side={THREE.DoubleSide}
+        />
       </mesh>
       <mesh geometry={geo}>
-        <meshBasicMaterial color="#334455" wireframe transparent opacity={0.3} />
+        <meshBasicMaterial color={VIZ_COLORS.surfaceWire} wireframe transparent opacity={0.62} />
       </mesh>
     </group>
   );
 }
 
 // Point marker with label
-function PointMarker({ position, color = '#ffffff', label }: { 
-  position: [number, number, number]; 
+function PointMarker({ position, color = COLORS.point, label }: {
+  position: [number, number, number];
   color?: string;
   label?: string;
 }) {
@@ -37,7 +95,7 @@ function PointMarker({ position, color = '#ffffff', label }: {
       </mesh>
       {label && (
         <Html position={[0.1, 0.1, 0]} style={{ pointerEvents: 'none' }}>
-          <div className="text-white text-xs bg-slate-900/80 px-1.5 py-0.5 rounded whitespace-nowrap">{label}</div>
+          <div className="rounded-md border border-stone-300 bg-[#fffaf1]/95 px-1.5 py-0.5 text-xs font-semibold text-stone-800 shadow-sm whitespace-nowrap">{label}</div>
         </Html>
       )}
     </group>
@@ -45,12 +103,13 @@ function PointMarker({ position, color = '#ffffff', label }: {
 }
 
 // Cutting plane visualization
-function CuttingPlane({ position, normal, tangent, color = '#ff00ff', size = 1.2 }: {
+function CuttingPlane({ position, normal, tangent, color = COLORS.normalSection, size = 1.2, opacity = 0.12 }: {
   position: [number, number, number];
   normal: THREE.Vector3;
   tangent: THREE.Vector3;
   color?: string;
   size?: number;
+  opacity?: number;
 }) {
   const geo = useMemo(() => {
     const n = normal.clone().normalize();
@@ -61,7 +120,7 @@ function CuttingPlane({ position, normal, tangent, color = '#ff00ff', size = 1.2
     const v1 = new THREE.Vector3().addVectors(tangent.clone().multiplyScalar(s), n.clone().multiplyScalar(-s));
     const v2 = new THREE.Vector3().addVectors(tangent.clone().multiplyScalar(s), n.clone().multiplyScalar(s));
     const v3 = new THREE.Vector3().addVectors(tangent.clone().multiplyScalar(-s), n.clone().multiplyScalar(s));
-    
+
     const pos = new Float32Array([
       v0.x, v0.y, v0.z, v1.x, v1.y, v1.z, v2.x, v2.y, v2.z,
       v0.x, v0.y, v0.z, v2.x, v2.y, v2.z, v3.x, v3.y, v3.z,
@@ -72,21 +131,30 @@ function CuttingPlane({ position, normal, tangent, color = '#ff00ff', size = 1.2
 
   return (
     <mesh geometry={geo} position={position}>
-      <meshBasicMaterial color={color} transparent opacity={0.12} side={THREE.DoubleSide} />
+      <meshBasicMaterial color={color} transparent opacity={opacity} side={THREE.DoubleSide} />
     </mesh>
   );
 }
 
 function CylinderContactScene({ direction }: { direction: DirectionMode }) {
   const groupRef = useRef<THREE.Group>(null);
+  const loopStartRef = useRef(0);
+  const lastDirectionRef = useRef(direction);
+  const [storyTime, setStoryTime] = useState(0);
   const R = 1; // cylinder radius
   // Point p on cylinder: at angle 0, height 0 → (R, 0, 0)
   const p: [number, number, number] = [R, 0, 0];
   const surfaceNormal = new THREE.Vector3(1, 0, 0); // outward normal at p
 
   useFrame(({ clock }) => {
+    const elapsed = clock.getElapsedTime();
+    if (lastDirectionRef.current !== direction) {
+      lastDirectionRef.current = direction;
+      loopStartRef.current = elapsed;
+    }
+    setStoryTime((elapsed - loopStartRef.current) % STORY_LOOP_SECONDS);
     if (groupRef.current) {
-      groupRef.current.rotation.y = clock.getElapsedTime() * 0.1;
+      groupRef.current.rotation.y = Math.sin(elapsed * 0.25) * 0.18;
     }
   });
 
@@ -99,14 +167,14 @@ function CylinderContactScene({ direction }: { direction: DirectionMode }) {
     let cOrder: string;
     let gLabel: string;
     let nLabel: string;
-    
+
     if (direction === 'axial') {
       // Tangent direction: along cylinder axis (y-axis)
       tDir = new THREE.Vector3(0, 1, 0);
       cOrder = '∞';
       gLabel = 'γ = β (直线 / line)';
       nLabel = '';
-      
+
       for (let i = 0; i <= N; i++) {
         const t = (i / N) * 2.4 - 1.2;
         // Geodesic: straight line along y
@@ -121,7 +189,7 @@ function CylinderContactScene({ direction }: { direction: DirectionMode }) {
       cOrder = '∞';
       gLabel = 'γ = β (圆 / circle)';
       nLabel = '';
-      
+
       for (let i = 0; i <= N; i++) {
         const theta = (i / N) * Math.PI * 1.2 - Math.PI * 0.6;
         // Geodesic: circle in xz-plane at y=0
@@ -135,7 +203,7 @@ function CylinderContactScene({ direction }: { direction: DirectionMode }) {
       cOrder = '2';
       gLabel = 'γ (螺旋线 / helix)';
       nLabel = 'β (椭圆 / ellipse)';
-      
+
       // Geodesic on cylinder: helix
       // At p=(R,0,0), tangent (0,1,1)/√2 → helix: (R cos(t/√2), t/√2, R sin(t/√2))
       // Speed: angular speed ω = 1/(R√2), vertical speed v = 1/√2
@@ -149,7 +217,7 @@ function CylinderContactScene({ direction }: { direction: DirectionMode }) {
           R * Math.sin(omega * t)
         ]);
       }
-      
+
       // Normal section: plane spanned by tangent (0,1,1)/√2 and normal (1,0,0)
       // This plane: x can be anything, y=z (since tangent direction is (0,1,1))
       // Intersection with cylinder x²+z²=R²:
@@ -162,77 +230,122 @@ function CylinderContactScene({ direction }: { direction: DirectionMode }) {
         nPts.push([x, z, z]);
       }
     }
-    
+
     return { geodesicPts: gPts, normalSectionPts: nPts, tangentDir: tDir, contactOrder: cOrder, geodesicLabel: gLabel, normalLabel: nLabel };
   }, [direction, R]);
 
   const showBothCurves = direction === 'diagonal';
+  const pointReveal = stageProgress(storyTime, 0.2, 0.8);
+  const vectorReveal = stageProgress(storyTime, 1.0, 1.0);
+  const planeReveal = stageProgress(storyTime, 2.0, 1.0);
+  const geodesicReveal = stageProgress(storyTime, 3.0, 1.6);
+  const normalReveal = stageProgress(storyTime, 4.1, 1.4);
+  const conclusionReveal = stageProgress(storyTime, 5.4, 1.0);
+  const revealedGeodesicPts = revealFromPoint(geodesicPts, p, geodesicReveal);
+  const revealedNormalSectionPts = revealFromPoint(normalSectionPts, p, normalReveal);
+  const tangentEnd: Point3 = [
+    p[0] + tangentDir.x * 0.55 * vectorReveal,
+    p[1] + tangentDir.y * 0.55 * vectorReveal,
+    p[2] + tangentDir.z * 0.55 * vectorReveal,
+  ];
+  const normalEnd: Point3 = [
+    p[0] + surfaceNormal.x * 0.42 * vectorReveal,
+    p[1] + surfaceNormal.y * 0.42 * vectorReveal,
+    p[2] + surfaceNormal.z * 0.42 * vectorReveal,
+  ];
+  const currentStep = storyTime < 1.2
+    ? '① 定点 p'
+    : storyTime < 2.2
+      ? '② 选择切方向 u'
+      : storyTime < 3.4
+        ? '③ 张成切割平面'
+        : storyTime < 5.3
+          ? '④ 比较 γ 与 β'
+          : '⑤ 读取接触阶';
 
   return (
     <group ref={groupRef}>
       <ambientLight intensity={0.4} />
       <pointLight position={[10, 10, 10]} intensity={1} />
-      
+
       <CylinderSurface radius={R} height={3} />
-      
+
       {/* Point p */}
-      <PointMarker position={p} color="#ffffff" label="p" />
-      
+      <group scale={0.75 + 0.25 * pointReveal}>
+      <PointMarker position={p} label="p" />
+      </group>
+
       {/* Tangent direction arrow */}
-      <Line 
-        points={[p, [p[0] + tangentDir.x * 0.5, p[1] + tangentDir.y * 0.5, p[2] + tangentDir.z * 0.5]]} 
-        color="#00ff00" 
-        lineWidth={3} 
-      />
-      <PointMarker 
-        position={[p[0] + tangentDir.x * 0.55, p[1] + tangentDir.y * 0.55, p[2] + tangentDir.z * 0.55]} 
-        color="#00ff00" 
-        label="u" 
-      />
+      {vectorReveal > 0.02 && (
+        <>
+          <Line points={[p, tangentEnd]} color={COLORS.tangent} lineWidth={3} transparent opacity={vectorReveal} />
+          <PointMarker position={tangentEnd} color={COLORS.tangent} label="u" />
+        </>
+      )}
 
       {/* Normal direction arrow */}
-      <Line 
-        points={[p, [p[0] + surfaceNormal.x * 0.4, p[1], p[2]]]} 
-        color="#ff8800" 
-        lineWidth={2} 
-      />
+      {vectorReveal > 0.02 && (
+        <Line points={[p, normalEnd]} color={COLORS.normal} lineWidth={2} transparent opacity={vectorReveal} />
+      )}
 
       {/* Cutting plane (always show for context) */}
-      <CuttingPlane position={p} normal={surfaceNormal} tangent={tangentDir} color="#ff00ff" size={1.0} />
-      
-      {/* Geodesic curve */}
-      {geodesicPts.length > 1 && (
-        <Line points={geodesicPts} color="#00ffff" lineWidth={4} />
+      {planeReveal > 0.02 && (
+        <CuttingPlane
+          position={p}
+          normal={surfaceNormal}
+          tangent={tangentDir}
+          color={COLORS.normalSection}
+          size={1.0 + 0.12 * planeReveal}
+          opacity={0.04 + 0.12 * planeReveal}
+        />
       )}
-      
+
+      {/* Geodesic curve */}
+      {revealedGeodesicPts.length > 1 && (
+        <Line points={revealedGeodesicPts} color={COLORS.geodesic} lineWidth={4} transparent opacity={0.35 + 0.65 * geodesicReveal} />
+      )}
+
       {/* Normal section curve */}
-      {showBothCurves && normalSectionPts.length > 1 && (
-        <Line points={normalSectionPts} color="#ff00ff" lineWidth={3} />
+      {showBothCurves && revealedNormalSectionPts.length > 1 && (
+        <Line points={revealedNormalSectionPts} color={COLORS.normalSection} lineWidth={3} transparent opacity={0.35 + 0.65 * normalReveal} />
+      )}
+
+      {showBothCurves && conclusionReveal > 0.2 && (
+        <Html position={[1.05, 0.34, 0.34]} style={{ pointerEvents: 'none' }}>
+          <div className="text-[11px] bg-[#fffaf1]/95 border border-amber-700/30 rounded px-2 py-1 text-amber-800 shadow-lg whitespace-nowrap">
+            p 附近先贴合，随后分开
+          </div>
+        </Html>
       )}
 
       {/* Labels */}
-      {geodesicPts.length > 1 && (
+      {revealedGeodesicPts.length > 1 && geodesicReveal > 0.55 && (
         <Html position={geodesicPts[Math.floor(geodesicPts.length * 0.85)]} style={{ pointerEvents: 'none' }}>
-          <div className="text-cyan-400 text-xs bg-slate-900/90 px-1.5 py-0.5 rounded whitespace-nowrap">
+          <div className="text-teal-800 text-xs bg-[#fffaf1]/95 border border-teal-700/20 px-1.5 py-0.5 rounded whitespace-nowrap">
             {geodesicLabel}
           </div>
         </Html>
       )}
-      {showBothCurves && normalSectionPts.length > 1 && (
+      {showBothCurves && revealedNormalSectionPts.length > 1 && normalReveal > 0.55 && (
         <Html position={normalSectionPts[Math.floor(normalSectionPts.length * 0.85)]} style={{ pointerEvents: 'none' }}>
-          <div className="text-fuchsia-400 text-xs bg-slate-900/90 px-1.5 py-0.5 rounded whitespace-nowrap">
+          <div className="text-rose-800 text-xs bg-[#fffaf1]/95 border border-rose-700/20 px-1.5 py-0.5 rounded whitespace-nowrap">
             {normalLabel}
           </div>
         </Html>
       )}
-      
+
       {/* Contact order label */}
-      <Html position={[0, 1.8, 0]} style={{ pointerEvents: 'none' }}>
-        <div className="text-yellow-400 text-sm bg-slate-900/90 px-2 py-1 rounded text-center whitespace-nowrap">
-          {direction === 'diagonal' 
+      <Html position={[0, 1.8, 0]} style={{ pointerEvents: 'none', opacity: conclusionReveal }}>
+        <div className="text-amber-800 text-sm bg-[#fffaf1]/95 px-2 py-1 rounded text-center whitespace-nowrap border border-amber-700/30">{direction === 'diagonal'
             ? `接触阶 / Contact order: ${contactOrder}  →  γ ≠ β`
             : `接触阶 / Contact order: ${contactOrder}  →  γ = β`
           }
+        </div>
+      </Html>
+
+      <Html position={[-1.15, -1.72, 0]} style={{ pointerEvents: 'none' }}>
+        <div className={VIZ_CLASSES.labelPill}>
+          {currentStep}
         </div>
       </Html>
 
@@ -243,7 +356,7 @@ function CylinderContactScene({ direction }: { direction: DirectionMode }) {
 
 export default function ContactNumberViz({ contactNumber = 2 }: { contactNumber?: number }) {
   return (
-    <div className="w-full h-80 bg-slate-900 rounded-xl overflow-hidden">
+    <div className={`w-full h-80 ${VIZ_CLASSES.canvas}`}>
       <Canvas camera={{ position: [2, 1.5, 2.5], fov: 45 }}>
         <CylinderContactScene direction={contactNumber >= 3 ? 'axial' : 'diagonal'} />
       </Canvas>
@@ -253,23 +366,23 @@ export default function ContactNumberViz({ contactNumber = 2 }: { contactNumber?
 
 export function ContactNumberVizWithControls() {
   const [direction, setDirection] = useState<DirectionMode>('axial');
-  
+
   const directionInfo: Record<DirectionMode, { zh: string; en: string; desc_zh: string; desc_en: string; order: string }> = {
-    axial: { 
-      zh: '轴向', en: 'Axial', 
-      desc_zh: '测地线 = 法截线 = 直线。两条曲线完全重合！', 
+    axial: {
+      zh: '轴向', en: 'Axial',
+      desc_zh: '测地线 = 法截线 = 直线。两条曲线完全重合！',
       desc_en: 'Geodesic = Normal section = straight line. The two curves coincide completely!',
       order: '∞'
     },
-    circumferential: { 
-      zh: '环向', en: 'Circumferential', 
-      desc_zh: '测地线 = 法截线 = 圆。两条曲线也完全重合！', 
+    circumferential: {
+      zh: '环向', en: 'Circumferential',
+      desc_zh: '测地线 = 法截线 = 圆。两条曲线也完全重合！',
       desc_en: 'Geodesic = Normal section = circle. The two curves also coincide completely!',
       order: '∞'
     },
-    diagonal: { 
-      zh: '斜向 (45°)', en: 'Diagonal (45°)', 
-      desc_zh: '测地线 = 螺旋线，法截线 = 椭圆。两条曲线从第3阶导数开始不同！', 
+    diagonal: {
+      zh: '斜向 (45°)', en: 'Diagonal (45°)',
+      desc_zh: '测地线 = 螺旋线，法截线 = 椭圆。两条曲线从第3阶导数开始不同！',
       desc_en: 'Geodesic = helix, Normal section = ellipse. The two curves diverge from the 3rd derivative!',
       order: '2'
     },
@@ -277,50 +390,53 @@ export function ContactNumberVizWithControls() {
 
   return (
     <div className="space-y-4">
-      <div className="w-full h-80 bg-slate-900 rounded-xl overflow-hidden">
+      <div className={`w-full h-80 ${VIZ_CLASSES.canvas}`}>
         <Canvas camera={{ position: [2.5, 1.2, 2.5], fov: 45 }}>
           <CylinderContactScene direction={direction} />
         </Canvas>
       </div>
-      
+
       {/* Legend */}
       <div className="flex flex-wrap gap-4 text-sm">
         <div className="flex items-center gap-2">
-          <div className="w-4 h-1 bg-cyan-400 rounded"></div>
-          <span className="text-slate-300">测地线 γ<sub>u</sub> (Geodesic)</span>
+          <div className="w-4 h-1 rounded bg-[#1f6f78]"></div>
+          <span className="text-stone-700">测地线 γ<sub>u</sub> (Geodesic)</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-1 bg-fuchsia-500 rounded"></div>
-          <span className="text-slate-300">法截线 β<sub>u</sub> (Normal Section)</span>
+          <div className="w-4 h-1 rounded bg-[#c75f52]"></div>
+          <span className="text-stone-700">法截线 β<sub>u</sub> (Normal Section)</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-1 bg-green-400 rounded"></div>
-          <span className="text-slate-300">切方向 u (Tangent)</span>
+          <div className="w-4 h-1 rounded bg-[#0f8f71]"></div>
+          <span className="text-stone-700">切方向 u (Tangent)</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-0.5 bg-fuchsia-500/40 rounded" style={{ width: '16px', height: '16px' }}></div>
-          <span className="text-slate-300">切割平面 (Cutting plane)</span>
+          <div className="w-4 h-1 rounded bg-[#c76f28]"></div>
+          <span className="text-stone-700">法向量 n (Normal)</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-4 h-4 rounded border border-[#b96d5c] bg-[#d7a08c]/35"></div>
+          <span className="text-stone-700">切割平面 (Cutting plane)</span>
         </div>
       </div>
-      
+
       {/* Direction selector */}
-      <div className="bg-slate-800 rounded-lg p-4">
-        <p className="text-slate-300 mb-3 font-semibold">
-          🎯 选择切方向 / Choose tangent direction:
+      <div className={VIZ_CLASSES.panel}>
+        <p className="text-stone-700 mb-3 font-semibold">
+          选择切方向 / Choose tangent direction:
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
           {(['axial', 'circumferential', 'diagonal'] as DirectionMode[]).map((d) => (
             <button
               key={d}
               onClick={() => setDirection(d)}
-              className={`px-4 py-3 rounded-lg text-left transition-all ${
-                direction === d 
-                  ? 'bg-cyan-900/50 border-2 border-cyan-400 text-cyan-300' 
-                  : 'bg-slate-700/50 border-2 border-slate-600 text-slate-400 hover:border-slate-400'
+              className={`px-4 py-3 rounded-xl border-2 text-left transition-all ${
+                direction === d
+                  ? VIZ_CLASSES.buttonActive
+                  : VIZ_CLASSES.buttonIdle
               }`}
             >
-              <div className="font-semibold text-sm">
-                {directionInfo[d].zh} / {directionInfo[d].en}
+              <div className="font-semibold text-sm">{directionInfo[d].zh} / {directionInfo[d].en}
               </div>
               <div className="text-xs mt-1 opacity-80">
                 接触阶 c<sup>#</sup> = {directionInfo[d].order}
@@ -332,43 +448,42 @@ export function ContactNumberVizWithControls() {
 
       {/* Explanation for current direction */}
       <div className={`rounded-lg p-4 border ${
-        direction === 'diagonal' 
-          ? 'bg-red-900/20 border-red-700' 
-          : 'bg-green-900/20 border-green-700'
+        direction === 'diagonal'
+          ? 'bg-rose-900/10 border-rose-700/30'
+          : 'bg-emerald-900/10 border-emerald-700/30'
       }`}>
-        <p className={`font-semibold mb-1 ${direction === 'diagonal' ? 'text-red-400' : 'text-green-400'}`}>
-          {direction === 'diagonal' ? '⚠️' : '✅'} {directionInfo[direction].zh}
+        <p className={`font-semibold mb-1 ${direction === 'diagonal' ? 'text-rose-800' : 'text-emerald-800'}`}>{directionInfo[direction].zh}
         </p>
-        <p className="text-slate-300 text-sm">{directionInfo[direction].desc_zh}</p>
-        <p className="text-slate-400 text-xs mt-1">{directionInfo[direction].desc_en}</p>
+        <p className="text-stone-700 text-sm">{directionInfo[direction].desc_zh}</p>
+        <p className="text-stone-500 text-xs mt-1">{directionInfo[direction].desc_en}</p>
       </div>
-      
+
       {/* Contact number summary */}
-      <div className="bg-gradient-to-r from-yellow-900/30 to-amber-900/30 rounded-lg p-4 border border-yellow-600">
-        <p className="text-yellow-400 font-semibold mb-2">
-          📐 圆柱面的接触数 / Contact Number of Cylinder
+      <div className="rounded-2xl border border-amber-700/25 bg-amber-900/10 p-4">
+        <p className="text-amber-800 font-semibold mb-2">
+          圆柱面的接触数 / Contact Number of Cylinder
         </p>
         <div className="grid grid-cols-3 gap-2 text-sm mb-3">
-          <div className={`rounded p-2 text-center ${direction === 'axial' ? 'bg-cyan-900/40 ring-2 ring-cyan-400' : 'bg-slate-800'}`}>
-            <div className="text-slate-400">轴向 Axial</div>
-            <div className="text-green-400 font-bold">∞</div>
+          <div className={`rounded p-2 text-center ${direction === 'axial' ? 'bg-teal-700/[0.12] ring-2 ring-teal-700/40' : 'bg-white/50'}`}>
+            <div className="text-stone-600">轴向 Axial</div>
+            <div className="text-emerald-800 font-bold">∞</div>
           </div>
-          <div className={`rounded p-2 text-center ${direction === 'circumferential' ? 'bg-cyan-900/40 ring-2 ring-cyan-400' : 'bg-slate-800'}`}>
-            <div className="text-slate-400">环向 Circ.</div>
-            <div className="text-green-400 font-bold">∞</div>
+          <div className={`rounded p-2 text-center ${direction === 'circumferential' ? 'bg-teal-700/[0.12] ring-2 ring-teal-700/40' : 'bg-white/50'}`}>
+            <div className="text-stone-600">环向 Circ.</div>
+            <div className="text-emerald-800 font-bold">∞</div>
           </div>
-          <div className={`rounded p-2 text-center ${direction === 'diagonal' ? 'bg-cyan-900/40 ring-2 ring-cyan-400' : 'bg-slate-800'}`}>
-            <div className="text-slate-400">斜向 Diag.</div>
-            <div className="text-red-400 font-bold">2</div>
+          <div className={`rounded p-2 text-center ${direction === 'diagonal' ? 'bg-teal-700/[0.12] ring-2 ring-teal-700/40' : 'bg-white/50'}`}>
+            <div className="text-stone-600">斜向 Diag.</div>
+            <div className="text-rose-800 font-bold">2</div>
           </div>
         </div>
-        <p className="text-slate-300 text-sm">
-          c<sup>#</sup>(圆柱面) = min(∞, ∞, 2, ...) = <span className="text-yellow-400 font-bold text-lg">2</span>
+        <p className="text-stone-700 text-sm">
+          c<sup>#</sup>(圆柱面) = min(∞, ∞, 2, ...) = <span className="text-amber-800 font-bold text-lg">2</span>
         </p>
-        <p className="text-slate-400 text-xs mt-1">
+        <p className="text-stone-600 text-xs mt-1">
           接触数 = 所有方向接触阶的最小值。即使大多数方向完美吻合，只要有一个方向不完美，接触数就由那个方向决定。
         </p>
-        <p className="text-slate-500 text-xs">
+        <p className="text-stone-500 text-xs">
           Contact number = minimum contact order over all directions. Even if most directions match perfectly, one imperfect direction determines the contact number.
         </p>
       </div>

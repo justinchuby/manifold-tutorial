@@ -2,16 +2,17 @@ import { useMemo, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Line, Sphere, Html } from '@react-three/drei';
 import * as THREE from 'three';
+import { VIZ_CLASSES, VIZ_COLORS } from './theme';
 
 // Geodesic curve (great circle) on sphere
-function GeodesicCurve({ 
+function GeodesicCurve({
   center,
-  direction, 
-  color = '#00ffff',
+  direction,
+  color = VIZ_COLORS.geodesic,
   radius = 1
-}: { 
+}: {
   center: THREE.Vector3;
-  direction: THREE.Vector3; 
+  direction: THREE.Vector3;
   color?: string;
   radius?: number;
 }) {
@@ -19,7 +20,7 @@ function GeodesicCurve({
     const pts: THREE.Vector3[] = [];
     const n = center.clone().normalize();
     const u = direction.clone().sub(n.clone().multiplyScalar(direction.dot(n))).normalize();
-    
+
     for (let i = 0; i <= 64; i++) {
       const t = (i / 64) * Math.PI * 2;
       const p = n.clone().multiplyScalar(Math.cos(t) * radius).add(u.clone().multiplyScalar(Math.sin(t) * radius));
@@ -34,13 +35,13 @@ function GeodesicCurve({
 // Show multiple cutting directions from same point
 function MultiDirectionScene() {
   const [time, setTime] = useState(0);
-  
+
   useFrame(({ clock }) => {
     setTime(clock.getElapsedTime());
   });
 
   const point = new THREE.Vector3(0, 0, 1);
-  
+
   // Multiple directions in tangent plane
   const directions = useMemo(() => {
     const dirs: THREE.Vector3[] = [];
@@ -51,42 +52,49 @@ function MultiDirectionScene() {
     return dirs;
   }, [time]);
 
-  const colors = ['#ff0000', '#ff8800', '#ffff00', '#00ff00', '#0088ff', '#8800ff'];
+  const colors = [
+    VIZ_COLORS.geodesic,
+    VIZ_COLORS.normalSection,
+    VIZ_COLORS.tangent,
+    VIZ_COLORS.normal,
+    VIZ_COLORS.comparison,
+    VIZ_COLORS.accentBlue,
+  ];
 
   return (
     <>
       <ambientLight intensity={0.4} />
       <pointLight position={[10, 10, 10]} intensity={1} />
-      
+
       {/* Sphere */}
       <Sphere args={[1, 32, 32]}>
-        <meshStandardMaterial color="#1a3a5c" transparent opacity={0.3} />
+        <meshStandardMaterial color={VIZ_COLORS.surface} transparent opacity={0.32} roughness={0.78} metalness={0.02} />
       </Sphere>
       <Sphere args={[1.001, 16, 16]}>
-        <meshBasicMaterial color="#334455" wireframe />
+        <meshBasicMaterial color={VIZ_COLORS.surfaceWire} wireframe transparent opacity={0.52} />
       </Sphere>
-      
+
       {/* Point p */}
       <mesh position={point}>
         <sphereGeometry args={[0.06, 16, 16]} />
-        <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={0.5} />
+        <meshStandardMaterial color={VIZ_COLORS.point} emissive={VIZ_COLORS.point} emissiveIntensity={0.42} />
       </mesh>
-      
+
       {/* Multiple great circles for different directions */}
       {directions.map((dir, idx) => (
         <GeodesicCurve key={idx} center={point} direction={dir} color={colors[idx]} />
       ))}
-      
+
       {/* Direction arrows */}
       {directions.map((dir, idx) => (
-        <Line 
+        <Line
           key={`arrow-${idx}`}
           points={[point, point.clone().add(dir.clone().multiplyScalar(0.3))]}
           color={colors[idx]}
           lineWidth={3}
         />
       ))}
-      
+
       <OrbitControls enableZoom={true} enablePan={false} />
     </>
   );
@@ -95,61 +103,61 @@ function MultiDirectionScene() {
 // Geodesic vs Normal Section side by side
 function ComparisonScene() {
   const [time, setTime] = useState(0);
-  
+
   useFrame(({ clock }) => {
     setTime(clock.getElapsedTime());
   });
 
   // Animated point along the curves
   const t = time * 0.5;
-  const point = new THREE.Vector3(0, 0, 1);
-  const direction = new THREE.Vector3(1, 0, 0);
-  
+  const point = useMemo(() => new THREE.Vector3(0, 0, 1), []);
+  const direction = useMemo(() => new THREE.Vector3(1, 0, 0), []);
+
   // For sphere, geodesic and normal section are identical (both great circles)
   const geodesicPoint = useMemo(() => {
     const n = point.clone().normalize();
     const u = direction.clone().normalize();
     return n.clone().multiplyScalar(Math.cos(t)).add(u.clone().multiplyScalar(Math.sin(t)));
-  }, [t]);
+  }, [direction, point, t]);
 
   return (
     <>
       <ambientLight intensity={0.4} />
       <pointLight position={[10, 10, 10]} intensity={1} />
-      
+
       {/* Sphere */}
       <Sphere args={[1, 32, 32]}>
-        <meshStandardMaterial color="#1a3a5c" transparent opacity={0.4} />
+        <meshStandardMaterial color={VIZ_COLORS.surface} transparent opacity={0.32} roughness={0.78} metalness={0.02} />
       </Sphere>
-      
+
       {/* Great circle (both geodesic and normal section) */}
-      <GeodesicCurve center={point} direction={direction} color="#00ffff" />
-      
+      <GeodesicCurve center={point} direction={direction} color={VIZ_COLORS.geodesic} />
+
       {/* Starting point p */}
       <mesh position={point}>
         <sphereGeometry args={[0.05, 16, 16]} />
-        <meshStandardMaterial color="#ffff00" emissive="#ffff00" emissiveIntensity={0.5} />
+        <meshStandardMaterial color={VIZ_COLORS.point} emissive={VIZ_COLORS.point} emissiveIntensity={0.42} />
       </mesh>
       <Html position={point.clone().add(new THREE.Vector3(0.1, 0.1, 0))} style={{ pointerEvents: 'none' }}>
-        <div className="text-yellow-400 text-sm font-bold">p</div>
+        <div className="rounded-md border border-stone-300 bg-[#fffaf1]/95 px-1.5 py-0.5 text-xs font-semibold text-stone-800 shadow-sm">p</div>
       </Html>
-      
+
       {/* Moving point */}
       <mesh position={geodesicPoint}>
         <sphereGeometry args={[0.04, 16, 16]} />
-        <meshStandardMaterial color="#00ff00" emissive="#00ff00" emissiveIntensity={0.5} />
+        <meshStandardMaterial color={VIZ_COLORS.tangent} emissive={VIZ_COLORS.tangent} emissiveIntensity={0.24} />
       </mesh>
-      
+
       {/* Direction u */}
-      <Line 
+      <Line
         points={[point, point.clone().add(direction.clone().multiplyScalar(0.4))]}
-        color="#ff6600"
+        color={VIZ_COLORS.normal}
         lineWidth={4}
       />
       <Html position={point.clone().add(direction.clone().multiplyScalar(0.45))} style={{ pointerEvents: 'none' }}>
-        <div className="text-orange-400 text-sm font-bold">u</div>
+        <div className="rounded-md border border-amber-700/30 bg-[#fffaf1]/95 px-1.5 py-0.5 text-xs font-semibold text-amber-800 shadow-sm">u</div>
       </Html>
-      
+
       <OrbitControls enableZoom={true} enablePan={false} />
     </>
   );
@@ -158,7 +166,7 @@ function ComparisonScene() {
 // Show what happens when geodesic ≠ normal section (non-sphere case)
 function DifferentCurvesScene() {
   const [time, setTime] = useState(0);
-  
+
   useFrame(({ clock }) => {
     setTime(clock.getElapsedTime());
   });
@@ -197,7 +205,7 @@ function DifferentCurvesScene() {
       lines.push(line);
     }
     return lines;
-  }, []);
+  }, [a, b, c]);
 
   // Start at equator-side point where difference is visible
   // Point on ellipsoid at phi=0, theta=45°
@@ -225,7 +233,7 @@ function DifferentCurvesScene() {
       pts.push(new THREE.Vector3(x, y, z));
     }
     return pts;
-  }, []);
+  }, [a, b, c, startTheta]);
 
   // Geodesic: on an ellipsoid, geodesics generally don't stay in a plane.
   // Approximate by slightly drifting theta as phi changes (Clairaut's relation).
@@ -243,7 +251,7 @@ function DifferentCurvesScene() {
       pts.push(new THREE.Vector3(x, y, z));
     }
     return pts;
-  }, []);
+  }, [a, b, c, startTheta]);
 
   // Animated comparison
   const paramT = (Math.sin(time * 0.5) + 1) / 2;
@@ -254,38 +262,38 @@ function DifferentCurvesScene() {
     <>
       <ambientLight intensity={0.4} />
       <pointLight position={[10, 10, 10]} intensity={1} />
-      
+
       {/* Ellipsoid wireframe */}
       {ellipsoidLines.map((line, idx) => (
-        <Line key={idx} points={line} color="#334455" lineWidth={1} />
+        <Line key={idx} points={line} color={VIZ_COLORS.surfaceWire} lineWidth={1} transparent opacity={0.68} />
       ))}
-      
+
       {/* Geodesic */}
-      <Line points={geodesicPoints} color="#00ffff" lineWidth={3} />
-      
+      <Line points={geodesicPoints} color={VIZ_COLORS.geodesic} lineWidth={3} />
+
       {/* Normal section */}
-      <Line points={normalSectionPoints} color="#ff00ff" lineWidth={3} dashed dashScale={15} />
-      
+      <Line points={normalSectionPoints} color={VIZ_COLORS.normalSection} lineWidth={3} dashed dashScale={15} />
+
       {/* Starting point */}
       <mesh position={point}>
         <sphereGeometry args={[0.04, 16, 16]} />
-        <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={0.5} />
+        <meshStandardMaterial color={VIZ_COLORS.point} emissive={VIZ_COLORS.point} emissiveIntensity={0.42} />
       </mesh>
-      
+
       {/* Moving points showing difference */}
       {geodesicPos && (
         <mesh position={geodesicPos}>
           <sphereGeometry args={[0.03, 16, 16]} />
-          <meshStandardMaterial color="#00ffff" emissive="#00ffff" emissiveIntensity={0.5} />
+          <meshStandardMaterial color={VIZ_COLORS.geodesic} emissive={VIZ_COLORS.geodesic} emissiveIntensity={0.24} />
         </mesh>
       )}
       {normalPos && (
         <mesh position={normalPos}>
           <sphereGeometry args={[0.03, 16, 16]} />
-          <meshStandardMaterial color="#ff00ff" emissive="#ff00ff" emissiveIntensity={0.5} />
+          <meshStandardMaterial color={VIZ_COLORS.normalSection} emissive={VIZ_COLORS.normalSection} emissiveIntensity={0.24} />
         </mesh>
       )}
-      
+
       <OrbitControls enableZoom={true} enablePan={false} />
     </>
   );
@@ -293,7 +301,7 @@ function DifferentCurvesScene() {
 
 export function MultiDirectionViz() {
   return (
-    <div className="w-full h-64 bg-slate-900 rounded-xl overflow-hidden">
+    <div className={`w-full h-64 ${VIZ_CLASSES.canvas}`}>
       <Canvas camera={{ position: [2, 2, 2.5], fov: 45 }}>
         <MultiDirectionScene />
       </Canvas>
@@ -303,7 +311,7 @@ export function MultiDirectionViz() {
 
 export function GeodesicNormalComparisonViz() {
   return (
-    <div className="w-full h-64 bg-slate-900 rounded-xl overflow-hidden">
+    <div className={`w-full h-64 ${VIZ_CLASSES.canvas}`}>
       <Canvas camera={{ position: [2, 1.5, 2], fov: 45 }}>
         <ComparisonScene />
       </Canvas>
@@ -313,7 +321,7 @@ export function GeodesicNormalComparisonViz() {
 
 export function DifferentCurvesViz() {
   return (
-    <div className="w-full h-64 bg-slate-900 rounded-xl overflow-hidden">
+    <div className={`w-full h-64 ${VIZ_CLASSES.canvas}`}>
       <Canvas camera={{ position: [2, 1, 2], fov: 45 }}>
         <DifferentCurvesScene />
       </Canvas>
@@ -326,43 +334,43 @@ export function Chapter4VizCollection() {
     <div className="space-y-6">
       {/* Multi-direction visualization */}
       <div>
-        <p className="text-cyan-400 font-semibold mb-2">
-          🌈 不同方向的法截线 / Normal Sections in Different Directions
+        <p className="text-teal-800 font-semibold mb-2">
+           不同方向的法截线 / Normal Sections in Different Directions
         </p>
         <MultiDirectionViz />
-        <p className="text-slate-400 text-xs mt-2">
+        <p className="text-stone-600 text-xs mt-2">
           从同一点p出发，不同方向u产生不同的法截线（大圆）。每种颜色代表一个方向。
         </p>
       </div>
 
       {/* Sphere case: geodesic = normal section */}
       <div>
-        <p className="text-green-400 font-semibold mb-2">
-          ✅ 球面：测地线 = 法截线 / Sphere: Geodesic = Normal Section
+        <p className="text-emerald-800 font-semibold mb-2">
+          ✓ 球面：测地线 = 法截线 / Sphere: Geodesic = Normal Section
         </p>
         <GeodesicNormalComparisonViz />
-        <p className="text-slate-400 text-xs mt-2">
+        <p className="text-stone-600 text-xs mt-2">
           球面上，测地线和法截线都是大圆——完全重合！这就是为什么球面的接触数 c# = ∞
         </p>
       </div>
 
       {/* Non-sphere case: geodesic ≠ normal section */}
       <div>
-        <p className="text-orange-400 font-semibold mb-2">
-          ⚠️ 椭球面：测地线 ≠ 法截线 / Ellipsoid: Geodesic ≠ Normal Section
+        <p className="text-amber-800 font-semibold mb-2">
+           椭球面：测地线 ≠ 法截线 / Ellipsoid: Geodesic ≠ Normal Section
         </p>
         <DifferentCurvesViz />
         <div className="flex gap-4 mt-2 text-sm">
           <div className="flex items-center gap-2">
-            <div className="w-4 h-1 bg-cyan-400 rounded"></div>
-            <span className="text-slate-300">测地线 γ_u</span>
+            <div className="w-4 h-1 rounded bg-[#1f6f78]"></div>
+            <span className="text-stone-700">测地线 γ_u</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-4 h-1 bg-fuchsia-500 rounded border-dashed"></div>
-            <span className="text-slate-300">法截线 β_u</span>
+            <div className="w-4 h-1 rounded bg-[#c75f52] border-dashed"></div>
+            <span className="text-stone-700">法截线 β_u</span>
           </div>
         </div>
-        <p className="text-slate-400 text-xs mt-2">
+        <p className="text-stone-600 text-xs mt-2">
           椭球上，两条曲线从同一点出发、同一方向，但随后分开。它们的"接触阶数"有限。
         </p>
       </div>

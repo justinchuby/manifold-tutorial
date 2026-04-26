@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
+import { useId, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 
 interface TooltipProps {
@@ -21,7 +22,7 @@ const definitions: Record<string, { zh: string; en: string }> = {
     zh: '开集是拓扑空间中的基本概念。直观上，开集是"没有边界点"的集合——集合中的每个点都有一个"小邻域"完全包含在集合内。例如：开区间(0,1)是开集，但闭区间[0,1]不是（端点没有邻域）。',
     en: 'An open set is a fundamental concept in topology. Intuitively, an open set has "no boundary points"—every point has a "small neighborhood" entirely within the set. Example: open interval (0,1) is open, but closed interval [0,1] is not (endpoints lack neighborhoods).'
   },
-  
+
   // Manifold concepts
   'manifold': {
     zh: '流形是一个拓扑空间，局部看起来像欧氏空间ℝⁿ。例如：地球表面是2维流形（局部像平面），但整体是球形。n维流形的每个点附近都有一个坐标卡映射到ℝⁿ。',
@@ -43,7 +44,7 @@ const definitions: Record<string, { zh: string; en: string }> = {
     zh: '图册（Atlas）是覆盖整个流形的坐标卡的集合。就像世界地图册由很多页组成，每页覆盖一部分区域，合起来覆盖整个地球。',
     en: 'An atlas is a collection of charts covering the entire manifold. Like a world atlas with many pages, each covering part of the region, together covering the whole Earth.'
   },
-  
+
   // Submanifold concepts
   'submanifold': {
     zh: '子流形是"住在"另一个流形里的流形。例如：球面S²是E³的2维子流形。子流形继承了外部流形的部分结构，但有自己的维数。',
@@ -61,7 +62,7 @@ const definitions: Record<string, { zh: string; en: string }> = {
     zh: '浸入是允许"自交"的嵌入。映射仍是光滑的，但像可能自己交叉。例如：8字形是圆到平面的浸入（有一个交叉点）。浸入在局部是嵌入。',
     en: 'An immersion allows "self-intersection". The map is still smooth, but the image may cross itself. Example: figure-8 is an immersion of circle in plane (one crossing point). Locally, an immersion is an embedding.'
   },
-  
+
   // Tangent and normal
   'tangent-space': {
     zh: '切空间T_pM是在点p处与流形M相切的所有向量构成的向量空间。直观上是"在p点可以沿着流形走的所有方向"。维数等于流形的维数n。',
@@ -75,7 +76,7 @@ const definitions: Record<string, { zh: string; en: string }> = {
     zh: '余维数 = 外部空间维数m - 子流形维数n。它表示法空间的维数，即"子流形缺少的维数"。例如：E³中的曲面余维数=1，E³中的曲线余维数=2。',
     en: 'Codimension = ambient dimension m - submanifold dimension n. It represents the normal space dimension, i.e., "missing dimensions" of the submanifold. Example: surface in E³ has codim=1, curve in E³ has codim=2.'
   },
-  
+
   // Fundamental forms
   'second-fundamental-form': {
     zh: '第二基本形式h是一个映射h: T_pM × T_pM → T_p⊥M，测量子流形如何"弯曲"嵌入外部空间。输入两个切向量，输出它们造成的"弯曲"方向（法向量）。',
@@ -93,7 +94,7 @@ const definitions: Record<string, { zh: string; en: string }> = {
     zh: '主曲率是形状算子的特征值，表示曲面在各个方向的弯曲程度。球面各方向主曲率相同；马鞍面有一正一负的主曲率。',
     en: 'Principal curvatures are eigenvalues of the shape operator, representing bending degree in each direction. Sphere has equal principal curvatures in all directions; saddle surface has one positive, one negative.'
   },
-  
+
   // Contact number specific
   'contact-number': {
     zh: '接触数c#是Chen-Li定义的几何不变量，测量子流形与切超球面的"接触程度"。接触数越高，子流形的对称性越强。c#≥3与各向同性等价。',
@@ -107,7 +108,7 @@ const definitions: Record<string, { zh: string; en: string }> = {
     zh: '超球面是高维欧氏空间中到某点等距的点的集合。在E³中是球面，在E⁴中是3维超球面S³。公式：|x - c| = r。',
     en: 'A hypersphere is the set of points equidistant from a center in high-dimensional Euclidean space. In E³ it\'s a sphere, in E⁴ it\'s the 3-sphere S³. Formula: |x - c| = r.'
   },
-  
+
   // Holomorphic
   'holomorphic-function': {
     zh: '全纯函数是复可微的函数f: ℂ → ℂ，满足Cauchy-Riemann方程。它是"最好"的复函数——无限可微、解析、保角。例：z², eᶻ, sin(z)。',
@@ -117,7 +118,7 @@ const definitions: Record<string, { zh: string; en: string }> = {
     zh: '全纯曲线是由全纯函数参数化的曲线γ(z) = (f(z), g(z))，其中f,g是全纯的。它是ℂ²（或E⁴）中的极小曲面，接触数恰好为3。',
     en: 'A holomorphic curve is a curve parametrized by holomorphic functions γ(z) = (f(z), g(z)), where f,g are holomorphic. It\'s a minimal surface in ℂ² (or E⁴) with contact number exactly 3.'
   },
-  
+
   // Other
   'euclidean-space': {
     zh: '欧氏空间Eⁿ（或ℝⁿ）是配备标准内积的n维实向量空间。内积⟨x,y⟩ = Σxᵢyᵢ定义了长度和角度。它是"平坦"的——曲率为零。',
@@ -173,66 +174,78 @@ export default function Tooltip({ term, children }: TooltipProps) {
   const { i18n } = useTranslation();
   const isZh = i18n.language === 'zh';
   const [isVisible, setIsVisible] = useState(false);
-  const [position, setPosition] = useState({ top: 0, left: 0 });
+  const [position, setPosition] = useState<{
+    top: number;
+    left: number;
+    placement: 'top' | 'bottom';
+  }>({ top: 0, left: 0, placement: 'top' });
   const triggerRef = useRef<HTMLSpanElement>(null);
-  const tooltipRef = useRef<HTMLDivElement>(null);
+  const tooltipId = useId();
 
   const definition = definitions[term];
-  
-  useEffect(() => {
-    if (isVisible && triggerRef.current && tooltipRef.current) {
+
+  const showTooltip = () => {
+    if (triggerRef.current) {
       const triggerRect = triggerRef.current.getBoundingClientRect();
-      const tooltipRect = tooltipRef.current.getBoundingClientRect();
-      
-      let left = triggerRect.left + triggerRect.width / 2 - tooltipRect.width / 2;
-      let top = triggerRect.top - tooltipRect.height - 8;
-      
-      // Keep tooltip within viewport
-      if (left < 10) left = 10;
-      if (left + tooltipRect.width > window.innerWidth - 10) {
-        left = window.innerWidth - tooltipRect.width - 10;
-      }
-      if (top < 10) {
-        top = triggerRect.bottom + 8;
-      }
-      
-      setPosition({ top, left });
+      const tooltipWidth = Math.min(352, window.innerWidth - 20);
+      const placement = triggerRect.top < 170 ? 'bottom' : 'top';
+      const left = Math.min(
+        Math.max(10, triggerRect.left + triggerRect.width / 2 - tooltipWidth / 2),
+        window.innerWidth - tooltipWidth - 10,
+      );
+      const top = placement === 'top' ? triggerRect.top - 12 : triggerRect.bottom + 12;
+
+      setPosition({ top, left, placement });
     }
-  }, [isVisible]);
+    setIsVisible(true);
+  };
 
   if (!definition) {
     console.warn(`Tooltip: No definition found for term "${term}"`);
     return <>{children}</>;
   }
 
+  const tooltip = (
+    <div
+      id={tooltipId}
+      role="tooltip"
+      className="fixed z-[9999] max-w-sm rounded-xl border border-teal-800/20 bg-[#fffaf1] p-3 text-sm text-stone-800 shadow-[0_22px_60px_rgba(65,45,28,0.24)]"
+      style={{
+        top: position.top,
+        left: position.left,
+        width: 'min(22rem, calc(100vw - 20px))',
+        transform: position.placement === 'top' ? 'translateY(-100%)' : undefined,
+      }}
+    >
+      <div className="mb-1 text-xs font-semibold uppercase tracking-[0.18em] text-teal-800">{isZh ? '术语解释' : 'Term Definition'}
+      </div>
+      <p className="leading-relaxed text-stone-700">{isZh ? definition.zh : definition.en}
+      </p>
+      <div
+        className={`absolute left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 border-teal-800/20 bg-[#fffaf1] ${
+          position.placement === 'top'
+            ? '-bottom-1.5 border-r border-b'
+            : '-top-1.5 border-l border-t'
+        }`}
+      />
+    </div>
+  );
+
   return (
     <>
       <span
         ref={triggerRef}
-        className="text-cyan-400 border-b border-dashed border-cyan-400/50 cursor-help hover:text-cyan-300 hover:border-cyan-300 transition-colors"
-        onMouseEnter={() => setIsVisible(true)}
+        tabIndex={0}
+        aria-describedby={isVisible ? tooltipId : undefined}
+        className="cursor-help border-b border-dashed border-teal-700/45 text-teal-800 transition-colors hover:border-teal-700 hover:text-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-700/20"
+        onFocus={showTooltip}
+        onBlur={() => setIsVisible(false)}
+        onMouseEnter={showTooltip}
         onMouseLeave={() => setIsVisible(false)}
       >
         {children}
       </span>
-      {isVisible && (
-        <div
-          ref={tooltipRef}
-          className="fixed z-50 max-w-sm p-3 bg-slate-800 border border-cyan-500/50 rounded-lg shadow-xl text-sm"
-          style={{ top: position.top, left: position.left }}
-        >
-          <div className="text-cyan-400 font-semibold mb-1 text-xs uppercase tracking-wide">
-            {isZh ? '术语解释' : 'Term Definition'}
-          </div>
-          <p className="text-slate-300 leading-relaxed">
-            {isZh ? definition.zh : definition.en}
-          </p>
-          <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-slate-800 border-r border-b border-cyan-500/50 rotate-45" />
-        </div>
-      )}
+      {isVisible && createPortal(tooltip, document.body)}
     </>
   );
 }
-
-// Export a list of available terms for reference
-export const availableTerms = Object.keys(definitions);

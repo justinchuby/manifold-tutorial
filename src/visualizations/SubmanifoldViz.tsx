@@ -2,9 +2,10 @@ import { useMemo, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Line } from '@react-three/drei';
 import * as THREE from 'three';
+import { VIZ_CLASSES, VIZ_COLORS } from './theme';
 
 // Curve embedded vs immersed
-function EmbeddedCurve({ color = '#00ffff' }: { color?: string }) {
+function EmbeddedCurve({ color = VIZ_COLORS.geodesic }: { color?: string }) {
   const points = useMemo(() => {
     const pts: THREE.Vector3[] = [];
     for (let i = 0; i <= 100; i++) {
@@ -18,7 +19,7 @@ function EmbeddedCurve({ color = '#00ffff' }: { color?: string }) {
 }
 
 // Figure-8 curve (immersed but not embedded - has self-intersection)
-function ImmersedCurve({ color = '#ff6600' }: { color?: string }) {
+function ImmersedCurve({ color = VIZ_COLORS.comparison }: { color?: string }) {
   const points = useMemo(() => {
     const pts: THREE.Vector3[] = [];
     for (let i = 0; i <= 100; i++) {
@@ -42,7 +43,7 @@ function IntersectionMarker() {
   return (
     <mesh position={[0, 0, 0]}>
       <sphereGeometry args={[0.08, 16, 16]} />
-      <meshStandardMaterial color="#ff0000" emissive="#ff0000" emissiveIntensity={0.5} />
+      <meshStandardMaterial color={VIZ_COLORS.normalSection} emissive={VIZ_COLORS.normalSection} emissiveIntensity={0.22} />
     </mesh>
   );
 }
@@ -71,7 +72,7 @@ function EmbeddingScene() {
 
 export function EmbeddingViz() {
   return (
-    <div className="w-full h-64 bg-slate-900 rounded-xl overflow-hidden">
+    <div className={`w-full h-64 ${VIZ_CLASSES.canvas}`}>
       <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
         <EmbeddingScene />
       </Canvas>
@@ -84,19 +85,19 @@ export function EmbeddingVizWithLabels() {
     <div className="space-y-4">
       <EmbeddingViz />
       <div className="grid grid-cols-2 gap-4 text-sm">
-        <div className="bg-slate-800 rounded-lg p-3">
+        <div className={VIZ_CLASSES.panel}>
           <div className="flex items-center gap-2 mb-2">
-            <div className="w-4 h-1 bg-cyan-400 rounded"></div>
-            <span className="text-cyan-400 font-semibold">嵌入 (Embedding)</span>
+            <div className="w-4 h-1 rounded bg-[#1f6f78]"></div>
+            <span className="text-teal-800 font-semibold">嵌入 (Embedding)</span>
           </div>
-          <p className="text-slate-400 text-xs">没有自相交，是真正的"子流形"</p>
+          <p className="text-stone-600 text-xs">没有自相交，是真正的"子流形"</p>
         </div>
-        <div className="bg-slate-800 rounded-lg p-3">
+        <div className={VIZ_CLASSES.panel}>
           <div className="flex items-center gap-2 mb-2">
-            <div className="w-4 h-1 bg-orange-500 rounded"></div>
-            <span className="text-orange-400 font-semibold">浸入 (Immersion)</span>
+            <div className="w-4 h-1 rounded bg-[#9b6a3a]"></div>
+            <span className="text-amber-800 font-semibold">浸入 (Immersion)</span>
           </div>
-          <p className="text-slate-400 text-xs">允许自相交（红点），局部是"好的"</p>
+          <p className="text-stone-600 text-xs">允许自相交（陶土色点），局部是"好的"</p>
         </div>
       </div>
     </div>
@@ -162,19 +163,19 @@ function SecondFundamentalFormScene() {
       
       {/* Surface wireframe */}
       {lines.map((line, idx) => (
-        <Line key={idx} points={line} color="#4488ff" lineWidth={1} />
+        <Line key={idx} points={line} color={VIZ_COLORS.accentBlue} lineWidth={1} />
       ))}
       
       {/* Center point */}
       <mesh position={[0, 0, 0]}>
         <sphereGeometry args={[0.05, 16, 16]} />
-        <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={0.5} />
+        <meshStandardMaterial color={VIZ_COLORS.point} emissive={VIZ_COLORS.point} emissiveIntensity={0.42} />
       </mesh>
       
       {/* Normal vector */}
       <Line 
         points={[new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0.6)]} 
-        color="#ff4444" 
+        color={VIZ_COLORS.normal} 
         lineWidth={3} 
       />
       
@@ -184,7 +185,7 @@ function SecondFundamentalFormScene() {
           new THREE.Vector3(0, 0, 0), 
           new THREE.Vector3(0, 0, -0.4 * curvature)
         ]} 
-        color="#00ff00" 
+        color={VIZ_COLORS.tangent} 
         lineWidth={4} 
       />
       
@@ -195,7 +196,7 @@ function SecondFundamentalFormScene() {
 
 export function SecondFundamentalFormViz() {
   return (
-    <div className="w-full h-64 bg-slate-900 rounded-xl overflow-hidden">
+    <div className={`w-full h-64 ${VIZ_CLASSES.canvas}`}>
       <Canvas camera={{ position: [3, 3, 3], fov: 45 }}>
         <SecondFundamentalFormScene />
       </Canvas>
@@ -209,19 +210,19 @@ export function SecondFundamentalFormVizWithLabels() {
       <SecondFundamentalFormViz />
       <div className="flex flex-wrap gap-4 text-sm">
         <div className="flex items-center gap-2">
-          <div className="w-4 h-1 bg-blue-400 rounded"></div>
-          <span className="text-slate-300">曲面 M</span>
+          <div className="w-4 h-1 rounded bg-[#456f86]"></div>
+          <span className="text-stone-700">曲面 M</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-1 bg-red-500 rounded"></div>
-          <span className="text-slate-300">法向量 n</span>
+          <div className="w-4 h-1 rounded bg-[#c76f28]"></div>
+          <span className="text-stone-700">法向量 n</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-1 bg-green-500 rounded"></div>
-          <span className="text-slate-300">h(u,u) 弯曲方向</span>
+          <div className="w-4 h-1 rounded bg-[#0f8f71]"></div>
+          <span className="text-stone-700">h(u,u) 弯曲方向</span>
         </div>
       </div>
-      <p className="text-slate-400 text-xs">
+      <p className="text-stone-600 text-xs">
         观察：曲率变化时，h(u,u) 的长度也随之变化。第二基本形式测量曲面的"弯曲程度"。
       </p>
     </div>
